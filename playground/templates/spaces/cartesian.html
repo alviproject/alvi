@@ -1,0 +1,132 @@
+{% extends "spaces/index.html" %}
+
+{% block space_content %}
+    <script type="text/javascript">
+        //Canvas size
+        var padding = 30;
+        var scene_width = $("svg").parent().width(); //TODO support window resize
+        var scene_height = 500;
+
+        var points = [];
+
+        //scale functions
+        var xScale = d3.scale.linear()
+                .domain([0, d3.max(points, function (d) {
+                    return d[0];
+                })])
+                .range([padding, scene_width - padding * 2]);
+
+        var yScale = d3.scale.linear()
+                .domain([0, points.length])
+                .range([scene_height - padding, padding]);
+
+        //SVG element
+        var svg = d3.select("svg")
+                .attr("width", scene_width)
+                .attr("height", scene_height);
+
+        //X axis
+        var xAxis = d3.svg.axis()
+                .scale(xScale)
+                .orient("bottom")
+                .ticks(5);
+
+        svg.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(0," + (scene_height - padding) + ")")
+                .call(xAxis);
+
+        //Y axis
+        var yAxis = d3.svg.axis()
+                .scale(yScale)
+                .orient("left")
+                .ticks(5);
+
+        svg.append("g")
+                .attr("class", "y axis")
+                .attr("transform", "translate(" + padding + ",0)")
+                .call(yAxis);
+
+        //actions
+        function action_update_point(action) {
+            var point = {};
+            point.x = action.x;
+            point.y = action.y;
+            point.id = action.id;
+
+            points[point.id] = point;
+
+            update_scale(point.x, point.y);
+
+            svg.selectAll("circle").data(points)
+                    .filter(function (d) {
+                        return d.id == point.id;
+                    })
+                    .transition().duration(1000).attr("cx", function (d) {
+                        return xScale(d.x);
+                    })
+                    .attr("cy", function (d) {
+                        return yScale(d.y);
+                    });
+        }
+
+        function action_create_point(action) {
+            var point = {};
+            point.x = action.x;
+            point.y = action.y;
+            point.id = action.id;
+
+            update_scale(point.x, point.y);
+
+            if (point.id > points.length - 1) {
+                points.length = point.id + 1;
+            }
+            points[point.id] = point;
+
+            var circles = svg.selectAll("circle")
+                    .data(points);
+
+            circles.enter()
+                    .append("circle")
+                    .attr("cx", function (d) {
+                        return xScale(d.x);
+                    })
+                    .attr("cy", function (d, i) {
+                        return yScale(d.y);
+                    })
+                    .attr("r", 2);
+
+            circles.transition()
+                    .duration(1000)
+                    .attr("cx", function (d) {
+                        return xScale(d.x);
+                    })
+                    .attr("cy", function (d, i) {
+                        return yScale(d.y);
+                    });
+
+        }
+
+        function update_scale(x, y) {
+            var maxX = max(xScale.domain()[1], x);
+            var maxY = max(yScale.domain()[1], y);
+            xScale.domain([0, maxX]);
+            yScale.domain([0, maxY]);
+
+            svg.select(".x.axis")
+                    .transition()
+                    .duration(1000)
+                    .call(xAxis);
+
+            svg.select(".y.axis")
+                    .transition()
+                    .duration(1000)
+                    .call(yAxis);
+        }
+
+        register_action('create_point', action_create_point);
+        register_action('update_point', action_update_point);
+
+    </script>
+    <div class="hide" id="session_id">{{ session_id }}</div>
+{% endblock %}
