@@ -1,7 +1,7 @@
-import connections
+import scenes
 
 
 def context_processor(request):
     return {
-        'scenes': connections.scenes,
+        'scenes': scenes.scenes,
     }

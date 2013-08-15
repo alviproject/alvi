@@ -1,6 +1,7 @@
 from playground import service
 from playground.spaces import Cartesian
 from playground.spaces import Sorting
+from playground import scenes
 import random
 import time
 
@@ -48,25 +49,26 @@ def booble(queue):
                 changed = True
 
 
-def booble2(queue):
-    space = Sorting(queue)
-    space.stats.test = 0
-    for i in xrange(N):
-        space.create_item(random.randint(1, N))
+@scenes.register(Sorting)
+class Booble2(object):
+    def run(self, queue):
+        self.space.stats.test = 0
+        for i in xrange(N):
+            self.space.create_item(random.randint(1, N))
 
-    changed = True
-    while changed:
-        changed = False
-        for j in xrange(1, len(space.items)):
-            item_a = space.items[j]
-            item_b = space.items[j-1]
+        changed = True
+        while changed:
+            changed = False
+            for j in xrange(1, len(self.space.items)):
+                item_a = self.space.items[j]
+                item_b = self.space.items[j-1]
 
-            space.stats.test += 1
-            if item_a > item_b:
-                space.swap(item_a, item_b)
-                changed = True
+                self.space.stats.test += 1
+                if item_a > item_b:
+                    self.space.swap(item_a, item_b)
+                    changed = True
 
 
-service.add_scene("Booble Sort", booble, Cartesian)
-service.add_scene("Booble 2", booble2, Sorting)
+#service.add_scene("Booble Sort", booble, Cartesian)
+#service.add_scene("Booble 2", booble2, Sorting)
 service.run()

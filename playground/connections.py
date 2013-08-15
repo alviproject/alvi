@@ -32,4 +32,4 @@ class Connection(sockjs.tornado.SockJSConnection):
 
 
 queues = {}
-scenes = [] #TODO
+#scenes = [] #TODO

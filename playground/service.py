@@ -26,8 +26,3 @@ def run():
     server = tornado.httpserver.HTTPServer(tornado_app)
     server.listen(8000)
     tornado.ioloop.IOLoop.instance().start()
-
-
-def add_scene(name, algorithm, space):
-    space = {'name': name, 'algorithm': algorithm, 'space': space}
-    connections.scenes.append(space)
