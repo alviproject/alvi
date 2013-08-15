@@ -3,8 +3,12 @@ import time
 from functools import total_ordering
 
 
-@total_ordering
 class Item(cartesian.Point):
+    """
+    @total_ordering cannot be used because it would cause errors in number of comparisons
+     (fe. __gt__ calls __le__ and __eq__, which means that one __gt__ call would increments number of comparisons twice
+       first for __le__ and secondly for __eq__)
+    """
     def __init__(self, space, value):
         cartesian.Point.__init__(self, value)
         self.space = space
@@ -23,6 +27,18 @@ class Item(cartesian.Point):
     def __lt__(self, other):
         self.space.stats.comparisons += 1
         return self.x < other.x
+
+    def __le__(self, other):
+        self.space.stats.comparisons += 1
+        return self.x <= other.x
+
+    def __gt__(self, other):
+        self.space.stats.comparisons += 1
+        return self.x > other.x
+
+    def __ge__(self, other):
+        self.space.stats.comparisons += 1
+        return self.x >= other.x
 
     def __eq__(self, other):
         self.space.stats.comparisons += 1

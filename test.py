@@ -2,6 +2,7 @@ from playground import service
 from playground.spaces import Cartesian
 from playground.spaces import Sorting
 import random
+import time
 
 
 N = 10  # number of points and max value of the point
@@ -24,6 +25,8 @@ def generate_points(space, n):
 
 def booble(queue):
     space = Cartesian(queue)
+    space.stats.comparisons = 0
+    space.stats.assignments = 0
     points = generate_points(space, N)
 
     changed = True
@@ -33,13 +36,21 @@ def booble(queue):
             point_a = points[j]
             point_b = points[j-1]
 
+            space.stats.comparisons += 1
             if point_a.x > point_b.x:
-                space.swap_x(point_a, point_b)
+                tmp = point_a.x
+                point_a.x = point_b.x
+                point_b.x = tmp
+                space.stats.assignments += 2
+                space.update_point(point_a)
+                space.update_point(point_b)
+                time.sleep(1)
                 changed = True
 
 
 def booble2(queue):
     space = Sorting(queue)
+    space.stats.test = 0
     for i in xrange(N):
         space.create_item(random.randint(1, N))
 
@@ -50,6 +61,7 @@ def booble2(queue):
             item_a = space.items[j]
             item_b = space.items[j-1]
 
+            space.stats.test += 1
             if item_a > item_b:
                 space.swap(item_a, item_b)
                 changed = True

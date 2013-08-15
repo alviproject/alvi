@@ -41,12 +41,3 @@ class Cartesian(Space):
             y=point.y,
         ))
         return point
-
-    #TODO remove
-    def swap_x(self, point_a, point_b):
-        tmp = point_a.x
-        point_a.x = point_b.x
-        point_b.x = tmp
-        self.update_point(point_a)
-        self.update_point(point_b)
-        time.sleep(1)
