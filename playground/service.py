@@ -12,6 +12,7 @@ import tornado.ioloop
 import tornado.web
 import tornado.wsgi
 import connections
+import scenes
 
 
 def run():
@@ -26,3 +27,7 @@ def run():
     server = tornado.httpserver.HTTPServer(tornado_app)
     server.listen(8000)
     tornado.ioloop.IOLoop.instance().start()
+
+
+def register_scene(scene):
+    scenes.register(scene)

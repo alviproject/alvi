@@ -15,5 +15,6 @@ def run(request, id):
 
     context = RequestContext(request, {
         'session_id': process.pid,
+        'scene': scene,
     })
     return render(request, scene.Space.template, context_instance=context)

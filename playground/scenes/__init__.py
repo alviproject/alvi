@@ -1,22 +1,23 @@
-class register(object):
-    def __init__(self, Space):
-        self.Space = Space
+from booble import Booble
+from booble_cartesian import BoobleCartesian
+import inspect
 
-    def _run(self, queue):
-        obj = self.cls()
-        obj.space = self.Space(queue)
-        return obj.run(queue)
 
-    def __call__(self, cls):
-        def name(self):
-            return self.__class__.__name__
+def register(scene):
+    def _run(queue):
+        space = scene.Space(queue)
+        return scene.run(space)
 
-        self.cls = cls
-        scenes.append(cls)
-        cls._run = self._run
-        cls.Space = self.Space
-        cls.name = name
-        return cls
+    def name():
+        return scene.__class__.__name__
+
+    def source():
+        return inspect.getsource(scene.__class__)
+
+    scenes.append(scene)
+    scene._run = _run
+    scene.name = name
+    scene.source = source
 
 
 scenes = []
