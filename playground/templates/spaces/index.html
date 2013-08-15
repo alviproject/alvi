@@ -7,3 +7,13 @@
     {% block space_content %}
     {% endblock %}
 {% endblock %}
+
+{% block sidebar %}
+    {{ block.super }}
+    <div class="well sidebar-nav">
+        <ul class="nav nav-list" id="stats">
+            <li class="nav-header">Statistics</li>
+        </ul>
+    </div>
+
+{% endblock %}

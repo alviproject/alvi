@@ -4,7 +4,7 @@ from playground.spaces import Sorting
 import random
 
 
-N = 100  # number of points and max value of the point
+N = 10  # number of points and max value of the point
 
 
 def generate_points(space, n):

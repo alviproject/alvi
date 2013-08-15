@@ -1,5 +1,6 @@
 from node import Node
 import time
+from space import Space
 
 
 class Point(Node):
@@ -9,12 +10,13 @@ class Point(Node):
         self.y = y if y else self.id + 1
 
 
-class Cartesian(object):
+class Cartesian(Space):
     template = "spaces/cartesian.html"
 
     def __init__(self, queue):
-        self.queue = queue
+        Space.__init__(self, queue)
         self.points = []
+        self.stats.points = 0
 
     def create_point(self, x, y):
         point = Point(x, y)
@@ -22,25 +24,25 @@ class Cartesian(object):
         return point
 
     def add_point(self, point):
-        action = dict(
+        self.stats.points += 1
+        self.points.append(point)
+        self.queue.put(dict(
             type='create_point',
             id=point.id,
             x=point.x,
             y=point.y,
-        )
-        self.points.append(point)
-        self.queue.put(action)
+        ))
 
     def update_point(self, point):
-        action = dict(
+        self.queue.put(dict(
             type='update_point',
             id=point.id,
             x=point.x,
             y=point.y,
-        )
-        self.queue.put(action)
+        ))
         return point
 
+    #TODO remove
     def swap_x(self, point_a, point_b):
         tmp = point_a.x
         point_a.x = point_b.x

@@ -5,6 +5,12 @@ from functools import total_ordering
 
 @total_ordering
 class Item(cartesian.Point):
+    def __init__(self, space, value):
+        cartesian.Point.__init__(self, value)
+        self.space = space
+        self.space.stats.assignments = 0
+        self.space.stats.comparisons = 0
+
     @property
     def value(self):
         return self.x
@@ -12,17 +18,20 @@ class Item(cartesian.Point):
     @value.setter
     def value(self, v):
         self.x = v
+        self.space.stats.assignments += 1
 
     def __lt__(self, other):
+        self.space.stats.comparisons += 1
         return self.x < other.x
 
     def __eq__(self, other):
+        self.space.stats.comparisons += 1
         return self.x == other.x
 
 
 class Sorting(cartesian.Cartesian):
     def create_item(self, value):
-        item = Item(value)
+        item = Item(self, value)
         self.add_point(item)
         return item
 

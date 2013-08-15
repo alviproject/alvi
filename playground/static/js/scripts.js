@@ -67,6 +67,16 @@ function register_action(name, action) {
     window.actions[name] = action;
 }
 
+function update_stats(action) {
+    var name = action.name;
+    var value = action.value;
+    var id = "stats_" + name;
+    var stat = $("#stats").find("#"+id);
+    if(stat.length == 0) {
+        stat = $("#stats").append('<li id="'+id+'"><span>'+name+':</span> <span class="value"></span></li>');
+    }
+    stat.find(".value").text(value);
+}
 
-
+register_action("update_stats", update_stats)
 
