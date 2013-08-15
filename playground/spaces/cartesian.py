@@ -3,10 +3,10 @@ import time
 
 
 class Point(Node):
-    def __init__(self, x, y):
+    def __init__(self, x, y=None):
         Node.__init__(self)
         self.x = x
-        self.y = y
+        self.y = y if y else self.id + 1
 
 
 class Cartesian(object):
@@ -14,17 +14,22 @@ class Cartesian(object):
 
     def __init__(self, queue):
         self.queue = queue
+        self.points = []
 
     def create_point(self, x, y):
         point = Point(x, y)
+        self.add_point(point)
+        return point
+
+    def add_point(self, point):
         action = dict(
             type='create_point',
             id=point.id,
             x=point.x,
             y=point.y,
         )
+        self.points.append(point)
         self.queue.put(action)
-        return point
 
     def update_point(self, point):
         action = dict(
