@@ -2,11 +2,6 @@
 
 {% block space_content %}
     <script type="text/javascript">
-        //Canvas size
-        var padding = 30;
-        var scene_width = $("svg").parent().width(); //TODO support window resize
-        var scene_height = 500;
-
         var points = [];
 
         //scale functions
@@ -62,7 +57,7 @@
                     .filter(function (d) {
                         return d.id == point.id;
                     })
-                    .transition().duration(1000).attr("cx", function (d) {
+                    .transition().duration(delay).attr("cx", function (d) {
                         return xScale(d.x);
                     })
                     .attr("cy", function (d) {
@@ -97,7 +92,7 @@
                     .attr("r", 2);
 
             circles.transition()
-                    .duration(1000)
+                    .duration(delay)
                     .attr("cx", function (d) {
                         return xScale(d.x);
                     })
@@ -115,18 +110,16 @@
 
             svg.select(".x.axis")
                     .transition()
-                    .duration(1000)
+                    .duration(delay)
                     .call(xAxis);
 
             svg.select(".y.axis")
                     .transition()
-                    .duration(1000)
+                    .duration(delay)
                     .call(yAxis);
         }
 
         register_action('create_point', action_create_point);
         register_action('update_point', action_update_point);
-
     </script>
-    <div class="hide" id="session_id">{{ session_id }}</div>
 {% endblock %}
