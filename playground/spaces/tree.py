@@ -35,10 +35,10 @@ class TreeNode(object):
 class Tree(object):
     template = "spaces/tree.html"
 
-    def __init__(self, queue):
+    def __init__(self, queue, RootNode=TreeNode):
         self._space = Space(queue)
         self.stats.nodes = 0
-        self.root = TreeNode(self, None, 0)
+        self.root = RootNode(self, None, 0)
 
     @property
     def nodes(self):

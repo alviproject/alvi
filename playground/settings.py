@@ -14,9 +14,9 @@ SECRET_KEY = 'hn+-d5ox)bdr)a6+yn6+m3wazw0n2=6mi#cc839sb@=rs9=2%y'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-TEMPLATE_DEBUG = True
+TEMPLATE_DEBUG = DEBUG
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost']
 
 
 # Application definition
@@ -105,3 +105,41 @@ DEBUG_TOOLBAR_PANELS = (
 DEBUG_TOOLBAR_CONFIG = {'INTERCEPT_REDIRECTS': False, 'HIDE_DJANGO_SQL': True, 'SHOW_TEMPLATE_CONTEXT': True}
 
 TEMPLATE_DIRS = (os.path.join(PROJECT_BASE_DIR, 'templates'),)
+
+
+LOGGING = {
+    'version': 1,
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
+            },
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': '%s/data/log.txt' % BASE_DIR,
+            'formatter': 'simple'
+            },
+        },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+            },
+        }
+    }
+
+#TODO change in production
+# make all loggers use the console.
+for logger in LOGGING['loggers']:
+    LOGGING['loggers'][logger]['handlers'] = ['console']
