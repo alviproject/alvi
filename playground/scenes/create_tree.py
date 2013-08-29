@@ -4,9 +4,10 @@ import time
 
 
 class CreateTree(object):
+    Space = Tree
+
     def __init__(self, n):
         self.n = n
-        self.Space = Tree
 
     def run(self, space):
         for i in xrange(self.n):

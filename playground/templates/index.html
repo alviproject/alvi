@@ -50,9 +50,9 @@
                 <ul class="nav nav-list">
                     <li class="nav-header">Algorithms</li>
                     <!--<li class="active"><a href="#">Session1</a></li>-->
-                    {% for scene in scenes %}
+                    {% for name in scene_names %}
                         <li>
-                            <a href="{% url 'playground.views.run' forloop.counter0 %}">{{ scene.name }}</a>
+                            <a href="{% url 'playground.views.run' forloop.counter0 %}">{{ name }}</a>
                         </li>
                     {% endfor %}
                 </ul>
@@ -64,72 +64,6 @@
                 {% block content %}
                 {% endblock %}
             </div>
-            <div class="row-fluid">
-                <div class="span4">
-                    <h2>Heading</h2>
-
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
-                        mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
-                        magna mollis euismod. Donec sed odio dui. </p>
-
-                    <p><a class="btn" href="#">View details &raquo;</a></p>
-                </div>
-                <!--/span-->
-                <div class="span4">
-                    <h2>Heading</h2>
-
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
-                        mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
-                        magna mollis euismod. Donec sed odio dui. </p>
-
-                    <p><a class="btn" href="#">View details &raquo;</a></p>
-                </div>
-                <!--/span-->
-                <div class="span4">
-                    <h2>Heading</h2>
-
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
-                        mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
-                        magna mollis euismod. Donec sed odio dui. </p>
-
-                    <p><a class="btn" href="#">View details &raquo;</a></p>
-                </div>
-                <!--/span-->
-            </div>
-            <!--/row-->
-            <div class="row-fluid">
-                <div class="span4">
-                    <h2>Heading</h2>
-
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
-                        mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
-                        magna mollis euismod. Donec sed odio dui. </p>
-
-                    <p><a class="btn" href="#">View details &raquo;</a></p>
-                </div>
-                <!--/span-->
-                <div class="span4">
-                    <h2>Heading</h2>
-
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
-                        mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
-                        magna mollis euismod. Donec sed odio dui. </p>
-
-                    <p><a class="btn" href="#">View details &raquo;</a></p>
-                </div>
-                <!--/span-->
-                <div class="span4">
-                    <h2>Heading</h2>
-
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
-                        mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
-                        magna mollis euismod. Donec sed odio dui. </p>
-
-                    <p><a class="btn" href="#">View details &raquo;</a></p>
-                </div>
-                <!--/span-->
-            </div>
-            <!--/row-->
         </div>
         <!--/span-->
     </div>

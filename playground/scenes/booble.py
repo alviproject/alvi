@@ -3,9 +3,10 @@ import random
 
 
 class Booble(object):
+    Space = Sorting
+
     def __init__(self, n):
         self.n = n
-        self.Space = Sorting
 
     def run(self, space):
         for i in xrange(self.n):

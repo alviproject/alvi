@@ -29,5 +29,5 @@ def run():
     tornado.ioloop.IOLoop.instance().start()
 
 
-def register_scene(scene):
-    scenes.register(scene)
+def register_scene(*args, **kwargs):
+    scenes.register(*args, **kwargs)

@@ -4,9 +4,10 @@ import time
 
 
 class BoobleCartesian(object):
+    Space = Cartesian
+
     def __init__(self, n):
         self.n = n
-        self.Space = Cartesian
 
     def generate_points(self, space):
         """ generates n points (x, y) on a given space

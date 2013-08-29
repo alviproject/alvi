@@ -5,21 +5,14 @@ from binary_search_tree import BinarySearchTree
 import inspect
 
 
-def register(scene):
+def register(scene_name, scene_function, Space):
     def _run(queue):
-        space = scene.Space(queue)
-        return scene.run(space)
+        space = Space(queue)
+        return scene_function(space)
 
-    def name():
-        return scene.__class__.__name__
+    source = inspect.getsource(scene_function)
 
-    def source():
-        return inspect.getsource(scene.__class__)
-
-    scenes.append(scene)
-    scene._run = _run
-    scene.name = name
-    scene.source = source
+    scenes.append((scene_name, _run, Space, source))
 
 
 scenes = []

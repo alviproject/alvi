@@ -4,9 +4,10 @@ import time
 
 
 class BinarySearchTree(object):
+    Space = BinaryTree
+
     def __init__(self, n):
         self.n = n
-        self.Space = BinaryTree
 
     def run(self, space):
         self.space = space

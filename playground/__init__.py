@@ -2,6 +2,7 @@ import scenes
 
 
 def context_processor(request):
+    scene_names = [name for name, _, _, _ in scenes.scenes]
     return {
-        'scenes': scenes.scenes,
+        'scene_names': scene_names,
     }
