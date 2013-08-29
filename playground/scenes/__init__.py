@@ -1,8 +1,9 @@
-from booble import Booble
-from booble_cartesian import BoobleCartesian
-from create_tree import CreateTree
-from binary_search_tree import BinarySearchTree
 import inspect
+
+from .booble import Booble
+from .booble_cartesian import BoobleCartesian
+from .create_tree import CreateTree
+from .binary_search_tree import BinarySearchTree
 
 
 def register(scene_name, scene_function, Space):

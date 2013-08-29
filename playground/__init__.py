@@ -1,4 +1,4 @@
-import scenes
+from . import scenes
 
 
 def context_processor(request):

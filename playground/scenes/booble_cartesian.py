@@ -15,7 +15,7 @@ class BoobleCartesian(object):
             y is just incremented, the reason is that it looks better; thanks to that, when you swap adjacent elements
             (with adjacent ids) user can see that adjacent circles (with adjacent y values) are swapped
         """
-        for i in xrange(self.n):
+        for i in range(self.n):
             x = random.randint(1, self.n)
             y = i + 1
             space.create_point(x, y)
@@ -28,7 +28,7 @@ class BoobleCartesian(object):
         changed = True
         while changed:
             changed = False
-            for j in xrange(1, len(space.points)):
+            for j in range(1, len(space.points)):
                 point_a = space.points[j]
                 point_b = space.points[j-1]
 

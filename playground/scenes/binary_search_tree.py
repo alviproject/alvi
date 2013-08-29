@@ -11,7 +11,7 @@ class BinarySearchTree(object):
 
     def run(self, space):
         self.space = space
-        for i in xrange(self.n):
+        for i in range(self.n):
             x = random.randint(0, self.n)
             self.insert(x)
             time.sleep(1)

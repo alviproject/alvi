@@ -1,5 +1,5 @@
-from space import Space
-from space import Node
+from .space import Space
+from .space import Node
 
 
 class Point(object):

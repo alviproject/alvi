@@ -1,6 +1,3 @@
-import twiggy
-twiggy.quickSetup()
-
 import os
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "playground.settings")
 
@@ -11,8 +8,9 @@ import tornado.httpserver
 import tornado.ioloop
 import tornado.web
 import tornado.wsgi
-import connections
-import scenes
+
+from . import connections
+from . import scenes
 
 
 def run():

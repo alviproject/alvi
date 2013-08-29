@@ -1,4 +1,4 @@
-import tree
+from . import tree
 
 
 class BinaryTreeNode(object):

@@ -5,8 +5,8 @@ from multiprocessing import Process
 from multiprocessing import Queue
 from django.template import RequestContext
 
-import connections
-import scenes
+from . import connections
+from . import scenes
 import __main__
 
 

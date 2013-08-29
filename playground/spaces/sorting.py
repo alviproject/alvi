@@ -1,5 +1,6 @@
-import cartesian
 import time
+
+from . import cartesian
 
 
 class Item(object):
