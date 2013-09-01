@@ -12,7 +12,7 @@ class TreeNode(object):
         space._space.add_node(self)
         parent_id = parent.id if parent else 0
         #TODO action type shall be on different level than action parameters, it will make JS mapping easier
-        space.queue.put(dict(
+        space.pipe.put(dict(
             type='create_node',
             id=self.id,
             parent_id=parent_id,
@@ -35,8 +35,8 @@ class TreeNode(object):
 class Tree(object):
     template = "spaces/tree.html"
 
-    def __init__(self, queue, RootNode=TreeNode):
-        self._space = Space(queue)
+    def __init__(self, pipe, RootNode=TreeNode):
+        self._space = Space(pipe)
         self.stats.nodes = 0
         self.root = RootNode(self, None, 0)
 
@@ -49,8 +49,8 @@ class Tree(object):
         return self._space.stats
 
     @property
-    def queue(self):
-        return self._space.queue
+    def pipe(self):
+        return self._space.pipe
 
     def next_node_id(self):
         return self._space.next_node_id()

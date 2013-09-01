@@ -11,6 +11,7 @@ class Booble(object):
     def run(self, space):
         for i in range(self.n):
             space.create_item(random.randint(1, self.n))
+        space.sync(1)
 
         changed = True
         while changed:
@@ -21,3 +22,4 @@ class Booble(object):
                 if item_a > item_b:
                     space.swap(item_a, item_b)
                     changed = True
+            space.sync(1)

@@ -41,8 +41,8 @@ class BinaryTreeNode(object):
 class BinaryTree(object):
     template = tree.Tree.template
 
-    def __init__(self, queue):
-        self._tree = tree.Tree(queue, BinaryTreeNode)
+    def __init__(self, pipe):
+        self._tree = tree.Tree(pipe, BinaryTreeNode)
 
     @property
     def nodes(self):
@@ -53,8 +53,8 @@ class BinaryTree(object):
         return self._tree.stats
 
     @property
-    def queue(self):
-        return self._tree.queue
+    def pipe(self):
+        return self._tree.pipe
 
     def next_node_id(self):
         return self._tree.next_node_id()

@@ -14,18 +14,19 @@ class Connection(sockjs.tornado.SockJSConnection):
         logger.info("new connection")
 
     def on_message(self, message):
-        #TODO catch errorrs (queue does not exists, cannot parse, etc)
+        #TODO catch errors (queue does not exists, cannot parse, etc)
         #TODO check rights to access the queue
-        session_id = simplejson.loads(message)['session_id']
+        message = simplejson.loads(message)
+        session_id = message['session_id']
         session_id = int(session_id)
         logger.info("session_id=%d" % session_id)
         queue = queues[session_id]
 
-        def notify(fd, events):
-            action = queue.get()
-            self.send(proto.json_encode(action))
-
-        IOLoop.instance().add_handler(queue._reader.fileno(), notify, IOLoop.READ)
+        if message['message'] == 'init':
+            def notify(fd, events):
+                action = queue.get()
+                self.send(proto.json_encode(action))
+            IOLoop.instance().add_handler(queue._reader.fileno(), notify, IOLoop.READ)
 
     def on_close(self):
         logger.info("closing connection")

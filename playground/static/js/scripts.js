@@ -1,7 +1,7 @@
 window.actions = {};
 
 $(function () {
-    var connection = null;
+    connection = null;
 
     function connect() {
         disconnect();
@@ -11,20 +11,36 @@ $(function () {
 
         connection.onopen = function () {
             console.log('Connected.');
-            var session_id = $("#session_id").text();
-            if (session_id) {
-                var data = {'session_id': session_id};
-                var message = JSON.stringify(data);
-                connection.send(message);
-            }
+            connection.message('init');
             update_ui();
         };
 
+        connection.message = function(message) {
+            var session_id = $("#session_id").text();
+            if (session_id) {
+                var data = {'session_id': session_id, 'message': message};
+                var message = JSON.stringify(data);
+                connection.send(message);
+            }
+        }
+
         connection.onmessage = function (e) {
-            console.log('Received: ' + e.data);
-            var action = JSON.parse(e.data);
-            var action_type = action['type'];
-            actions[action_type](action);
+            function run_action(action) {
+                var action_type = action['type'];
+                actions[action_type](action);
+            }
+
+            var data = JSON.parse(e.data);
+
+            if( Object.prototype.toString.call(data) === '[object Array]' ) {
+                for (var i = 0; i < data.length; ++i) {
+                    run_action(data[i]);
+                }
+            }
+            else {
+                run_action(data);
+            }
+            update_data();
         };
 
         connection.onclose = function () {

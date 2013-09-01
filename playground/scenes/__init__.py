@@ -6,9 +6,23 @@ from .create_tree import CreateTree
 from .binary_search_tree import BinarySearchTree
 
 
+class Pipe:
+    def __init__(self, queue):
+        self.queue = queue
+        self._backlog = []
+
+    def send(self, message):
+        self._backlog.append(message)
+
+    def sync(self):
+        #TODO optimize data and stats (send only latest value if entry occurs multiple times)
+        self.queue.put(self._backlog)
+
+
 def register(scene_name, scene_function, Space):
     def _run(queue):
-        space = Space(queue)
+        pipe = Pipe(queue)
+        space = Space(pipe)
         return scene_function(space)
 
     source = inspect.getsource(scene_function)

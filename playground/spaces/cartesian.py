@@ -7,7 +7,7 @@ class Point(object):
         self._node = Node(space)
         self._x = x
         self._y = y
-        space.queue.put(dict(
+        space.pipe.send(dict(
             type='create_point',
             id=self.id,
             x=self.x,
@@ -33,7 +33,7 @@ class Point(object):
         self._update()
 
     def _update(self):
-        self.space.queue.put(dict(
+        self.space.pipe.send(dict(
             type='update_point',
             id=self.id,
             x=self.x,
@@ -52,8 +52,8 @@ class Point(object):
 class Cartesian(object):
     template = "spaces/cartesian.html"
 
-    def __init__(self, queue):
-        self._space = Space(queue)
+    def __init__(self, pipe):
+        self._space = Space(pipe)
         self.stats.points = 0
 
     @property
@@ -65,8 +65,11 @@ class Cartesian(object):
         return self._space.stats
 
     @property
-    def queue(self):
-        return self._space.queue
+    def pipe(self):
+        return self._space.pipe
+
+    def sync(self, level):
+        self._space.sync(level)
 
     def next_node_id(self):
         return self._space.next_node_id()

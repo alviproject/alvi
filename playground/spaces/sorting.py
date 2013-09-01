@@ -51,20 +51,23 @@ class Item(object):
 class Sorting(object):
     template = cartesian.Cartesian.template
 
-    def __init__(self, queue):
-        self._cartesian = cartesian.Cartesian(queue)
+    def __init__(self, pipe):
+        self._cartesian = cartesian.Cartesian(pipe)
 
     @property
     def items(self):
         return self._cartesian.points
 
     @property
-    def queue(self):
-        return self._cartesian.queue
+    def pipe(self):
+        return self._cartesian.pipe
 
     @property
     def stats(self):
         return self._cartesian.stats
+
+    def sync(self, level):
+        self._cartesian.sync(level)
 
     def next_node_id(self):
         return self._cartesian.next_node_id()
@@ -78,4 +81,3 @@ class Sorting(object):
         tmp = item_a.value
         item_a.value = item_b.value
         item_b.value = tmp
-        time.sleep(1)
