@@ -24,6 +24,7 @@ class BoobleCartesian(object):
         space.stats.comparisons = 0
         space.stats.assignments = 0
         self.generate_points(space)
+        space.sync(1)
 
         changed = True
         while changed:
@@ -38,5 +39,5 @@ class BoobleCartesian(object):
                     point_a.x = point_b.x
                     point_b.x = tmp
                     space.stats.assignments += 2
-                    time.sleep(1)
                     changed = True
+            space.sync(1)

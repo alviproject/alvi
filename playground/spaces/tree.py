@@ -12,12 +12,13 @@ class TreeNode(object):
         space._space.add_node(self)
         parent_id = parent.id if parent else 0
         #TODO action type shall be on different level than action parameters, it will make JS mapping easier
-        space.pipe.put(dict(
+        space.pipe.send(dict(
             type='create_node',
             id=self.id,
             parent_id=parent_id,
             value=self.value,
         ))
+        space.sync(1)
 
     @property
     def id(self):
@@ -51,6 +52,9 @@ class Tree(object):
     @property
     def pipe(self):
         return self._space.pipe
+
+    def sync(self, level):
+        self._space.sync(level)
 
     def next_node_id(self):
         return self._space.next_node_id()

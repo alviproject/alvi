@@ -16,7 +16,10 @@ class Pipe:
 
     def sync(self):
         #TODO optimize data and stats (send only latest value if entry occurs multiple times)
-        self.queue.put(self._backlog)
+        #message is sent asynchronously, so we need to make a copy, before clearing
+        backlog = self._backlog.copy()
+        self.queue.put(backlog)
+        self._backlog.clear()
 
 
 def register(scene_name, scene_function, Space):

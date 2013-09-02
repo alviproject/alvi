@@ -14,4 +14,3 @@ class CreateTree(object):
             x = random.randint(0, i)
             parent = space.nodes[x]
             parent.create_child(i + 1)
-            time.sleep(1)

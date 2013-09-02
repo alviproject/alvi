@@ -25,7 +25,7 @@ class Space(object):
     """abstract space, not to be used directly"""
 
     def __init__(self, pipe):
-        self.pipe = pipe
+        self.pipe = pipe #TODO pipe shall be private
         self.stats = Stats(pipe)
         self.nodes = []
 
