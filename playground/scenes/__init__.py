@@ -1,4 +1,5 @@
 import inspect
+import collections
 
 from .booble import Booble
 from .booble_cartesian import BoobleCartesian
@@ -9,15 +10,17 @@ from .binary_search_tree import BinarySearchTree
 class Pipe:
     def __init__(self, queue):
         self.queue = queue
-        self._backlog = []
+        self._backlog = collections.OrderedDict()
 
-    def send(self, message):
-        self._backlog.append(message)
+    def send(self, action_type, key, message):
+        message['type'] = action_type #TODO temp workaround
+        key = (action_type, ) + key
+        self._backlog[repr(key)] = message
 
     def sync(self):
         #TODO optimize data and stats (send only latest value if entry occurs multiple times)
         #message is sent asynchronously, so we need to make a copy, before clearing
-        backlog = self._backlog.copy()
+        backlog = list(self._backlog.values())
         self.queue.put(backlog)
         self._backlog.clear()
 

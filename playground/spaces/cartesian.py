@@ -7,8 +7,7 @@ class Point(object):
         self._node = Node(space)
         self._x = x
         self._y = y
-        space.pipe.send(dict(
-            type='create_point',
+        space.pipe.send('create_point', (self.id, ), dict(
             id=self.id,
             x=self.x,
             y=self.y,
@@ -33,8 +32,7 @@ class Point(object):
         self._update()
 
     def _update(self):
-        self.space.pipe.send(dict(
-            type='update_point',
+        self.space.pipe.send('update_point', (self.id, ), dict(
             id=self.id,
             x=self.x,
             y=self.y,

@@ -6,12 +6,10 @@ class Stats(object):
         object.__setattr__(self, 'pipe', pipe)
 
     def __setattr__(self, name, value):
-        if False:  #TODO
-            self.pipe.send(dict(
-                type='update_stats',
-                name=name,
-                value=value,
-            ))
+        self.pipe.send("update_stats", (name, ), dict(
+            name=name,
+            value=value
+        ))
         return object.__setattr__(self, name, value)
 
 

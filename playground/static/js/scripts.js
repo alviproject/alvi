@@ -89,7 +89,8 @@ function update_stats(action) {
     var id = "stats_" + name;
     var stat = $("#stats").find("#"+id);
     if(stat.length == 0) {
-        stat = $("#stats").append('<li id="'+id+'"><span>'+name+':</span> <span class="value"></span></li>');
+        $("#stats").append('<li id="'+id+'"><span>'+name+':</span> <span class="value"></span></li>');
+        stat = $("#stats").find("#"+id);
     }
     stat.find(".value").text(value);
 }
