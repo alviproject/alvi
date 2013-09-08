@@ -3,6 +3,7 @@
 {% block space_content %}
     <script type="text/javascript">
         var points = [];
+        var markers = []
 
         //scale functions
         var xScale = d3.scale.linear()
@@ -59,6 +60,17 @@
             points[point.id] = point;
         }
 
+        function action_create_marker(marker) {
+            if (marker.id > markers.length - 1) {
+                markers.length = marker.id + 1;
+            }
+            markers[marker.id] = marker;
+        }
+
+        function action_move_marker(marker) {
+            markers[marker.id].point_id = marker.point_id;
+        }
+
         function update_scale() {
             var maxX = d3.max(points, function(d) { return d.x; });
             var maxY = points.length;
@@ -82,29 +94,81 @@
             var circles = svg.selectAll("circle")
                     .data(points);
 
-            circles.enter()
-                    .append("circle")
-                    .attr("cx", function (d) {
+            function transform_circles(circles) {
+                    return circles.attr("cx", function (d) {
                         return xScale(d.x);
                     })
                     .attr("cy", function (d, i) {
                         return yScale(d.y);
                     })
-                    .attr("r", 2);
+            }
 
-            circles.transition()
-                    .duration(delay)
-                    .attr("cx", function (d) {
-                        return xScale(d.x);
+            transform_circles(circles.enter()
+                    .append("circle")
+            ).attr("r", 2);
+
+            transform_circles(circles.transition()
+                    .duration(delay));
+
+            /*
+            MARKERS
+             */
+
+            function marker(point_id) {
+                return {'x': xScale(points[point_id].x), 'y': yScale(points[point_id].y) };
+            }
+
+            var markers_select = svg.selectAll("g.marker")
+                .data(markers)
+
+            var markers_append = markers_select.enter()
+                .append("g")
+                .attr("class", "marker")
+                .attr("text-anchor", "end")
+                .attr("font-size", "12")
+                .attr("transform", function(d){
+                        return "translate(0,"+marker(d.point_id).y+")"
+                });
+
+            markers_append.append("text")
+                .attr("dy", -5)
+                .attr("dx", xScale.range()[1]+padding)
+                .text(function(d) {
+                        return d.name;
                     })
-                    .attr("cy", function (d, i) {
-                        return yScale(d.y);
-                    }).filter(function(d, i){
-                        return i === 0;
-                    });
+                .attr("fill", "red");
+
+            markers_append.append("line")
+                .attr("class", "link")
+                .attr("stroke-width", 1)
+                .attr("stroke", "red")
+                .attr("x1", function(d) {
+                        return marker(d.point_id).x;
+                    })
+                .attr("y1", 0)
+                .attr("x2", xScale.range()[1]+padding)
+                .attr("y2", 0);
+
+            markers_select
+                .transition()
+                .duration(delay)
+                .attr("transform", function(d){
+                     return "translate(0,"+marker(d.point_id).y+")"
+                });
+
+            markers_select
+                .selectAll("line")
+                .transition()
+                .duration(delay)
+                .attr("x1", function(d) {
+                    return marker(d.point_id).x;
+                });
         }
 
         register_action('create_point', action_create_point);
         register_action('update_point', action_update_point);
+        register_action('create_marker', action_create_marker);
+        register_action('move_marker', action_move_marker);
     </script>
+
 {% endblock %}

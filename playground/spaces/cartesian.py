@@ -47,11 +47,29 @@ class Point(object):
         return self._node.space
 
 
+class Marker(object):
+    def __init__(self, space, name, point):
+        self.id = space.next_marker_id()
+        self.space = space
+        space.pipe.send('create_marker', (self.id, ), dict(
+            id=self.id,
+            point_id=point.id,
+            name=name,
+        ))
+
+    def move(self, point):
+        self.space.pipe.send('move_marker', (self.id, ), dict(
+            id=self.id,
+            point_id=point.id,
+        ))
+
+
 class Cartesian(object):
     template = "spaces/cartesian.html"
 
     def __init__(self, pipe):
         self._space = Space(pipe)
+        self.markers = []
         self.stats.points = 0
 
     @property
@@ -72,6 +90,9 @@ class Cartesian(object):
     def next_node_id(self):
         return self._space.next_node_id()
 
+    def next_marker_id(self):
+        return len(self.markers)
+
     def create_point(self, x, y):
         point = Point(self, x, y)
         self.add_point(point)
@@ -80,3 +101,8 @@ class Cartesian(object):
     def add_point(self, point):
         self.stats.points += 1
         self._space.add_node(point)
+
+    def create_marker(self, name, point):
+        marker = Marker(self, name, point)
+        self.markers.append(marker)
+        return marker

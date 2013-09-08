@@ -5,7 +5,7 @@ from playground.scenes import CreateTree
 from playground.scenes import BinarySearchTree
 
 
-N = 1024  # number of points and max value of the point
+N = 4  # number of points and max value of the point
 service.register_scene("Booble", Booble(N).run, Booble.Space)
 service.register_scene("Booble Cartesian", BoobleCartesian(N).run, BoobleCartesian.Space)
 service.register_scene("Create Tree", CreateTree(N).run, CreateTree.Space)
