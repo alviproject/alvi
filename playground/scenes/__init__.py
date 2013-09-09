@@ -26,15 +26,18 @@ class Pipe:
         self._backlog.clear()
 
 
-def register(scene_name, scene_function, Space):
+def register(scene_name, scene_function, Container):
+    #TODO
+    Container = Container.implementations()[0]
+
     def _run(queue):
         pipe = Pipe(queue)
-        space = Space(pipe)
-        return scene_function(space)
+        container = Container(pipe)
+        return scene_function(container)
 
     source = inspect.getsource(scene_function)
 
-    scenes.append((scene_name, _run, Space, source))
+    scenes.append((scene_name, _run, Container, source))
 
 
 scenes = []

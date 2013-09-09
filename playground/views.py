@@ -22,7 +22,8 @@ def home(request):
 def run(request, id):
     scene = scenes.scenes[int(id)]
     queue = Queue()
-    name, run, Space, source = scene
+    name, run, Container, source = scene
+    print(Container)
     process = Process(target=run, args=(queue, ))
     process.start()
     connections.queues[process.pid] = queue
@@ -32,4 +33,4 @@ def run(request, id):
         'name': name,
         'source': source
     })
-    return render(request, Space.template, context_instance=context)
+    return render(request, Container.space_class().template, context_instance=context)

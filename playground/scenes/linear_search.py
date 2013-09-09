@@ -1,30 +1,30 @@
 import random
-from playground.spaces import Cartesian
 
 
 class LinearSearch(object):
-    Space = Cartesian
-
     def __init__(self, n):
         self.n = n
 
-    def generate_points(self, space):
-        for i in range(self.n):
-            x = random.randint(1, self.n)
-            y = i + 1
-            space.create_point(x, y)
+    def run(self, list):
+        wanted_id = random.randint(0, self.n)
+        head = list.create_node(random.randint(1, self.n))
+        node = head
+        for i in range(self.n-1):
+            value = random.randint(1, self.n)
+            node.next = list.create_node(value)
+            node = node.next
 
-    def run(self, space):
-        self.generate_points(space)
-        space.sync(1)
+            if node.id == wanted_id:
+                list.create_marker("wanted", node)
+        list.sync()
 
-        wanted = space.points[random.randint(0, len(space.points)-1)]
-        space.create_marker("wanted", wanted)
-        seeker = space.create_marker("seeker", space.points[0])
-        space.sync(1)
-        for point in space.points:
-            seeker.move(point)
-            space.sync(1)
-            if wanted.id == point.id:
+        seeker = list.create_marker("seeker", head)
+        list.sync()
+        node = head.next
+        while node:
+            seeker.move(node)
+            list.sync()
+            if wanted_id == node.id: #TODO nodes shall support comparison
                 break
-        space.sync(1)
+            node = node.next
+        list.sync()
