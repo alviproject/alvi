@@ -5,6 +5,8 @@
         var points = [];
         var markers = []
 
+        var marker_color = d3.scale.category10();
+
         //scale functions
         var xScale = d3.scale.linear()
                 .domain([0, d3.max(points, function (d) {
@@ -29,6 +31,7 @@
 
         svg.append("g")
                 .attr("class", "x axis")
+                .attr("stroke", "grey")
                 .attr("transform", "translate(0," + (scene_height - padding) + ")")
                 .call(xAxis);
 
@@ -40,6 +43,7 @@
 
         svg.append("g")
                 .attr("class", "y axis")
+                .attr("stroke", "grey")
                 .attr("transform", "translate(" + padding + ",0)")
                 .call(yAxis);
 
@@ -136,12 +140,16 @@
                 .text(function(d) {
                         return d.name;
                     })
-                .attr("fill", "red");
+                .attr("fill", function(d){
+                        return marker_color(d.id);
+                    });
 
             markers_append.append("line")
                 .attr("class", "link")
                 .attr("stroke-width", 1)
-                .attr("stroke", "red")
+                .attr("stroke", function(d){
+                        return marker_color(d.id);
+                    })
                 .attr("x1", function(d) {
                         return marker(d.point_id).x;
                     })
