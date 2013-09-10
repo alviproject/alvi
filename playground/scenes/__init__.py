@@ -2,7 +2,6 @@ import inspect
 import collections
 
 from .booble import Booble
-from .booble_cartesian import BoobleCartesian
 from .create_tree import CreateTree
 from .binary_search_tree import BinarySearchTree
 from .linear_search import LinearSearch

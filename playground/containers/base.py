@@ -4,7 +4,8 @@ import abc
 class Node(metaclass=abc.ABCMeta):
     def __init__(self, container):
         self.id = container._next_node_id()
-        self._container = container #TODO node should not be container aware
+        self._container = container
+        container._nodes.append(self)
 
 
 class Container(metaclass=abc.ABCMeta):
