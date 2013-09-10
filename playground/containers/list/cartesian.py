@@ -7,6 +7,10 @@ class Node(base.Node):
         super().__init__(container)
         self._point = point
 
+    @property
+    def value(self):
+        return self._point.x
+
 
 class Cartesian(base.List):
     @classmethod

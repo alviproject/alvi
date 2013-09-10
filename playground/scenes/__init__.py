@@ -35,7 +35,11 @@ def register(scene_name, scene_function, Container):
         container = Container(pipe)
         return scene_function(container)
 
-    source = inspect.getsource(scene_function)
+    try:
+        obj = scene_function.__self__.__class__
+    except AttributeError:
+        obj = scene_function
+    source = inspect.getsource(obj)
 
     scenes.append((scene_name, _run, Container, source))
 

@@ -7,7 +7,7 @@ from playground.scenes import LinearSearch
 from playground.containers import List
 
 
-N = 64  # number of points and max value of the point
+N = 8  # number of points and max value of the point
 #service.register_scene("Booble", Booble(N).run, Booble.Space)
 #service.register_scene("Booble Cartesian", BoobleCartesian(N).run, BoobleCartesian.Space)
 #service.register_scene("Create Tree", CreateTree(N).run, CreateTree.Space)

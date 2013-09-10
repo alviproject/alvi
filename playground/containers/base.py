@@ -18,6 +18,10 @@ class Container(metaclass=abc.ABCMeta):
     def sync(self):
         self._space.sync(1) #TODO
 
+    @property
+    def stats(self):
+        return self._space.stats
+
     def create_marker(self, name, node):
         return self._space.create_marker(name, node)
 

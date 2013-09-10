@@ -23,7 +23,6 @@ def run(request, id):
     scene = scenes.scenes[int(id)]
     queue = Queue()
     name, run, Container, source = scene
-    print(Container)
     process = Process(target=run, args=(queue, ))
     process.start()
     connections.queues[process.pid] = queue
