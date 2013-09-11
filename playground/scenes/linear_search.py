@@ -8,12 +8,11 @@ class LinearSearch(object):
     def generate_nodes(self, list):
         if self.n == 0:
             return
-        list.head = list.create_node(random.randint(1, self.n))
+        list.create_head(random.randint(1, self.n))
         node = list.head
         for i in range(self.n-1):
             value = random.randint(1, self.n)
-            node.next = list.create_node(value)
-            node = node.next
+            node = node.create_child(value)
         list.sync()
 
     def search(self, list, wanted_value):

@@ -89,6 +89,7 @@ function update_stats(action) {
     var value = action.value;
     var id = "stats_" + name;
     var stat = $("#stats").find("#"+id);
+    name = name.replace("_", " ");
     if(stat.length == 0) {
         $("#stats").append('<li id="'+id+'"><span>'+name+':</span> <span class="value"></span></li>');
         stat = $("#stats").find("#"+id);
