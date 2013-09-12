@@ -4,6 +4,7 @@ import collections
 from .booble import Booble
 from .create_tree import CreateTree
 from .binary_search_tree import BinarySearchTree
+from .binary_search import BinarySearch
 from .linear_search import LinearSearch
 
 
