@@ -111,7 +111,10 @@
                     });
 
             nodeUpdate.select("text")
-                    .style("fill-opacity", 1);
+                    .style("fill-opacity", 1)
+                    .text(function (d) {
+                        return d.name;
+                    });
 
             // Transition exiting nodes to the parent's new position.
             var nodeExit = node.exit().transition()
@@ -194,11 +197,21 @@
             update(parent);
         }
 
+        function set_node_value(action) {
+            var node = d3.selectAll("circle").filter(function (d) {
+                return d.id == action.id
+            })[0][0].__data__;
+            node.name = action.value;
+            console.log(node);
+            update(root);
+        }
+
         function update_data() {
             update(root);
         }
 
         register_action("create_node", create_node);
+        register_action("set_node_value", set_node_value);
 
     </script>
 {% endblock %}

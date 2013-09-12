@@ -4,29 +4,25 @@ import time
 
 
 class BinarySearchTree(object):
-    Space = BinaryTree
-
     def __init__(self, n):
         self.n = n
 
-    def run(self, space):
-        self.space = space
-        for i in range(self.n):
+    def run(self, tree):
+        x = random.randint(0, self.n)
+        tree.create_root(x)
+        for i in range(self.n-1):
             x = random.randint(0, self.n)
-            self.insert(x)
-            time.sleep(1)
+            self.insert(tree, x)
 
-    def insert(self, value):
-        node = self.space.root
+    def insert(self, tree, value):
+        node = tree.root
         while True:
             if node.value > value:
                 if node.left_child:
                     node = node.left_child
                     continue
-                node.left_child = value
-                return
+                return node.create_left_child(value)
             if node.right_child:
                 node = node.right_child
                 continue
-            node.right_child = value
-            return
+            return node.create_right_child(value)

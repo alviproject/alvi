@@ -4,8 +4,9 @@ from .space import Node
 
 class TreeNode(object):
     def __init__(self, space, parent, value):
+        self._space = space
         self._node = Node(space)
-        self.value = value
+        self._value = value
         self.parent = parent
         self.children = []
         space.stats.nodes += 1
@@ -17,7 +18,21 @@ class TreeNode(object):
             parent_id=parent_id,
             value=self.value,
         ))
-        space.sync(1)
+        if value:
+            space.sync(1)
+
+    @property
+    def value(self):
+        return self._value
+
+    @value.setter
+    def value(self, value):
+        self._value = value
+        self._space.pipe.send('set_node_value', (self.id, ), dict(
+            id=self.id,
+            value=self.value,
+        ))
+        self._space.sync(1)
 
     @property
     def id(self):
@@ -35,10 +50,9 @@ class TreeNode(object):
 class Tree(object):
     template = "spaces/tree.html"
 
-    def __init__(self, pipe, RootNode=TreeNode):
+    def __init__(self, pipe):
         self._space = Space(pipe)
         self.stats.nodes = 0
-        self.root = RootNode(self, None, 0)
 
     @property
     def nodes(self):
