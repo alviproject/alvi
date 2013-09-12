@@ -26,7 +26,7 @@ $(function () {
 
         connection.onmessage = function (e) {
             function run_action(action) {
-                console.log(action);
+                //console.log(action);
                 var action_type = action['type'];
                 actions[action_type](action);
             }

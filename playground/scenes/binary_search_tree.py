@@ -1,6 +1,4 @@
-from playground.spaces import BinaryTree
 import random
-import time
 
 
 class BinarySearchTree(object):
