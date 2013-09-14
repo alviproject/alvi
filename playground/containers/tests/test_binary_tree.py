@@ -24,3 +24,12 @@ class TestBinaryTree(TestContainer):
         right_child = root.create_right_child(12)
         assert right_child.value == 12
         assert root.right_child == right_child
+
+    def test_assign_value(self):
+        tree = BinaryTree(self.pipe)
+        root = tree.create_root(10)
+
+        left_child = root.create_left_child(11)
+        assert left_child.value == 11
+        left_child.value = 12
+        assert root.left_child.value == 12
