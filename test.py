@@ -10,7 +10,7 @@ from playground.containers import Tree
 from playground.containers import BinaryTree
 
 
-N = 2048  # number of nodes and max value of the node
+N = 256  # number of nodes and max value of the node
 service.register_scene("Booble", Booble(N).run, Array)
 service.register_scene("Create Tree", CreateTree(N).run, Tree)
 service.register_scene("Binary Search Tree", BinarySearchTree(N).run, BinaryTree)

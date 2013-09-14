@@ -25,3 +25,4 @@ class Cartesian(base.List):
         if self.head:
             raise RuntimeError("Cannot set head more that once")
         self._head = Node(self, value)
+        return self._head

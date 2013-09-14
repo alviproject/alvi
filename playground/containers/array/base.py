@@ -5,12 +5,14 @@ from .. import base
 class Node(base.Node):
     @property
     @abc.abstractmethod
-    def value(self):pass
+    def value(self):
+        raise NotImplementedError
 
 
 class Array(base.Container):
     @abc.abstractmethod
-    def _create_node(self, value):pass
+    def _create_node(self, value):
+        raise NotImplementedError
 
     def init(self, size):
         if self._nodes:

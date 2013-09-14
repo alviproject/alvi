@@ -12,7 +12,8 @@ class Node(base.Node):
 
     @property
     @abc.abstractmethod
-    def value(self):pass
+    def value(self):
+        raise NotImplementedError
 
 
 class List(base.Container):
@@ -24,4 +25,5 @@ class List(base.Container):
             return None
 
     @abc.abstractmethod
-    def create_head(self, node):pass
+    def create_head(self, node):
+        raise NotImplementedError
