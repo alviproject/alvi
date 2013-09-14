@@ -9,14 +9,13 @@ class Node(base.Node):
 
     @property
     def value(self):
-        return self._point.x
+        return self._node.value
 
     def create_child(self, value):
         return Node(self._container, self, value)
 
 
 class Tree(base.Container):
-    #TODO
     @classmethod
     def implementations(cls):
         return (cls, )
