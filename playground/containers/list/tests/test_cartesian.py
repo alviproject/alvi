@@ -1,6 +1,5 @@
 from playground.containers.list import cartesian
 from playground.containers.tests import TestContainer
-import unittest
 
 
 class TestCartesian(TestContainer):
@@ -13,4 +12,4 @@ class TestCartesian(TestContainer):
         child = head.create_child(11)
         assert child.value == 11
         assert head.next == child
-        assert child.next == None
+        assert child.next is None

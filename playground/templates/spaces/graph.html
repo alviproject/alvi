@@ -1,0 +1,180 @@
+{% extends "spaces/index.html" %}
+
+{% block space_content %}
+    <style type="text/css">
+        .node {
+            fill: #fff;
+            cursor: crosshair;
+        }
+
+        .node_selected {
+            stroke: black;
+        }
+
+        .node_visited {
+            fill: blue;
+            stroke: blue;
+        }
+
+        .link {
+            stroke: #999;
+            stroke-width: 2;
+            cursor: crosshair;
+        }
+
+        .node text {
+            font: 10px sans-serif;
+            fill: black;
+            dominant-baseline: hanging;
+        }
+
+        .node_selected text{
+            fill: black;
+            stroke: black;
+        }
+    </style>
+
+    <script type="text/javascript">
+        var selected_node = null;
+        var selected_link = null;
+        var radius = 10;
+        var distance = 50;
+
+        var svg = d3.select("svg")
+                .attr("pointer-events", "all")
+                .call(d3.behavior.zoom().on("zoom", rescale))
+                .append('svg:g');
+
+        var force = d3.layout.force()
+                .size([scene_width, scene_height])
+                .nodes([])
+                .linkDistance(distance)
+                .charge(-100)
+                .on("tick", tick);
+
+
+        var nodes = force.nodes();
+        var links = force.links();
+        var node = svg.selectAll(".node");
+        var link = svg.selectAll(".link");
+
+        function tick() {
+            link.attr("x1", function (d) {
+                return d.source.x;
+            })
+                    .attr("y1", function (d) {
+                        return d.source.y;
+                    })
+                    .attr("x2", function (d) {
+                        return d.target.x;
+                    })
+                    .attr("y2", function (d) {
+                        return d.target.y;
+                    });
+
+            node
+                    .attr("transform", function (d) {
+                        return "translate(" + d.x + "," + d.y + ")";
+                    });
+        }
+
+        function rescale() {
+            var translate = d3.event.translate;
+            var scale = d3.event.scale;
+
+            svg.attr("transform", "translate(" + translate + ")" + " scale(" + scale + ")");
+        }
+
+        function visit(tree, index) {
+            tree[index].visited = true;
+            selected_node = d3.selectAll("circle").filter(function (d) {
+                return d.index == index
+            })[0][0].__data__;
+        }
+
+        function traverse(tree, index) {
+            visit(tree, index);
+            console.log(d3.selectAll("line").filter(function (d) {
+                return d && (d.source == tree[index] || d.target == tree[index]) && !d.visited;
+            }));
+            setTimeout(function () {
+                traverse(tree, index + 1)
+            }, 1000);
+        }
+
+        function create_node(action) {
+            var node = {};
+            node.value = action.value;
+            if (action.parent_id != action.id) {
+                var link = {}
+                var parent = nodes[action.parent_id];
+                link.source = parent;
+                link.target = node;
+                links.push({source: nodes[action.parent_id], target: node});
+                node.x = parent.x;
+                node.y = parent.y;
+            }
+            else {
+                node.x = 0;
+                node.y = 0;
+            }
+            nodes.push(node);
+
+            selected_node = node;
+            selected_link = null;
+        }
+
+        function update_data() {
+            link = link.data(links);
+
+            link.enter().insert("line", ".node")
+                    .attr("class", "link");
+
+            link.exit().remove();
+
+            link.classed("link_selected", function (d) {
+                return d === selected_link;
+            });
+
+            node = node.data(nodes);
+
+            var g = node.enter()
+                    .append("g")
+                    .attr("class", "node");
+
+            g.append("circle")
+                    .attr("class", "node")
+                    .attr("r", radius)
+                    .transition()
+                    .duration(delay)
+                    .ease("elastic");
+
+            g.append("text")
+                    .text(function (d) {
+                        return d.value;
+                    })
+                    .attr("text-anchor", "middle");
+
+            node.exit().transition()
+                    .attr("r", 0)
+                    .remove();
+
+            node.classed("node_selected", function (d) {
+                return d === selected_node;
+            })
+                    .classed("node_visited", function (d) {
+                        return d.visited
+                    });
+
+            force.start();
+        }
+
+        function set_node_value(action) {
+            console.log(action);
+        }
+
+        register_action("create_node", create_node);
+        register_action("set_node_value", set_node_value);
+
+    </script>
+{% endblock %}

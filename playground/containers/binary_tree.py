@@ -1,4 +1,3 @@
-from . import tree
 from . import base
 import playground.spaces.tree
 

@@ -6,8 +6,10 @@ from .create_tree import CreateTree
 from .binary_search_tree import BinarySearchTree
 from .binary_search import BinarySearch
 from .linear_search import LinearSearch
+from .create_graph import CreateGraph
 
 
+#TODO move implementation to base module
 class Pipe:
     def __init__(self, queue):
         self.queue = queue

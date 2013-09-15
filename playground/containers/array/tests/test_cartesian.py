@@ -1,6 +1,5 @@
 from playground.containers.array import cartesian
 from playground.containers.tests import TestContainer
-import unittest
 
 
 class TestCartesian(TestContainer):

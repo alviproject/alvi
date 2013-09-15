@@ -30,6 +30,7 @@ class BinarySearch(object):
                 left_marker.move(array._nodes[left])
             else:
                 array.stats.found_id = mid
+                #TODO remove left and right marker, create found marker
                 return
             array.sync()
         array.stats.not_found = ""

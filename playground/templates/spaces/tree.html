@@ -120,7 +120,7 @@
             var nodeExit = node.exit().transition()
                     .duration(delay)
                     .attr("transform", function (d) {
-                        return "translate(" + source.y + "," + source.x + ")";
+                        return "translate(" + source.x + "," + source.y + ")";
                     })
                     .remove();
 

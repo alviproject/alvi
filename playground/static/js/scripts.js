@@ -15,14 +15,14 @@ $(function () {
             update_ui();
         };
 
-        connection.message = function(message) {
+        connection.message = function (message) {
             var session_id = $("#session_id").text();
             if (session_id) {
                 var data = {'session_id': session_id, 'message': message};
                 var message = JSON.stringify(data);
                 connection.send(message);
             }
-        }
+        };
 
         connection.onmessage = function (e) {
             function run_action(action) {
@@ -97,5 +97,5 @@ function update_stats(action) {
     stat.find(".value").text(value);
 }
 
-register_action("update_stats", update_stats)
+register_action("update_stats", update_stats);
 

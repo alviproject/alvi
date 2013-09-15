@@ -11,7 +11,7 @@ class Node(base.Node):
 
 class Array(base.Container):
     @abc.abstractmethod
-    def _create_node(self, value):
+    def _create_node(self):
         raise NotImplementedError
 
     def init(self, size):
