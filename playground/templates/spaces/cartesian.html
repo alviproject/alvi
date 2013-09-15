@@ -161,6 +161,9 @@
                 .transition()
                 .duration(delay)
                 .attr("transform", function(d){
+                     if(d === null) {
+                         return "translate("+xScale.range()[1]+", -10)"
+                     }
                      return "translate(0,"+marker(d.point_id).y+")"
                 });
 
@@ -173,10 +176,15 @@
                 });
         }
 
+        function action_remove_marker(action) {
+            markers[action.id] = null;
+        }
+
         register_action('create_point', action_create_point);
         register_action('update_point', action_update_point);
         register_action('create_marker', action_create_marker);
         register_action('move_marker', action_move_marker);
+        register_action('remove_marker', action_remove_marker);
     </script>
 
 {% endblock %}

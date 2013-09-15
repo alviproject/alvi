@@ -17,20 +17,23 @@ class BinarySearch(object):
     def search(self, array, value):
         left = 0
         right = len(array._nodes)-1 #TODO
-        left_marker = array.create_marker("left", array._nodes[left]) #TODO
-        right_marker = array.create_marker("right", array._nodes[right])
+        left_marker = array.create_marker("left", left)
+        right_marker = array.create_marker("right", right)
         array.sync()
         while left < right:
             mid = (right + left) // 2
             if array[mid] > value:
                 right = mid - 1
-                right_marker.move(array._nodes[right])
+                right_marker.move(right)
             elif array[mid] < value:
                 left = mid + 1
-                left_marker.move(array._nodes[left])
+                left_marker.move(left)
             else:
                 array.stats.found_id = mid
-                #TODO remove left and right marker, create found marker
+                array.create_marker("found", mid)
+                array.sync()
+                left_marker.remove()
+                right_marker.remove()
                 return
             array.sync()
         array.stats.not_found = ""

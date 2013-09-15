@@ -50,7 +50,7 @@ class Point(object):
 class Marker(object):
     def __init__(self, space, name, point):
         self.id = space.next_marker_id()
-        self.space = space
+        self._space = space
         space.pipe.send('create_marker', (self.id, ), dict(
             id=self.id,
             point_id=point.id,
@@ -58,9 +58,14 @@ class Marker(object):
         ))
 
     def move(self, point):
-        self.space.pipe.send('move_marker', (self.id, ), dict(
+        self._space.pipe.send('move_marker', (self.id, ), dict(
             id=self.id,
             point_id=point.id,
+        ))
+
+    def remove(self):
+        self._space.pipe.send('remove_marker', (self.id, ), dict(
+            id=self.id,
         ))
 
 

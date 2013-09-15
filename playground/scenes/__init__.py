@@ -3,6 +3,7 @@ import collections
 
 from .booble import Booble
 from .selection_sort import SelectionSort
+from .insertion_sort import InsertionSort
 from .create_tree import CreateTree
 from .binary_search_tree import BinarySearchTree
 from .binary_search import BinarySearch
