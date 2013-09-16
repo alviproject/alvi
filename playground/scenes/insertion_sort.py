@@ -20,4 +20,3 @@ class InsertionSort(Sort):
                     array.sync()
                 else:
                     break
-            array.sync()
