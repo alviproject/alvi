@@ -50,9 +50,9 @@
                 <ul class="nav nav-list">
                     <li class="nav-header">Algorithms</li>
                     <!--<li class="active"><a href="#">Session1</a></li>-->
-                    {% for name in scene_names %}
+                    {% for scene in scenes %}
                         <li>
-                            <a href="{% url 'playground.views.run' forloop.counter0 %}">{{ name }}</a>
+                            <a href="{% url 'playground.views.run' forloop.counter0 %}">{{ scene.name }}</a>
                         </li>
                     {% endfor %}
                 </ul>

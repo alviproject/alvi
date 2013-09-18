@@ -1,8 +1,12 @@
 import abc
 import random
 
+from . import base
+import playground.containers
 
-class Sort(object):
+
+
+class Sort(base.Scene):
     """abstract scene, not to be used directly"""
     def __init__(self, n):
         self.n = n
@@ -32,3 +36,6 @@ class Sort(object):
         self.init(array)
         self.generate_points(array)
         self.sort(array)
+
+    def container_class(self):
+        return playground.containers.Array

@@ -1,5 +1,4 @@
 import inspect
-import collections
 
 from .booble import Booble
 from .selection_sort import SelectionSort
@@ -11,43 +10,28 @@ from .binary_search_tree import BinarySearchTree
 from .binary_search import BinarySearch
 from .linear_search import LinearSearch
 from .create_graph import CreateGraph
+from .base import Scene
 
 
-#TODO move implementation to base module
-class Pipe:
-    def __init__(self, queue):
-        self.queue = queue
-        self._backlog = collections.OrderedDict()
-
-    def send(self, action_type, key, message):
-        message['type'] = action_type #TODO temp workaround
-        key = (action_type, ) + key
-        self._backlog[repr(key)] = message
-
-    def sync(self):
-        #TODO optimize data and stats (send only latest value if entry occurs multiple times)
-        #message is sent asynchronously, so we need to make a copy, before clearing
-        backlog = list(self._backlog.values())
-        self.queue.put(backlog)
-        self._backlog.clear()
+def register(scene):
+    scenes.append(scene)
 
 
-def register(scene_name, scene_function, Container):
-    #TODO
-    Container = Container.implementations()[0]
+def make_scene(name, function, Container):
+    class SceneWrapper(Scene):
+        def name(self):
+            return name
 
-    def _run(queue):
-        pipe = Pipe(queue)
-        container = Container(pipe)
-        return scene_function(container)
+        def run(self, container):
+            return function(container)
 
-    try:
-        obj = scene_function.__self__.__class__
-    except AttributeError:
-        obj = scene_function
-    source = inspect.getsource(obj)
+        def container_class(self):
+            return Container
 
-    scenes.append((scene_name, _run, Container, source))
+        def source(self):
+            return inspect.getsource(function)
+
+    return SceneWrapper()
 
 
 scenes = []

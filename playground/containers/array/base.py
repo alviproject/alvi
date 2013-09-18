@@ -21,6 +21,7 @@ class Marker(object):
         return self._marker.move(self._array._nodes[index])
 
 
+#TODO iterators
 class Array(base.Container):
     @abc.abstractmethod
     def _create_node(self):

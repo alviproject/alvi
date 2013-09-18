@@ -1,7 +1,10 @@
 import random
 
+from . import base
+import playground.containers
 
-class CreateTree(object):
+
+class CreateTree(base.Scene):
     def __init__(self, n):
         self.n = n
 
@@ -14,3 +17,6 @@ class CreateTree(object):
             parent = nodes[x]
             node = parent.create_child(i)
             nodes.append(node)
+
+    def container_class(self):
+        return playground.containers.Tree

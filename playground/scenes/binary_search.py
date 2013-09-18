@@ -1,7 +1,10 @@
 import random
 
+from . import base
+import playground.containers
 
-class BinarySearch(object):
+
+class BinarySearch(base.Scene):
     def __init__(self, n):
         self.n = n
 
@@ -51,3 +54,6 @@ class BinarySearch(object):
         array.sync()
         self.search(array, wanted_value)
         array.sync()
+
+    def container_class(self):
+        return playground.containers.Array

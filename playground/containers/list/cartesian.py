@@ -5,7 +5,7 @@ import playground.spaces.cartesian
 class Node(base.Node):
     def __init__(self, container, value):
         super().__init__(container)
-        self._point = container._space.create_point(value, container._next_node_id())
+        self._point = container._space.create_point(container._next_node_id(), value)
 
     def create_child(self, value):
         self._next = Node(self._container, value)
@@ -13,7 +13,7 @@ class Node(base.Node):
 
     @property
     def value(self):
-        return self._point.x
+        return self._point.y
 
 
 class Cartesian(base.List):

@@ -22,14 +22,12 @@ def home(request):
 def run(request, id):
     scene = scenes.scenes[int(id)]
     queue = Queue()
-    name, run, Container, source = scene
-    process = Process(target=run, args=(queue, ))
+    process = Process(target=scene._run, args=(queue, ))
     process.start()
     connections.queues[process.pid] = queue
 
     context = RequestContext(request, {
         'session_id': process.pid,
-        'name': name,
-        'source': source
+        'scene': scene,
     })
-    return render(request, Container.space_class().template, context_instance=context)
+    return render(request, scene.template(), context_instance=context)

@@ -1,7 +1,10 @@
 import random
 
+from . import base
+import playground.containers
 
-class LinearSearch(object):
+
+class LinearSearch(base.Scene):
     def __init__(self, n):
         self.n = n
 
@@ -38,3 +41,6 @@ class LinearSearch(object):
         self.generate_nodes(list)
         self.search(list, wanted_value)
 
+
+    def container_class(self):
+        return playground.containers.List

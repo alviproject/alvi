@@ -1,7 +1,10 @@
 import random
 
+from . import base
+import playground.containers
 
-class BinarySearchTree(object):
+
+class BinarySearchTree(base.Scene):
     def __init__(self, n):
         self.n = n
 
@@ -24,3 +27,6 @@ class BinarySearchTree(object):
                 node = node.right_child
                 continue
             return node.create_right_child(value)
+
+    def container_class(self):
+        return playground.containers.BinaryTree
