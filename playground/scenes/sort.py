@@ -5,11 +5,9 @@ from . import base
 import playground.containers
 
 
-
 class Sort(base.Scene):
     """abstract scene, not to be used directly"""
-    def __init__(self, n):
-        self.n = n
+    Container = playground.containers.Array
 
     def swap(self, array, index_a, index_b):
         t = array[index_a]
@@ -32,10 +30,8 @@ class Sort(base.Scene):
     def sort(self, array):
         raise NotImplementedError
 
-    def run(self, array):
+    def run(self, array, form_data):
+        self.n = form_data['n']
         self.init(array)
         self.generate_points(array)
         self.sort(array)
-
-    def container_class(self):
-        return playground.containers.Array

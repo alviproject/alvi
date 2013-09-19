@@ -5,16 +5,15 @@ import playground.containers
 
 
 class LinearSearch(base.Scene):
-    def __init__(self, n):
-        self.n = n
+    Container = playground.containers.List
 
-    def generate_nodes(self, list):
-        if self.n == 0:
+    def generate_nodes(self, list, n):
+        if n == 0:
             return
-        list.create_head(random.randint(1, self.n))
+        list.create_head(random.randint(1, n))
         node = list.head
-        for i in range(self.n-1):
-            value = random.randint(1, self.n)
+        for i in range(n-1):
+            value = random.randint(1, n)
             node = node.create_child(value)
         list.sync()
 
@@ -34,13 +33,10 @@ class LinearSearch(base.Scene):
             list.stats.not_found = ""
         list.sync()
 
-    def run(self, list):
-        wanted_value = random.randint(0, self.n)
+    def run(self, list, form_data):
+        n = form_data['n']
+        wanted_value = random.randint(0, n)
         list.stats.wanted_value = wanted_value
 
-        self.generate_nodes(list)
+        self.generate_nodes(list, n)
         self.search(list, wanted_value)
-
-
-    def container_class(self):
-        return playground.containers.List

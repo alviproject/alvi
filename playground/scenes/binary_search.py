@@ -5,16 +5,15 @@ import playground.containers
 
 
 class BinarySearch(base.Scene):
-    def __init__(self, n):
-        self.n = n
+    Container = playground.containers.Array
 
-    def init(self, array):
-        array.init(self.n)
+    def init(self, array, n):
+        array.init(n)
         array.sync()
 
-    def generate_points(self, array):
-        for i in range(self.n):
-            array[i] = random.randint(1, self.n)
+    def generate_points(self, array, n):
+        for i in range(n):
+            array[i] = random.randint(1, n)
         array.sync()
 
     def search(self, array, value):
@@ -41,19 +40,16 @@ class BinarySearch(base.Scene):
             array.sync()
         array.stats.not_found = ""
 
-    def run(self, array):
-        wanted_value = random.randint(0, self.n)
+    def run(self, array, form_data):
+        n = form_data['n']
+        wanted_value = random.randint(0, n)
         array.stats.wanted_value = wanted_value
 
-        self.init(array)
-        self.generate_points(array)
+        self.init(array, n)
+        self.generate_points(array, n)
 
-        #TODO reconsider
         for i, value in enumerate(sorted(array)):
             array[i] = value
         array.sync()
         self.search(array, wanted_value)
         array.sync()
-
-    def container_class(self):
-        return playground.containers.Array

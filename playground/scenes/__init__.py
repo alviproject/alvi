@@ -17,16 +17,15 @@ def register(scene):
     scenes.append(scene)
 
 
-def make_scene(name, function, Container):
+def make_scene(name, function, _Container):
     class SceneWrapper(Scene):
+        Container = _Container
+
         def name(self):
             return name
 
-        def run(self, container):
-            return function(container)
-
-        def container_class(self):
-            return Container
+        def run(self, container, form_data):
+            return function(container, form_data)
 
         def source(self):
             return inspect.getsource(function)

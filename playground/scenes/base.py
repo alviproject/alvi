@@ -4,6 +4,9 @@ import inspect
 import collections
 import abc
 
+import django.forms.fields
+import django.forms
+
 
 class Pipe:
     def __init__(self, queue):
@@ -23,6 +26,11 @@ class Pipe:
 
 
 class Scene(metaclass=abc.ABCMeta):
+    Container = None  # override in inherited class
+
+    class Form(django.forms.Form):
+        n = django.forms.fields.IntegerField(min_value=1, max_value=2048, initial=1024, label="Number of elements")
+
     def name(self):
         name = self.__class__.__name__
         #change from camel case to space delimeted
@@ -31,26 +39,22 @@ class Scene(metaclass=abc.ABCMeta):
         return name
 
     @abc.abstractmethod
-    def run(self, container):
-        raise NotImplementedError
-
-    @abc.abstractmethod
-    def container_class(self):
+    def run(self, container, form_data):
         raise NotImplementedError
 
     def source(self):
         return inspect.getsource(self.__class__)
 
     #TODO change name
-    def _run(self, queue):
+    def _run(self, queue, form):
         pipe = Pipe(queue)
         Container = self.container_implementation()
         container = Container(pipe)
-        return self.run(container)
+        return self.run(container, form.cleaned_data)
 
     def container_implementation(self):
         #TODO
-        return self.container_class().implementations()[0]
+        return self.Container.implementations()[0]
 
     def template(self):
         return self.container_implementation().space_class().template

@@ -6,6 +6,7 @@ class Booble(Sort):
         changed = True
         delta = 0
         right_marker = array.create_marker("right", array.size()-1)
+        array.sync()
         while changed:
             changed = False
             for j in range(1, array.size()-delta):
