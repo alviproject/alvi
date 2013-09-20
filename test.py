@@ -4,7 +4,7 @@ import playground.containers
 import random
 
 
-def sample_scene1(array, form_data):
+def sample_scene_1(array, form_data):
     """example scene, create N random elements and iterate through each of them"""
     n = form_data['n']
     array.init(n)
@@ -36,7 +36,7 @@ class SampleScene_2(playground.scenes.Scene):
             list.sync()
 
 
-service.register_scene(playground.scenes.make_scene("Sample Scene 1", sample_scene1, playground.containers.Array))
+service.register_scene(playground.scenes.make_scene("Sample Scene 1", sample_scene_1, playground.containers.Array))
 service.register_scene(SampleScene_2())
 service.register_scene(playground.scenes.Booble())
 service.register_scene(playground.scenes.SelectionSort())
