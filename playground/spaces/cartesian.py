@@ -134,3 +134,9 @@ class Cartesian(object):
             id=id,
             point_id=point_id,
         ))
+
+    def update_stats(self, name, value):
+        return ('update_stats', dict(
+            name=name,
+            value=value,
+        ))

@@ -23,11 +23,13 @@ class LinearSearch:
         list.sync()
 
         node = list.head
+        found_index = 0
         while node:
+            found_index += 1
             seeker.move(node)
             list.sync()
             if wanted_value == node.value:
-                #list.stats.found_id = node.id
+                list.stats.found_index = found_index
                 break
             node = node.next
         else:

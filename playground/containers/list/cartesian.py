@@ -48,3 +48,7 @@ class Cartesian(base.List):
     @action
     def move_marker(self, id, node_id):
         return self._space.move_marker(id, node_id)
+
+    @action
+    def update_stats(self, name, value):
+        return self._space.update_stats(name, value)

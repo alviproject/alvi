@@ -87,8 +87,8 @@ class Node:
 
 class List:
     def __init__(self, scene_instance_id):
-        self.stats = Stats()
         self._pipe = Pipe(scene_instance_id)
+        self.stats = Stats(self._pipe)
 
     @property
     def head(self):
@@ -110,6 +110,13 @@ class List:
         return Marker(name, node)
 
 
-#TODO
 class Stats:
-    pass
+    def __init__(self, pipe):
+        object.__setattr__(self, '_pipe', pipe)
+
+    def __setattr__(self, name, value):
+        self._pipe.send("update_stats", (name, ), dict(
+            name=name,
+            value=value
+        ))
+        return object.__setattr__(self, name, value)
