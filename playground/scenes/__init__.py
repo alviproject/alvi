@@ -1,17 +1,8 @@
 import uuid
 
 import simplejson
-#from .selection_sort import SelectionSort
-#from .insertion_sort import InsertionSort
-#from .shell_sort import ShellSort
-#from .merge_sort import MergeSort
-#from .create_tree import CreateTree
-#from .binary_search_tree import BinarySearchTree
-#from .binary_search import BinarySearch
-#from .create_graph import CreateGraph
 from .base import Scene
 from .. import containers
-from ..containers import list
 
 
 def register(name, container_name, request):
