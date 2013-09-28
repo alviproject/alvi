@@ -16,9 +16,9 @@ $(function () {
         };
 
         connection.message = function (message) {
-            var session_id = $("#session_id").text();
-            if (session_id) {
-                var data = {'session_id': session_id, 'message': message};
+            var scene_id = $("#scene_id").text();
+            if (scene_id) {
+                var data = {'scene_id': scene_id, 'message': message};
                 var message = JSON.stringify(data);
                 connection.send(message);
             }
@@ -26,12 +26,13 @@ $(function () {
 
         connection.onmessage = function (e) {
             function run_action(action) {
-                //console.log(action);
-                var action_type = action['type'];
-                actions[action_type](action);
+                console.log(action);
+                var action_type = action[0];
+                actions[action_type](action[1]);
             }
 
             var data = JSON.parse(e.data);
+            //console.log(data);
 
             if( Object.prototype.toString.call(data) === '[object Array]' ) {
                 for (var i = 0; i < data.length; ++i) {

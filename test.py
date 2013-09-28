@@ -1,7 +1,9 @@
+import random
+
 from playground import service
 import playground.scenes
 import playground.containers
-import random
+import playground.scene_manager
 
 
 def sample_scene_1(array, form_data):
@@ -35,17 +37,18 @@ class SampleScene_2(playground.scenes.Scene):
             marker.move(node)
             list.sync()
 
+#playground.scene_manager.load_default_scenes()
 
-service.register_scene(playground.scenes.make_scene("Sample Scene 1", sample_scene_1, playground.containers.Array))
-service.register_scene(SampleScene_2())
-service.register_scene(playground.scenes.Booble())
-service.register_scene(playground.scenes.SelectionSort())
-service.register_scene(playground.scenes.InsertionSort())
-service.register_scene(playground.scenes.ShellSort())
-service.register_scene(playground.scenes.MergeSort())
-service.register_scene(playground.scenes.CreateTree())
-service.register_scene(playground.scenes.BinarySearchTree())
-service.register_scene(playground.scenes.LinearSearch())
-service.register_scene(playground.scenes.BinarySearch())
-service.register_scene(playground.scenes.CreateGraph())
+#service.register_scene(playground.scenes.make_scene("Sample Scene 1", sample_scene_1, playground.containers.Array))
+#service.register_scene(SampleScene_2())
+#service.register_scene(playground.scenes.Booble())
+#service.register_scene(playground.scenes.SelectionSort())
+#service.register_scene(playground.scenes.InsertionSort())
+#service.register_scene(playground.scenes.ShellSort())
+#service.register_scene(playground.scenes.MergeSort())
+#service.register_scene(playground.scenes.CreateTree())
+#service.register_scene(playground.scenes.BinarySearchTree())
+#service.register_scene(playground.scenes.LinearSearch())
+#service.register_scene(playground.scenes.BinarySearch())
+#service.register_scene(playground.scenes.CreateGraph())
 service.run()

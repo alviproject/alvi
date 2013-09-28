@@ -1,11 +1,17 @@
-from . import base
-import playground.spaces.tree
+from . import tree
 
 
-class Node(base.Node):
+class Node:
     def __init__(self, container, parent, value):
-        super().__init__(container)
-        self._node = playground.spaces.tree.TreeNode(container._space, parent, value)
+        self._node = tree.Node(container, parent, value)
+
+    @property
+    def _container(self):
+        return self._node._container
+
+    @property
+    def id(self):
+        return self._node.id
 
     @property
     def value(self):
@@ -53,15 +59,9 @@ class Node(base.Node):
         return self._child(1)
 
 
-class BinaryTree(base.Container):
-    #TODO
-    @classmethod
-    def implementations(cls):
-        return (cls, )
-
-    @classmethod
-    def space_class(cls):
-        return playground.spaces.tree.Tree
+class BinaryTree:
+    def __init__(self, *args, **kwargs):
+        self._tree = tree.Tree(*args, **kwargs)
 
     @property
     def root(self):
@@ -75,3 +75,15 @@ class BinaryTree(base.Container):
             raise RuntimeError("Cannot set root more that once")
         self._root = Node(self, None, value)
         return self._root
+
+    @property
+    def _pipe(self):
+        return self._tree._pipe
+
+    def sync(self):
+        self._tree.sync()
+
+    @classmethod
+    def name(cls):
+        return tree.Tree.__name__
+

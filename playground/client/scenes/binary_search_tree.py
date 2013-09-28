@@ -5,15 +5,15 @@ import playground.containers
 
 
 class BinarySearchTree(base.Scene):
-    Container = playground.containers.BinaryTree
-
-    def run(self, tree, form_data):
-        n = form_data['n']
+    def run(self, tree):
+        n = 8
         x = random.randint(0, n)
         tree.create_root(x)
+        tree.sync()
         for i in range(n-1):
             x = random.randint(0, n)
             self.insert(tree, x)
+            tree.sync()
 
     def insert(self, tree, value):
         node = tree.root
@@ -27,3 +27,10 @@ class BinarySearchTree(base.Scene):
                 node = node.right_child
                 continue
             return node.create_right_child(value)
+
+    @staticmethod
+    def container_class():
+        return playground.client.containers.BinaryTree
+
+if __name__ == "__main__":
+    BinarySearchTree.start()

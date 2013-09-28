@@ -1,7 +1,7 @@
-from playground.scenes.sort import Sort
+from playground.client.scenes.sort import Sort
 
 
-class Booble(Sort):
+class BoobleSort(Sort):
     def sort(self, array):
         changed = True
         right_marker = array.create_marker("right", array.size()-1)

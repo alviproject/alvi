@@ -19,24 +19,24 @@ def home(request):
     return render(request, 'home.html', context_instance=context)
 
 
-def run(request, id):
-    scene = scenes.scenes[int(id)]
+def run(request, name):
+    scene_class = scenes.scene_classes[name]
+    scene = scene_class.create()
     context = RequestContext(request, {
         'scene': scene,
-        'scene_id': id,
     })
 
-    if request.method == "POST":
-        form = scene.Form(request.POST)
-        if form.is_valid():
-            queue = Queue()
-            process = Process(target=scene._run, args=(queue, form))
-            process.start()
-            connections.queues[process.pid] = queue
-
-            context['session_id'] = process.pid
-            return render(request, scene.template(), context_instance=context)
-    else:
-        form = scene.Form()
-    context['form'] = form
-    return render(request, "init_scene.html", context_instance=context)
+    #if request.method == "POST":
+    #    form = scene.Form(request.POST)
+    #    if form.is_valid():
+    #        queue = Queue()
+    #        process = Process(target=scene._run, args=(queue, form))
+    #        process.start()
+    #        connections.queues[process.pid] = queue
+    #
+    #        context['session_id'] = process.pid
+    #        return render(request, scene.template(), context_instance=context)
+    #else:
+    #    form = scene.Form()
+    #context['form'] = form
+    return render(request, scene.template(), context_instance=context)

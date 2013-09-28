@@ -1,12 +1,10 @@
 import random
 
 from . import base
-import playground.containers
+import playground.client.containers
 
 
 class BinarySearch(base.Scene):
-    Container = playground.containers.Array
-
     def init(self, array, n):
         array.init(n)
         array.sync()
@@ -18,11 +16,11 @@ class BinarySearch(base.Scene):
 
     def search(self, array, value):
         left = 0
-        right = len(array._nodes)-1 #TODO
+        right = array.size()-1
         left_marker = array.create_marker("left", left)
         right_marker = array.create_marker("right", right)
         array.sync()
-        while left < right:
+        while left <= right:
             mid = (right + left) // 2
             if array[mid] > value:
                 right = mid - 1
@@ -40,9 +38,9 @@ class BinarySearch(base.Scene):
             array.sync()
         array.stats.not_found = ""
 
-    def run(self, array, form_data):
-        n = form_data['n']
-        wanted_value = random.randint(0, n)
+    def run(self, array):
+        n = 8
+        wanted_value = random.randint(1, n)
         array.stats.wanted_value = wanted_value
 
         self.init(array, n)
@@ -53,3 +51,11 @@ class BinarySearch(base.Scene):
         array.sync()
         self.search(array, wanted_value)
         array.sync()
+
+    @staticmethod
+    def container_class():
+        return playground.client.containers.Array
+
+
+if __name__ == "__main__":
+    BinarySearch.start()

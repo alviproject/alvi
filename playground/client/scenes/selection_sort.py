@@ -1,5 +1,4 @@
-from os import terminal_size
-from playground.scenes.sort import Sort
+from playground.client.scenes.sort import Sort
 
 
 class SelectionSort(Sort):

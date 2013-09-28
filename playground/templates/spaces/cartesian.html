@@ -3,7 +3,9 @@
 {% block space_content %}
     <script type="text/javascript">
         var points = [];
-        var markers = []
+        var point_indexes = {};
+        var markers = [];
+        var marker_indexes = {};
 
         var marker_color = d3.scale.category10();
 
@@ -49,7 +51,13 @@
 
         //actions
         function action_update_point(point) {
-            points[point.id] = point;
+            var index = point_indexes[point.id];
+            if(point.x){
+                points[index].x = point.x;
+            }
+            if(point.y){
+                points[index].y = point.y;
+            }
         }
 
         function action_create_point(action) {
@@ -58,21 +66,17 @@
             point.y = action.y;
             point.id = action.id;
 
-            if (point.id > points.length - 1) {
-                points.length = point.id + 1;
-            }
-            points[point.id] = point;
+            point_indexes[point.id] = points.length;
+            points.push(point);
         }
 
         function action_create_marker(marker) {
-            if (marker.id > markers.length - 1) {
-                markers.length = marker.id + 1;
-            }
-            markers[marker.id] = marker;
+            marker_indexes[marker.id] = markers.length;
+            markers.push(marker);
         }
 
         function action_move_marker(marker) {
-            markers[marker.id].point_id = marker.point_id;
+            markers[marker_indexes[marker.id]].point_id = marker.point_id;
         }
 
         function update_scale() {
@@ -119,7 +123,11 @@
              */
 
             function marker(point_id) {
-                return {'x': xScale(points[point_id].x), 'y': yScale(points[point_id].y) };
+                var point = points[point_indexes[point_id]];
+                return {
+                    'x': xScale(point.x),
+                    'y': yScale(point.y)
+                };
             }
 
             var markers_select = svg.selectAll("g.marker")
@@ -177,7 +185,7 @@
         }
 
         function action_remove_marker(action) {
-            markers[action.id] = null;
+            markers[marker_indexes[action.id]] = null;
         }
 
         register_action('create_point', action_create_point);

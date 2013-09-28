@@ -53,6 +53,7 @@
                 .on("tick", tick);
 
 
+        var node_indexes = {};
         var nodes = force.nodes();
         var links = force.links();
         var node = svg.selectAll(".node");
@@ -105,12 +106,12 @@
         function create_node(action) {
             var node = {};
             node.value = action.value;
-            if (action.parent_id != action.id) {
+            if (action.parent_id != 0) {
                 var link = {}
-                var parent = nodes[action.parent_id];
+                var parent = nodes[node_indexes[action.parent_id]];
                 link.source = parent;
                 link.target = node;
-                links.push({source: nodes[action.parent_id], target: node});
+                links.push({source: nodes[node_indexes[action.parent_id]], target: node});
                 node.x = parent.x;
                 node.y = parent.y;
             }
@@ -118,6 +119,7 @@
                 node.x = 0;
                 node.y = 0;
             }
+            node_indexes[action.id] = nodes.length;
             nodes.push(node);
 
             selected_node = node;
