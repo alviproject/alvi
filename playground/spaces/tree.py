@@ -77,3 +77,9 @@ class Tree(object):
             value=value,
             parent_id=parent_id,
         ))
+
+    def set_node_value(self, id, value):
+        return ('set_node_value', dict(
+            id=id,
+            value=value,
+        ))

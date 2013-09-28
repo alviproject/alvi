@@ -21,7 +21,7 @@ class Node(base.Node):
     @value.setter
     def value(self, value):
         self._value = value
-        self._space.pipe.send('set_node_value', (self.id, ), dict(
+        self._container._pipe.send('set_node_value', (self.id, ), dict(
             id=self.id,
             value=self.value,
         ))

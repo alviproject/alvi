@@ -10,7 +10,7 @@ class Scene(metaclass=abc.ABCMeta):
         while True:
             post_data = dict(
                 name=cls.__name__,
-                container=cls.container_class().__name__,
+                container=cls.container_class().name(),
             )
             response = playground.client.utils.post_to_server(settings.API_URL_SCENE_REGISTER, post_data)
             scene_instance_id = response['scene_instance_id']

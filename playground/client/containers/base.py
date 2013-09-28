@@ -87,3 +87,7 @@ class Container:
 
     def create_marker(self, name, node):
         return Marker(name, node)
+
+    @classmethod
+    def name(cls):
+        return cls.__name__
