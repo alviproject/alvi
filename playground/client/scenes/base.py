@@ -20,7 +20,8 @@ class Scene(metaclass=abc.ABCMeta):
     @classmethod
     def create_instance(cls, instance_id):
         scene = cls()
-        scene.run(instance_id)
+        container = cls.container_class()(instance_id)
+        scene.run(container)
 
     @abc.abstractmethod
     def run(self, instance_id):

@@ -5,9 +5,8 @@ import playground.containers
 
 
 class BinarySearchTree(base.Scene):
-    def run(self, instance_id):
+    def run(self, tree):
         n = 8
-        tree = self.container_class()(instance_id)
         x = random.randint(0, n)
         tree.create_root(x)
         tree.sync()

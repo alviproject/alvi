@@ -197,7 +197,7 @@
             update(parent);
         }
 
-        function set_node_value(action) {
+        function update_node(action) {
             var node = d3.selectAll("circle").filter(function (d) {
                 return d.id == action.id
             })[0][0].__data__;
@@ -210,7 +210,7 @@
         }
 
         register_action("create_node", create_node);
-        register_action("set_node_value", set_node_value);
+        register_action("update_node", update_node);
 
     </script>
 {% endblock %}

@@ -5,9 +5,8 @@ import playground.client.containers
 
 
 class CreateGraph(base.Scene):
-    def run(self, instance_id):
+    def run(self, graph):
         n = 8
-        graph = self.container_class()(instance_id)
         nodes = []
         node = graph.create_node(random.randint(0, n))
         graph.sync()

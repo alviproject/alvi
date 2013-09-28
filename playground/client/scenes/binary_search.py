@@ -38,9 +38,8 @@ class BinarySearch(base.Scene):
             array.sync()
         array.stats.not_found = ""
 
-    def run(self, instance_id):
+    def run(self, array):
         n = 8
-        array = self.container_class()(instance_id)
         wanted_value = random.randint(1, n)
         array.stats.wanted_value = wanted_value
 

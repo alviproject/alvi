@@ -34,9 +34,8 @@ class LinearSearch(base.Scene):
             list.stats.not_found = ""
         list.sync()
 
-    def run(self, instance_id):
+    def run(self, list):
         n = 8
-        list = self.container_class()(instance_id)
         wanted_value = random.randint(0, n)
         list.stats.wanted_value = wanted_value
 

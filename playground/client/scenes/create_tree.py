@@ -5,9 +5,8 @@ import playground.client.containers
 
 
 class CreateTree(base.Scene):
-    def run(self, instance_id):
+    def run(self, tree):
         n = 8
-        tree = self.container_class()(instance_id)
         nodes = []
         node = tree.create_root(random.randint(0, n))
         nodes.append(node)

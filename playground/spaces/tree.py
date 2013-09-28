@@ -78,8 +78,8 @@ class Tree(object):
             parent_id=parent_id,
         ))
 
-    def set_node_value(self, id, value):
-        return ('set_node_value', dict(
+    def update_node(self, id, value):
+        return ('update_node', dict(
             id=id,
             value=value,
         ))

@@ -1,7 +1,7 @@
 from . import base
 
 
-class Element(base.Node):
+class Element(base.Item):
     def __init__(self, container):
         super().__init__(container)
         self._value = 0

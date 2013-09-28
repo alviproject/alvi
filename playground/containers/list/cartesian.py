@@ -33,7 +33,7 @@ class Cartesian(base.List):
         return self._head
 
     @action
-    def create_node(self, id, value):
+    def create_node(self, id, parent_id, value):
         self._next_x += 1
         return self._space.create_point(id, self._next_x, value)
 
@@ -42,9 +42,9 @@ class Cartesian(base.List):
         return self._space.update_point(id, y=value)
 
     @action
-    def create_marker(self, id, name, node_id):
-        return self._space.create_marker(id, name, node_id)
+    def create_marker(self, id, name, item_id):
+        return self._space.create_marker(id, name, item_id)
 
     @action
-    def move_marker(self, id, node_id):
-        return self._space.move_marker(id, node_id)
+    def move_marker(self, id, item_id):
+        return self._space.move_marker(id, item_id)

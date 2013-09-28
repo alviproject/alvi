@@ -28,9 +28,8 @@ class Sort(base.Scene):
     def sort(self, array):
         raise NotImplementedError
 
-    def run(self, instance_id):
+    def run(self, array):
         self.n = 8
-        array = self.container_class()(instance_id)
         self.init(array)
         self.generate_points(array)
         self.sort(array)

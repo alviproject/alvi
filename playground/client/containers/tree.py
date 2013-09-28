@@ -3,28 +3,8 @@ from . import base
 
 class Node(base.Node):
     def __init__(self, container, parent, value):
-        super().__init__(container)
-        self._value = value
-        self.parent = parent
+        super().__init__(container, parent, value)
         self.children = []
-        parent_id = parent.id if parent else 0
-        self._container._pipe.send('create_node', (self.id, ), dict(
-            id=self.id,
-            parent_id=parent_id,
-            value=self.value,
-        ))
-
-    @property
-    def value(self):
-        return self._value
-
-    @value.setter
-    def value(self, value):
-        self._value = value
-        self._container._pipe.send('set_node_value', (self.id, ), dict(
-            id=self.id,
-            value=self.value,
-        ))
 
     def create_child(self, value):
         node = Node(self._container, self, value)

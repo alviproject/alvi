@@ -43,5 +43,5 @@ class Tree(base.Container):
         return self._space.create_node(id, value, parent_id)
 
     @action
-    def set_node_value(self, id, value):
-        return self._space.set_node_value(id, value)
+    def update_node(self, id, value):
+        return self._space.update_node(id, value)
