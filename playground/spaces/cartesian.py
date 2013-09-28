@@ -119,7 +119,18 @@ class Cartesian(object):
         self.stats.points += 1
         self._space.add_node(point)
 
-    def create_marker(self, name, point):
+    def create_marker(self, id, name, point_id):
+        return ('create_marker', dict(
+            id=id,
+            name=name,
+            point_id=point_id,
+        ))
         marker = Marker(self, name, point)
         self.markers.append(marker)
         return marker
+
+    def move_marker(self, id, point_id):
+        return ('move_marker', dict(
+            id=id,
+            point_id=point_id,
+        ))

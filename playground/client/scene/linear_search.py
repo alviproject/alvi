@@ -19,12 +19,12 @@ class LinearSearch:
         list.sync()
 
     def search(self, list, wanted_value):
-        #seeker = list.create_marker("seeker", list.head)
+        seeker = list.create_marker("seeker", list.head)
         list.sync()
 
         node = list.head
         while node:
-            #seeker.move(node)
+            seeker.move(node)
             list.sync()
             if wanted_value == node.value:
                 #list.stats.found_id = node.id
@@ -35,7 +35,6 @@ class LinearSearch:
         list.sync()
 
     def run(self, scene_instance_id):
-        print("ok")
         n = 8
         list = playground.client.containers.List(scene_instance_id)
         wanted_value = random.randint(0, n)
@@ -43,14 +42,6 @@ class LinearSearch:
 
         self.generate_nodes(list, n)
         self.search(list, wanted_value)
-
-        #TODO
-        node = list.head
-        print(node)
-        while node:
-            node.value = 3
-            node = node.next
-        list.sync()
 
 
 def run():

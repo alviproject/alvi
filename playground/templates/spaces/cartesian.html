@@ -3,8 +3,9 @@
 {% block space_content %}
     <script type="text/javascript">
         var points = [];
-        var points_dict = {};
-        var markers = []
+        var point_indexes = {};
+        var markers = [];
+        var marker_indexes = {};
 
         var marker_color = d3.scale.category10();
 
@@ -50,7 +51,7 @@
 
         //actions
         function action_update_point(point) {
-            var index = points_dict[point.id];
+            var index = point_indexes[point.id];
             if(point.x){
                 points[index].x = point.x;
             }
@@ -65,19 +66,17 @@
             point.y = action.y;
             point.id = action.id;
 
-            points_dict[point.id] = points.length;
+            point_indexes[point.id] = points.length;
             points.push(point);
         }
 
         function action_create_marker(marker) {
-            if (marker.id > markers.length - 1) {
-                markers.length = marker.id + 1;
-            }
-            markers[marker.id] = marker;
+            marker_indexes[marker.id] = markers.length;
+            markers.push(marker);
         }
 
         function action_move_marker(marker) {
-            markers[marker.id].point_id = marker.point_id;
+            markers[marker_indexes[marker.id]].point_id = marker.point_id;
         }
 
         function update_scale() {
@@ -124,7 +123,11 @@
              */
 
             function marker(point_id) {
-                return {'x': xScale(points[point_id].x), 'y': yScale(points[point_id].y) };
+                var point = points[point_indexes[point_id]];
+                return {
+                    'x': xScale(point.x),
+                    'y': yScale(point.y)
+                };
             }
 
             var markers_select = svg.selectAll("g.marker")

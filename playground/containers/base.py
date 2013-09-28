@@ -38,8 +38,8 @@ class Container(metaclass=ContainerMeta):
     def stats(self):
         return self._space.stats
 
-    def create_marker(self, name, node):
-        return self._space.create_marker(name, node)
+    #def create_marker(self, name, node):
+    #    return self._space.create_marker(name, node)
 
     @classmethod
     def implementations(cls):

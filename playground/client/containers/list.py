@@ -1,5 +1,6 @@
 import collections
 from django.conf import settings
+import time
 
 from .. import utils
 
@@ -27,13 +28,33 @@ class Pipe:
         #self.queue.put(backlog)
         utils.post_to_server(settings.API_URL_SCENE_SYNC, data)
         self._backlog.clear()
+        time.sleep(1)
+
+
+class Marker:
+    def __init__(self, name, node):
+        node._container._pipe.send('create_marker', (self.id,), dict(
+            id=self.id,
+            name=name,
+            node_id=node.id
+        ))
+
+    @property
+    def id(self):
+        return id(self)
+
+    def move(self, node):
+        node._container._pipe.send('move_marker', (self.id,), dict(
+            id=self.id,
+            node_id=node.id
+        ))
 
 
 class Node:
     def __init__(self, container, value):
         self._container = container
         self._value = value
-        self._container._pipe.send('create_point', (self.id, ), dict(
+        self._container._pipe.send('create_node', (self.id, ), dict(
             id=self.id,
             value=self.value,
         ))
@@ -54,7 +75,7 @@ class Node:
     @value.setter
     def value(self, v):
         self._value = v
-        self._container._pipe.send('update_point', (self.id, ), dict(
+        self._container._pipe.send('update_node', (self.id, ), dict(
             id=self.id,
             value=self.value,
         ))
@@ -84,6 +105,9 @@ class List:
 
     def sync(self):
         self._pipe.sync()
+
+    def create_marker(self, name, node):
+        return Marker(name, node)
 
 
 #TODO
