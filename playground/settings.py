@@ -146,8 +146,12 @@ for logger in LOGGING['loggers']:
     LOGGING['loggers'][logger]['handlers'] = ['console']
 
 default_scenes = (
-    'playground.client.scenes.linear_search.LinearSearch',
-    'playground.client.scenes.booble_sort.BoobleSort',
+    'playground.client.scenes.LinearSearch',
+    'playground.client.scenes.BoobleSort',
+    'playground.client.scenes.SelectionSort',
+    'playground.client.scenes.InsertionSort',
+    'playground.client.scenes.MergeSort',
+    'playground.client.scenes.ShellSort',
 )
 
 #define API urls to make sure that they are the same on client and server
