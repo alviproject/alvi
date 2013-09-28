@@ -153,6 +153,7 @@ default_scenes = (
     'playground.client.scenes.MergeSort',
     'playground.client.scenes.ShellSort',
     'playground.client.scenes.BinarySearch',
+    'playground.client.scenes.CreateTree',
 )
 
 #define API urls to make sure that they are the same on client and server

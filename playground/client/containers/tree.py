@@ -1,19 +1,35 @@
 from . import base
-from .base import action
-import playground.spaces.tree
 
 
 class Node(base.Node):
     def __init__(self, container, parent, value):
         super().__init__(container)
-        self._node = playground.spaces.tree.TreeNode(container._space, parent, value)
+        self._value = value
+        self.parent = parent
+        self.children = []
+        parent_id = parent.id if parent else 0
+        self._container._pipe.send('create_node', (self.id, ), dict(
+            id=self.id,
+            parent_id=parent_id,
+            value=self.value,
+        ))
 
     @property
     def value(self):
-        return self._node.value
+        return self._value
+
+    @value.setter
+    def value(self, value):
+        self._value = value
+        self._space.pipe.send('set_node_value', (self.id, ), dict(
+            id=self.id,
+            value=self.value,
+        ))
 
     def create_child(self, value):
-        return Node(self._container, self, value)
+        node = Node(self._container, self, value)
+        self.children.append(node)
+        return node
 
 
 class Tree(base.Container):
@@ -37,7 +53,3 @@ class Tree(base.Container):
             raise RuntimeError("Cannot set root more that once")
         self._root = Node(self, None, value)
         return self._root
-
-    @action
-    def create_node(self, id, value, parent_id):
-        return self._space.create_node(id, value, parent_id)

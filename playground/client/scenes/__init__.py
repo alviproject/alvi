@@ -5,3 +5,4 @@ from .merge_sort import MergeSort
 from .selection_sort import SelectionSort
 from .shell_sort import ShellSort
 from .binary_search import BinarySearch
+from .create_tree import CreateTree

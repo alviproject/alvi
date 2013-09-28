@@ -50,9 +50,8 @@ class TreeNode(object):
 class Tree(object):
     template = "spaces/tree.html"
 
-    def __init__(self, pipe):
-        self._space = Space(pipe)
-        self.stats.nodes = 0
+    def __init__(self):
+        self._space = Space()
 
     @property
     def nodes(self):
@@ -71,3 +70,10 @@ class Tree(object):
 
     def next_node_id(self):
         return self._space.next_node_id()
+
+    def create_node(self, id, value, parent_id):
+        return ('create_node', dict(
+            id=id,
+            value=value,
+            parent_id=parent_id,
+        ))
