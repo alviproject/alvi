@@ -72,10 +72,10 @@ class Marker(object):
 class Cartesian(object):
     template = "spaces/cartesian.html"
 
-    def __init__(self, pipe):
-        self._space = Space(pipe)
+    def __init__(self):
+        self._space = Space()
         self.markers = []
-        self.stats.points = 0
+        #self.stats.points = 0
 
     @property
     def points(self):
@@ -98,10 +98,22 @@ class Cartesian(object):
     def next_marker_id(self):
         return len(self.markers)
 
-    def create_point(self, x, y):
+    def create_point(self, id, x, y):
+        return ('create_point', dict(
+            id=id,
+            x=x,
+            y=y,
+        ))
+
         point = Point(self, x, y)
         self.add_point(point)
         return point
+
+    def update_point(self, id, **kwargs):
+        point = dict(id=id,)
+        for name, value in kwargs.items():
+            point[name] = value
+        return 'update_point', point
 
     def add_point(self, point):
         self.stats.points += 1

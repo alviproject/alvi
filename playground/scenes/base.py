@@ -29,6 +29,11 @@ class Pipe:
 class Scene(metaclass=abc.ABCMeta):
     Container = None  # override in inherited class
 
+    def __init__(self):
+        container_class = self.container_implementation()
+        container = container_class(pipe)
+        #self._container =
+
     @enum.unique
     class SyncPoints(enum.Enum):
         basic = 1
@@ -38,19 +43,19 @@ class Scene(metaclass=abc.ABCMeta):
 
     def name(self):
         name = self.__class__.__name__
-        #change from camel case to space delimeted
-        name = re.sub(r'((?<=[a-z])[A-Z]|(?<!\A)[A-Z](?=[a-z]))', r' \1', name)
-        name = name.replace("_", " ")
+        ##change from camel case to space delimeted
+        #name = re.sub(r'((?<=[a-z])[A-Z]|(?<!\A)[A-Z](?=[a-z]))', r' \1', name)
+        #name = name.replace("_", " ")
         return name
 
-    @abc.abstractmethod
-    def run(self, container, form_data):
-        raise NotImplementedError
+    #@abc.abstractmethod
+    #def run(self, container, form_data):
+    #    raise NotImplementedError
 
     def source(self):
         return inspect.getsource(self.__class__)
 
-    #TODO change name
+    #TODO remove?, change name
     def _run(self, queue, form):
         pipe = Pipe(queue)
         form_data = form.cleaned_data

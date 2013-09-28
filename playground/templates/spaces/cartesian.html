@@ -3,6 +3,7 @@
 {% block space_content %}
     <script type="text/javascript">
         var points = [];
+        var points_dict = {};
         var markers = []
 
         var marker_color = d3.scale.category10();
@@ -49,7 +50,13 @@
 
         //actions
         function action_update_point(point) {
-            points[point.id] = point;
+            var index = points_dict[point.id];
+            if(point.x){
+                points[index].x = point.x;
+            }
+            if(point.y){
+                points[index].y = point.y;
+            }
         }
 
         function action_create_point(action) {
@@ -58,10 +65,8 @@
             point.y = action.y;
             point.id = action.id;
 
-            if (point.id > points.length - 1) {
-                points.length = point.id + 1;
-            }
-            points[point.id] = point;
+            points_dict[point.id] = points.length;
+            points.push(point);
         }
 
         function action_create_marker(marker) {

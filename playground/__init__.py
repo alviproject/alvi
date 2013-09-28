@@ -3,5 +3,5 @@ from . import scenes
 
 def context_processor(request):
     return {
-        'scenes': scenes.scenes,
+        'scene_classes': scenes.scene_classes,
     }

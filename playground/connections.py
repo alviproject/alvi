@@ -1,9 +1,10 @@
 import logging
 import sockjs.tornado
 import simplejson
-from tornado import gen
 from tornado.ioloop import IOLoop
 from sockjs.tornado import proto
+
+import playground.scenes
 
 
 logger = logging.getLogger(__name__)
@@ -17,21 +18,20 @@ class Connection(sockjs.tornado.SockJSConnection):
         #TODO catch errors (queue does not exists, cannot parse, etc)
         #TODO check rights to access the queue
         message = simplejson.loads(message)
-        session_id = message['session_id']
-        session_id = int(session_id)
-        logger.info("session_id=%d" % session_id)
-        queue = queues[session_id]
+        scene_id = message['scene_id']
+        logger.info("scene_id=%s" % scene_id)
+        scene = playground.scenes.scene_instances[scene_id]
 
         if message['message'] == 'init':
-            def notify(fd, events):
-                action = queue.get()
-                self.send(proto.json_encode(action))
-            IOLoop.instance().add_handler(queue._reader.fileno(), notify, IOLoop.READ)
+            def notify(action):
+                self.send(proto.json_encode([action]))  # TODO consider sending all actions at once
+            scene.run(notify)
+            #IOLoop.instance().add_handler(queue._reader.fileno(), notify, IOLoop.READ)
 
     def on_close(self):
         logger.info("closing connection")
         #TODO kill the process
 
 
-queues = {}
+#queues = {}
 #scenes = [] #TODO

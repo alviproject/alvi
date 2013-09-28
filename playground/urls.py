@@ -6,7 +6,7 @@ admin.autodiscover()
 urlpatterns = patterns(
     '',
     url(r'^$', 'playground.views.home', name='home'),
-    url(r'^run/(?P<id>\d+)$', 'playground.views.run'),
+    url(r'^run/(?P<name>.*)$', 'playground.views.run'),
 
     url(r'^admin/', include(admin.site.urls)),
 )
