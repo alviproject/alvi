@@ -185,7 +185,7 @@
         }
 
         function action_remove_marker(action) {
-            markers[action.id] = null;
+            markers[marker_indexes[action.id]] = null;
         }
 
         register_action('create_point', action_create_point);

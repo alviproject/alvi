@@ -24,10 +24,6 @@ class Element(base.Node):
 
 
 class Marker(base.Marker):
-    def __init__(self, name, node):
-        super().__init__(name, node)
-        self._container = node._container
-
     def move(self, index):
         element = self._container._elements[index]
         return super().move(element)

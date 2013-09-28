@@ -1,6 +1,6 @@
 import random
 
-import playground.client.containers.list
+import playground.client.containers
 import playground.client.utils
 from . import base
 

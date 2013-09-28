@@ -33,7 +33,8 @@ class Pipe:
 
 class Marker:
     def __init__(self, name, node):
-        node._container._pipe.send('create_marker', (self.id,), dict(
+        self._container = node._container
+        self._container._pipe.send('create_marker', (self.id,), dict(
             id=self.id,
             name=name,
             node_id=node.id
@@ -44,9 +45,14 @@ class Marker:
         return id(self)
 
     def move(self, node):
-        node._container._pipe.send('move_marker', (self.id,), dict(
+        self._container._pipe.send('move_marker', (self.id,), dict(
             id=self.id,
             node_id=node.id
+        ))
+
+    def remove(self):
+        self._container._pipe.send('remove_marker', (self.id,), dict(
+            id=self.id,
         ))
 
 

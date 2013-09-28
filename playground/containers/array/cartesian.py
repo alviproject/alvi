@@ -45,3 +45,7 @@ class Cartesian(base.Array):
     @action
     def move_marker(self, id, node_id):
         return self._space.move_marker(id, node_id)
+
+    @action
+    def remove_marker(self, id):
+        return self._space.remove_marker(id)

@@ -140,3 +140,8 @@ class Cartesian(object):
             name=name,
             value=value,
         ))
+
+    def remove_marker(self, id):
+        return ('remove_marker', dict(
+            id=id,
+        ))
