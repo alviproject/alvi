@@ -1,4 +1,5 @@
 from . import base
+from .base import action
 import playground.spaces
 
 
@@ -24,5 +25,6 @@ class Graph(base.Container):
     def space_class(cls):
         return playground.spaces.Graph
 
-    def create_node(self, value):
-        return Node(self, None, value)
+    @action
+    def create_node(self, id, value, parent_id):
+        return self._space.create_node(id, value, parent_id)

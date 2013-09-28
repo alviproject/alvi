@@ -47,5 +47,6 @@ class LinearSearch(base.Scene):
     def container_class():
         return playground.client.containers.List
 
+
 if __name__ == "__main__":
     LinearSearch.start()

@@ -48,9 +48,8 @@ class Node(object):
 class Graph(object):
     template = "spaces/graph.html"
 
-    def __init__(self, pipe):
-        self._space = space.Space(pipe)
-        self.stats.nodes = 0
+    def __init__(self):
+        self._space = space.Space()
 
     @property
     def nodes(self):
@@ -72,3 +71,10 @@ class Graph(object):
 
     def next_node_id(self):
         return self._space.next_node_id()
+
+    def create_node(self, id, value, parent_id):
+        return ('create_node', dict(
+            id=id,
+            value=value,
+            parent_id=parent_id,
+        ))
