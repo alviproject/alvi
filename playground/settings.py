@@ -145,7 +145,10 @@ LOGGING = {
 for logger in LOGGING['loggers']:
     LOGGING['loggers'][logger]['handlers'] = ['console']
 
-default_scenes = ('playground.client.scene.linear_search',)
+default_scenes = (
+    'playground.client.scenes.linear_search.LinearSearch',
+    'playground.client.scenes.booble_sort.BoobleSort',
+)
 
 #define API urls to make sure that they are the same on client and server
 #url reversing was not used to make sure that no code (except settings) will be reused between client and server

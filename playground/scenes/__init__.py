@@ -1,38 +1,36 @@
 import uuid
 
 import simplejson
-
-from .booble import Booble
-from .selection_sort import SelectionSort
-from .insertion_sort import InsertionSort
-from .shell_sort import ShellSort
-from .merge_sort import MergeSort
-from .create_tree import CreateTree
-from .binary_search_tree import BinarySearchTree
-from .binary_search import BinarySearch
-from .create_graph import CreateGraph
+#from .selection_sort import SelectionSort
+#from .insertion_sort import InsertionSort
+#from .shell_sort import ShellSort
+#from .merge_sort import MergeSort
+#from .create_tree import CreateTree
+#from .binary_search_tree import BinarySearchTree
+#from .binary_search import BinarySearch
+#from .create_graph import CreateGraph
 from .base import Scene
+from .. import containers
 from ..containers import list
 
 
-def register(name, request):
-    scene_classes[name] = make_scene(name, request)
+def register(name, container_name, request):
+    scene_classes[name] = make_scene(name, container_name, request)
 
 
-def make_scene(name, request):
-    #TODO don't hardcode
-    _Container = list.List
-
+def make_scene(name, container_name, request):
     #TODO this wrapper does not make sens anymore
     class SceneWrapper(Scene):
-        Container = _Container
-
         def __init__(self, _id):
             self.id = _id
             self._message_evaluator = self._evaluate_message_before_init
             self._message_backlog = []
             self._message_callback = None
             self._container = self.container_implementation()()
+
+        @staticmethod
+        def container_class():
+            return getattr(containers, container_name)
 
         def _evaluate_message_before_init(self, message):
             self._message_backlog.append(message)

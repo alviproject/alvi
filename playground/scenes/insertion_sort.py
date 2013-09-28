@@ -1,4 +1,4 @@
-from playground.scenes.sort import Sort
+from playground.client.scenes.sort import Sort
 
 
 class InsertionSort(Sort):

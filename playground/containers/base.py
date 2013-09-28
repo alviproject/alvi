@@ -1,5 +1,9 @@
 import abc
-import functools
+
+
+def action(container_method):
+    container_method._register = True
+    return container_method
 
 
 class Node(metaclass=abc.ABCMeta):
@@ -12,11 +16,10 @@ class Node(metaclass=abc.ABCMeta):
 class ContainerMeta(abc.ABCMeta):
     def __init__(cls, name, bases, attributes):
         cls.actions = {}
-        for key, val in attributes.items():
-            try:
-                cls.actions[key] = val
-            except AttributeError:
-                pass
+        for attr_name in dir(cls):
+            attr = getattr(cls, attr_name)
+            if hasattr(attr, '_register'):
+                cls.actions[attr_name] = attr
         super().__init__(name, bases, attributes)
 
 
@@ -50,7 +53,6 @@ class Container(metaclass=ContainerMeta):
     def space_class(cls):
         raise NotImplementedError()
 
-
-def action(container_method):
-    container_method.register = True
-    return container_method
+    @action
+    def update_stats(self, name, value):
+        return self._space.update_stats(name, value)

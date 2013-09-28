@@ -65,7 +65,7 @@ class Scene(metaclass=abc.ABCMeta):
 
     def container_implementation(self):
         #TODO
-        return self.Container.implementations()[0]
+        return self.container_class().implementations()[0]
 
     def template(self):
         return self.container_implementation().space_class().template
