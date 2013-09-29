@@ -1,20 +1,23 @@
+from ..api import marker
+from ..api import stats
+from ..api import node
 from .. import api
 
 
 class Marker:
     def __init__(self, name, item):
         self._container = item._container
-        api.create_marker(self._container._pipe, self.id, name, item.id)
+        marker.create(self._container._pipe, self.id, name, item.id)
 
     @property
     def id(self):
         return id(self)
 
     def move(self, item):
-        api.move_marker(self._container._pipe, self.id, item.id)
+        marker.move(self._container._pipe, self.id, item.id)
 
     def remove(self):
-        api.remove_marker(self._container._pipe, self.id)
+        marker.remove(self._container._pipe, self.id)
 
 
 class Stats:
@@ -22,7 +25,7 @@ class Stats:
         object.__setattr__(self, '_pipe', pipe)
 
     def __setattr__(self, name, value):
-        api.update_stats(self._pipe, name, value)
+        stats.update(self._pipe, name, value)
         return object.__setattr__(self, name, value)
 
 
@@ -40,7 +43,7 @@ class Node(Item):
         super().__init__(container)
         self._value = value
         parent_id = parent.id if parent else 0
-        api.create_node(self._container._pipe, self.id, parent_id, value)
+        node.create(self._container._pipe, self.id, parent_id, value)
 
     @property
     def value(self):
@@ -49,7 +52,7 @@ class Node(Item):
     @value.setter
     def value(self, v):
         self._value = v
-        api.update_node(self._container._pipe, self.id, v)
+        node.update(self._container._pipe, self.id, v)
 
 
 class Container:
