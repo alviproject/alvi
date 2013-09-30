@@ -1,6 +1,7 @@
 {% extends "spaces/index.html" %}
 
 {% block space_content %}
+    <a href="#" class="reset_graph">reset</a>
     <style type="text/css">
         .node {
             fill: #fff;
@@ -39,6 +40,7 @@
         var selected_link = null;
         var radius = 10;
         var distance = 50;
+        var charge = -100;
 
         var svg = d3.select("svg")
                 .attr("pointer-events", "all")
@@ -49,7 +51,7 @@
                 .size([scene_width, scene_height])
                 .nodes([])
                 .linkDistance(distance)
-                .charge(-100)
+                .charge(charge)
                 .on("tick", tick);
 
 
@@ -95,9 +97,6 @@
 
         function traverse(tree, index) {
             visit(tree, index);
-            console.log(d3.selectAll("line").filter(function (d) {
-                return d && (d.source == tree[index] || d.target == tree[index]) && !d.visited;
-            }));
             setTimeout(function () {
                 traverse(tree, index + 1)
             }, 1000);
@@ -111,7 +110,7 @@
                 var parent = nodes[node_indexes[action.parent_id]];
                 link.source = parent;
                 link.target = node;
-                links.push({source: nodes[node_indexes[action.parent_id]], target: node});
+                links.push(link);
                 node.x = parent.x;
                 node.y = parent.y;
             }
@@ -124,6 +123,16 @@
 
             selected_node = node;
             selected_link = null;
+        }
+
+        function create_edge(action) {
+            var node1 = nodes[node_indexes[action.node1_id]];
+            var node2 = nodes[node_indexes[action.node2_id]];
+
+            var link = {}
+            link.source = node1;
+            link.target = node2;
+            links.push(link);
         }
 
         function update_data() {
@@ -176,7 +185,19 @@
         }
 
         register_action("create_node", create_node);
+        register_action("create_edge", create_edge);
         register_action("set_node_value", set_node_value);
+
+        $(".reset_graph").click(function() {
+            force.charge(0);
+            force.distance(0);
+            update_data();
+            setTimeout(function(){
+                force.charge(charge);
+                force.distance(distance);
+                update_data();
+            }, delay*3);
+        });
 
     </script>
 {% endblock %}

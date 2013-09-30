@@ -15,3 +15,7 @@ class Graph(base.Container):
     @action
     def create_node(self, id, value, parent_id):
         return self._space.create_node(id, value, parent_id)
+
+    @action
+    def create_edge(self, node1_id, node2_id):
+        return self._space.create_edge(node1_id, node2_id)

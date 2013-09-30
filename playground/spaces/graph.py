@@ -10,3 +10,9 @@ class Graph(base.Space):
             value=value,
             parent_id=parent_id,
         ))
+
+    def create_edge(self, node1_id, node2_id):
+        return ('create_edge', dict(
+            node1_id=node1_id,
+            node2_id=node2_id,
+        ))
