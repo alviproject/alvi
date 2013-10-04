@@ -22,6 +22,7 @@ class CreateGraph(base.Scene):
                 x = random.randint(0, i)
                 node1 = nodes[x]
                 node.create_edge(node1)
+                graph.sync()
         graph.sync()
 
     @staticmethod

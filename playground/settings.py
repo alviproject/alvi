@@ -156,6 +156,7 @@ default_scenes = (
     'playground.client.scenes.CreateTree',
     'playground.client.scenes.BinarySearchTree',
     'playground.client.scenes.CreateGraph',
+    'playground.client.scenes.TraverseGraph',
 )
 
 #define API urls to make sure that they are the same on client and server

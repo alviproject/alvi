@@ -8,11 +8,11 @@
             cursor: crosshair;
         }
 
-        .node_selected {
+        /*.node_selected {
             stroke: black;
-        }
+        }*/
 
-        .node_visited {
+        .node_marker {
             fill: blue;
             stroke: blue;
         }
@@ -29,10 +29,10 @@
             dominant-baseline: hanging;
         }
 
-        .node_selected text{
-            fill: black;
+        /*.node_selected text{
+        //    fill: black;
             stroke: black;
-        }
+        }*/
     </style>
 
     <script type="text/javascript">
@@ -54,31 +54,34 @@
                 .charge(charge)
                 .on("tick", tick);
 
-
         var node_indexes = {};
         var nodes = force.nodes();
         var links = force.links();
         var node = svg.selectAll(".node");
         var link = svg.selectAll(".link");
+        var marker_color = d3.scale.category10();
+        var marker_count = 0;
 
         function tick() {
             link.attr("x1", function (d) {
                 return d.source.x;
             })
-                    .attr("y1", function (d) {
-                        return d.source.y;
-                    })
-                    .attr("x2", function (d) {
-                        return d.target.x;
-                    })
-                    .attr("y2", function (d) {
-                        return d.target.y;
-                    });
+            .attr("y1", function (d) {
+                return d.source.y;
+            })
+            .attr("x2", function (d) {
+                return d.target.x;
+            })
+            .attr("y2", function (d) {
+                return d.target.y;
+            });
 
-            node
-                    .attr("transform", function (d) {
-                        return "translate(" + d.x + "," + d.y + ")";
-                    });
+            node.attr("transform", function (d) {
+                if(d.kind=="marker") {
+                    return "translate(20, 20)";
+                }
+                return "translate(" + d.x + "," + d.y + ")";
+            });
         }
 
         function rescale() {
@@ -105,6 +108,7 @@
         function create_node(action) {
             var node = {};
             node.value = action.value;
+            node.markers = [];
             if (action.parent_id != 0) {
                 var link = {}
                 var parent = nodes[node_indexes[action.parent_id]];
@@ -160,22 +164,36 @@
                     .duration(delay)
                     .ease("elastic");
 
-            g.append("text")
+            var text = g.append("text")
                     .text(function (d) {
                         return d.value;
                     })
                     .attr("text-anchor", "middle");
 
+            node.filter(function(d){
+                        return d.kind=="marker";
+                    })
+                    .select("text")
+                    .attr("text-anchor", "left")
+                    .attr("x", "15");
+
             node.exit().transition()
                     .attr("r", 0)
                     .remove();
 
-            node.classed("node_selected", function (d) {
-                return d === selected_node;
-            })
-                    .classed("node_visited", function (d) {
-                        return d.visited
-                    });
+            node.attr("stroke", function(d){
+                if(d.markers.length) {
+                    return d.markers[0].color;
+                }
+                if(d.kind == "marker") {
+                    return d.color;
+                }
+            });
+            //.classed("node_selected", function (d) {
+            //    return d === selected_node;
+            //})
+
+            node.x = 2;
 
             force.start();
         }
@@ -184,8 +202,31 @@
             console.log(action);
         }
 
+        function create_multi_marker(action) {
+            //marker is a regular node with special kind property and without edges
+            var node = {};
+            node.value = action.name;
+            node.x = 0;
+            node.y = 0;
+            node.kind = "marker";
+            node.markers = [];
+            node.color = marker_color(marker_count);
+            marker_count++;
+
+            node_indexes[action.id] = nodes.length;
+            nodes.push(node);
+        }
+
+        function multi_marker_add_item(action) {
+            var node = nodes[node_indexes[action.item_id]];
+            var marker = nodes[node_indexes[action.id]];
+            node.markers.push(marker);
+        }
+
         register_action("create_node", create_node);
         register_action("create_edge", create_edge);
+        register_action("create_multi_marker", create_multi_marker);
+        register_action("multi_marker_add_item", multi_marker_add_item);
         register_action("set_node_value", set_node_value);
 
         $(".reset_graph").click(function() {

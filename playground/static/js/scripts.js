@@ -99,4 +99,3 @@ function update_stats(action) {
 }
 
 register_action("update_stats", update_stats);
-

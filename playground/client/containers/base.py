@@ -1,4 +1,5 @@
 from ..api import marker
+from ..api import multi_marker
 from ..api import stats
 from ..api import node
 from .. import api
@@ -6,6 +7,7 @@ from .. import api
 
 class Marker:
     def __init__(self, name, item):
+        #TODO get container as first argument to be consistent with MM
         self._container = item._container
         marker.create(self._container._pipe, self.id, name, item.id)
 
@@ -18,6 +20,26 @@ class Marker:
 
     def remove(self):
         marker.remove(self._container._pipe, self.id)
+
+
+class MultiMarker:
+    """Non intrusive marker class"""
+    def __init__(self, container, name):
+        self._container = container
+        multi_marker.create(self._container._pipe, self.id, name)
+        self._items = set()
+
+    @property
+    def id(self):
+        return id(self)
+
+    def add(self, item):
+        if not item in self._items:
+            multi_marker.add(self._container._pipe, self.id, item.id)
+            self._items.add(item)
+
+    def __contains__(self, item):
+        return item in self._items
 
 
 class Stats:
@@ -65,6 +87,10 @@ class Container:
 
     def create_marker(self, name, item):
         return Marker(name, item)
+
+    def create_multi_marker(self, name):
+        #TODO move it to Container (same for create_marker)
+        return MultiMarker(self, name)
 
     @classmethod
     def name(cls):

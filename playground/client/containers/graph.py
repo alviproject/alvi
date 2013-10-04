@@ -7,7 +7,6 @@ class Node(base.Node):
         super().__init__(container, parent, value)
         self._edges = set()
         self.create_edge(parent, call_api=False)
-        print(self._edges)
 
     def create_child(self, value):
         return Node(self._container, self, value)
@@ -27,6 +26,9 @@ class Node(base.Node):
         node._edges.add((node1, node2))
         if call_api:
             playground.client.api.node.create_edge(self._container._pipe, node1.id, node2.id)
+
+    def children(self):
+        return (node1 if node2 == self else node2 for node1, node2 in self._edges)
 
 
 class Graph(base.Container):
