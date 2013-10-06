@@ -16,10 +16,7 @@ DEBUG = True
 
 TEMPLATE_DEBUG = DEBUG
 
-HOST = 'localhost'
-PORT = 8000
-
-ALLOWED_HOSTS = [HOST]
+ALLOWED_HOSTS = ['localhost']  # TODO
 
 
 # Application definition
@@ -144,20 +141,6 @@ LOGGING = {
 # make all loggers use the console.
 for logger in LOGGING['loggers']:
     LOGGING['loggers'][logger]['handlers'] = ['console']
-
-default_scenes = (
-    'playground.client.scenes.LinearSearch',
-    'playground.client.scenes.BoobleSort',
-    'playground.client.scenes.SelectionSort',
-    'playground.client.scenes.InsertionSort',
-    'playground.client.scenes.MergeSort',
-    'playground.client.scenes.ShellSort',
-    'playground.client.scenes.BinarySearch',
-    'playground.client.scenes.CreateTree',
-    'playground.client.scenes.BinarySearchTree',
-    'playground.client.scenes.CreateGraph',
-    'playground.client.scenes.TraverseGraph',
-)
 
 #define API urls to make sure that they are the same on client and server
 #url reversing was not used to make sure that no code (except settings) will be reused between client and server

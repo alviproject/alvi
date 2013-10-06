@@ -15,6 +15,10 @@ from . import scenes
 from . import scene_manager
 
 
+tornado.options.define("port", help="server port", default=8000, type=int)
+tornado.options.define("address", help="server address", default="localhost", type=str)
+
+
 def get_json_data(request):
     data = request.get_argument("data")
     return simplejson.loads(data)
@@ -42,7 +46,14 @@ class SyncSceneHandler(tornado.web.RequestHandler):
             raise x
 
 
-def run():
+def run(config_file=None):
+
+    #load configuration
+    #TODO support command line and help
+    if not config_file:
+        config_file = os.path.join(os.path.dirname(__file__), "config.py")
+    tornado.options.parse_config_file(config_file)
+
     wsgi_app = tornado.wsgi.WSGIContainer(django.core.handlers.wsgi.WSGIHandler())
     router = connections.sockjs.tornado.SockJSRouter(connections.Connection, '/rt')
     tornado_app = tornado.web.Application(
@@ -54,7 +65,7 @@ def run():
             ('.*', tornado.web.FallbackHandler, dict(fallback=wsgi_app)),
         ])
     server = tornado.httpserver.HTTPServer(tornado_app)
-    server.listen(8000)
+    server.listen(tornado.options.options.port, tornado.options.options.address)
     scene_manager.load_default_scenes()
     tornado.ioloop.IOLoop.instance().start()
 
