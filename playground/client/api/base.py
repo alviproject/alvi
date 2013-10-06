@@ -1,6 +1,8 @@
+import multiprocessing
 import collections
 from django.conf import settings
 import time
+import abc
 
 from .. import utils
 
@@ -26,3 +28,32 @@ class Pipe:
         utils.post_to_server(settings.API_URL_SCENE_SYNC, data)
         self._backlog.clear()
         time.sleep(1)
+
+
+class BaseScene(metaclass=abc.ABCMeta):
+    @classmethod
+    def start(cls):
+        while True:
+            post_data = dict(
+                name=cls.__name__,
+                container=cls.container_name(),
+            )
+            response = utils.post_to_server(settings.API_URL_SCENE_REGISTER, post_data)
+            scene_instance_id = response['scene_instance_id']
+            process = multiprocessing.Process(target=cls.create_instance, args=(scene_instance_id,))
+            process.start()
+
+    @classmethod
+    def create_instance(cls, instance_id):
+        scene = cls()
+        pipe = Pipe(instance_id)
+        scene.run(pipe)
+
+    @abc.abstractmethod
+    def run(self, instance_id):
+        raise NotImplementedError
+
+    @classmethod
+    @abc.abstractmethod
+    def container_name(cls):
+        raise NotImplementedError

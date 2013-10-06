@@ -64,7 +64,7 @@ class Node(Item):
     def __init__(self, container, parent, value):
         super().__init__(container)
         self._value = value
-        parent_id = parent.id if parent else 0
+        parent_id = parent.id if parent else self.id
         node.create(self._container._pipe, self.id, parent_id, value)
 
     @property
@@ -78,8 +78,8 @@ class Node(Item):
 
 
 class Container:
-    def __init__(self, scene_instance_id):
-        self._pipe = api.Pipe(scene_instance_id)
+    def __init__(self, pipe):
+        self._pipe = pipe
         self.stats = Stats(self._pipe)
 
     def sync(self):

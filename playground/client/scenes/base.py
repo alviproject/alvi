@@ -1,33 +1,21 @@
 import abc
-import multiprocessing
-from django.conf import settings
-import playground.client.utils
+from .. import api
 
 
-class Scene(metaclass=abc.ABCMeta):
-    @classmethod
-    def start(cls):
-        while True:
-            post_data = dict(
-                name=cls.__name__,
-                container=cls.container_class().name(),
-            )
-            response = playground.client.utils.post_to_server(settings.API_URL_SCENE_REGISTER, post_data)
-            scene_instance_id = response['scene_instance_id']
-            process = multiprocessing.Process(target=cls.create_instance, args=(scene_instance_id,))
-            process.start()
-
+class Scene(api.BaseScene):
+    """base class for container based scenes"""
     @classmethod
     def create_instance(cls, instance_id):
         scene = cls()
-        container = cls.container_class()(instance_id)
+        pipe = api.Pipe(instance_id)
+        container = cls.container_class()(pipe)
         scene.run(container)
 
-    @abc.abstractmethod
-    def run(self, instance_id):
-        raise NotImplementedError
+    @classmethod
+    def container_name(cls):
+        return cls.container_class().name()
 
-    @staticmethod
+    @classmethod
     @abc.abstractmethod
-    def container_class():
+    def container_class(cls):
         raise NotImplementedError

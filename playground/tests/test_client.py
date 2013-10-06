@@ -1,43 +1,84 @@
+import time
+import logging
+import importlib
+import os
 import unittest
 import multiprocessing
 from selenium import webdriver
-from selenium.webdriver.common.by import By
 from playground import service
+from playground.tests.pages.home import Home
+
+
+logger = logging.getLogger(__name__)
+logger.setLevel(level=logging.INFO)
 
 
 class TestContainer(unittest.TestCase):
-    def setUp(self):
-        self._setup_backend()
-        self._setup_client()
-        self._setup_browser()
+    @classmethod
+    def setUpClass(cls):
+        cls._setup_backend()
+        cls._setup_client()
+        cls._setup_browser()
 
-    def tearDown(self):
-        self._teardown_browser()
-        self._teardown_client()
-        self._teardown_backend()
+    @classmethod
+    def tearDownClass(cls):
+        cls._teardown_browser()
+        cls._teardown_client()
+        cls._teardown_backend()
 
-    def _setup_backend(self):
-        self._backend = multiprocessing.Process(target=service.run)
-        self._backend.start()
+    @classmethod
+    def _setup_backend(cls):
+        logger.info("setting up backend")
+        config_path = os.path.join(os.path.dirname(__file__), "config.py")
+        cls._backend = multiprocessing.Process(target=service.run, args=(config_path, ))
+        cls._backend.start()
 
-    def _setup_client(self):
-        pass
+    @classmethod
+    def _setup_client(cls):
+        logger.info("setting up clients")
+        scenes = ('playground.tests.scenes.graph.Graph', )
+        cls._clients = []
+        for scene in scenes:
+            module_name, class_name = scene.rsplit(".", 1)
+            module = importlib.import_module(module_name)
+            class_ = getattr(module, class_name)
+            process = multiprocessing.Process(target=class_.start)
+            cls._clients.append(process)
+            process.start()
 
-    def _setup_browser(self):
-        self._browser = webdriver.Firefox()
+    @classmethod
+    def _setup_browser(cls):
+        logger.info("setting up browser")
+        #cls._browser = webdriver.Firefox()
+        cls._browser = webdriver.Chrome('/usr/lib/chromium-browser/chromedriver')
 
-    def _teardown_backend(self):
-        self._backend.terminate()
+    @classmethod
+    def _teardown_backend(cls):
+        logger.info("terminating backend")
+        cls._backend.terminate()
 
-    def _teardown_client(self):
-        #TODO
-        pass
+    @classmethod
+    def _teardown_client(cls):
+        logger.info("terminating client")
+        for client in cls._clients:
+            client.terminate()
 
-    def _teardown_browser(self):
-        self._browser.quit()
+    @classmethod
+    def _teardown_browser(cls):
+        logger.info("terminating browser")
+        0 and cls._browser.quit()
 
     def test_check_scenes(self):
-        self._browser.get("http://localhost:8000") #TODO
-        scene_links = self._browser.find_elements(By.CSS_SELECTOR, "ul.scenes li a")
-        self.assertEquals(11, len(scene_links))
+        home_page = Home(self._browser)
+        home_page.load()
+        scene_links = home_page.scene_links
 
+        self.assertEquals(1, len(scene_links))
+
+    def test_graph(self):
+        home_page = Home(self._browser)
+        home_page.load()
+        scene_links = home_page.scene_links
+        graph_scene = scene_links[0]
+        graph_scene.click()
+        time.sleep(1)  # TODO

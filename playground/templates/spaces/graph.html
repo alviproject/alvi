@@ -109,7 +109,7 @@
             var node = {};
             node.value = action.value;
             node.markers = [];
-            if (action.parent_id != 0) {
+            if (action.parent_id != action.id) {
                 var link = {}
                 var parent = nodes[node_indexes[action.parent_id]];
                 link.source = parent;
