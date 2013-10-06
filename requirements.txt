@@ -5,3 +5,4 @@ futures
 simplejson
 nose2
 coverage
+selenium
