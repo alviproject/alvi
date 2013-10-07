@@ -13,6 +13,8 @@ class Graph(playground.client.api.BaseScene):
             node.create(pipe, id=i+1, parent_id=i, value=i+1)
         node.create_edge(pipe, node1_id=0, node2_id=n-1)
 
+        #node.update(pipe, 3, 10)
+
         pipe.sync()
 
     @classmethod

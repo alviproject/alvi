@@ -37,23 +37,3 @@ class MergeSort(Sort):
     def sort(self, array):
         self._sort(array, 0, self.n)
         array.sync()
-#        mid = self.n // 2
-#
-#        temp = []
-#        for i in range(mid):
-#            temp.append(array[i])
-#        temp.sort()
-#        for i in range(mid):
-#            array[i] = temp[i]
-#
-#        temp = []
-#        for i in range(mid, self.n):
-#            temp.append(array[i])
-#        temp.sort()
-#        for i in range(mid):
-#            array[mid+i] = temp[i]
-#
-#        array.sync()
-#        self.merge(array, 0, mid, self.n)
-#        array.sync()
-#

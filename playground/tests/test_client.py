@@ -5,6 +5,7 @@ import os
 import unittest
 import multiprocessing
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 from playground import service
 import playground.tests.pages as pages
 
@@ -74,7 +75,7 @@ class TestContainer(unittest.TestCase):
         home_page.goto()
         scene_links = home_page.scene_links
 
-        self.assertEquals(1, len(scene_links))
+        self.assertEqual(1, len(scene_links))
 
     def test_graph(self):
         graph_page = pages.Graph(self._browser)
@@ -82,5 +83,13 @@ class TestContainer(unittest.TestCase):
 
         time.sleep(1)  # TODO
 
-        self.assertEquals(4, len(graph_page.svg.nodes))
-        self.assertEquals(4, len(graph_page.svg.edges))
+        self.assertEqual(4, len(graph_page.svg.nodes), "node.create does not work properly")
+        self.assertEqual(4, len(graph_page.svg.edges), "node.create_edge does not work properly")
+
+        node_values = [int(element.find_element(By.CSS_SELECTOR, "text").text) for element in graph_page.svg.nodes]
+        node_values.sort()
+        created = node_values[:3]
+        updated = node_values[3:]
+        self.assertEqual([0, 1, 2], created, "node.create does not work properly")
+        self.assertEqual([10], updated, "node.update does not work properly")
+
