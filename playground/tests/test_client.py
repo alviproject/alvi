@@ -6,7 +6,7 @@ import unittest
 import multiprocessing
 from selenium import webdriver
 from playground import service
-from playground.tests.pages.home import Home
+import playground.tests.pages as pages
 
 
 logger = logging.getLogger(__name__)
@@ -49,6 +49,7 @@ class TestContainer(unittest.TestCase):
     @classmethod
     def _setup_browser(cls):
         logger.info("setting up browser")
+        #TODO config
         #cls._browser = webdriver.Firefox()
         cls._browser = webdriver.Chrome('/usr/lib/chromium-browser/chromedriver')
 
@@ -69,16 +70,17 @@ class TestContainer(unittest.TestCase):
         0 and cls._browser.quit()
 
     def test_check_scenes(self):
-        home_page = Home(self._browser)
-        home_page.load()
+        home_page = pages.Home(self._browser)
+        home_page.goto()
         scene_links = home_page.scene_links
 
         self.assertEquals(1, len(scene_links))
 
     def test_graph(self):
-        home_page = Home(self._browser)
-        home_page.load()
-        scene_links = home_page.scene_links
-        graph_scene = scene_links[0]
-        graph_scene.click()
+        graph_page = pages.Graph(self._browser)
+        graph_page.goto()
+
         time.sleep(1)  # TODO
+
+        self.assertEquals(4, len(graph_page.svg.nodes))
+        self.assertEquals(4, len(graph_page.svg.edges))
