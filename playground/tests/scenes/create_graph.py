@@ -1,7 +1,7 @@
 """various graph operations"""
 
 import playground.client.api
-import playground.client.api.node as node
+import playground.client.api.internal.node as node
 import playground.client.containers
 
 

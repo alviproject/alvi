@@ -13,14 +13,6 @@ class Node(base.Node):
 
 
 class Tree(base.Container):
-    @classmethod
-    def implementations(cls):
-        return (cls, )
-
-    @classmethod
-    def space_class(cls):
-        return playground.spaces.tree.Tree
-
     @property
     def root(self):
         try:

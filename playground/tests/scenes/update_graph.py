@@ -1,5 +1,5 @@
 from . import create_graph
-import playground.client.api.node as node
+import playground.client.api.internal.node as node
 
 
 class UpdateGraph(create_graph.CreateGraph):

@@ -1,32 +1,29 @@
-from ..api import marker
-from ..api import multi_marker
-from ..api import stats
-from ..api import node
-from .. import api
+import playground.client.api.base as base
+import playground.client.api.common as common
 
 
 class Marker:
     def __init__(self, name, item):
         #TODO get container as first argument to be consistent with MM
         self._container = item._container
-        marker.create(self._container._pipe, self.id, name, item.id)
+        common.create_marker(self._container._pipe, self.id, name, item.id)
 
     @property
     def id(self):
         return id(self)
 
     def move(self, item):
-        marker.move(self._container._pipe, self.id, item.id)
+        common.move_marker(self._container._pipe, self.id, item.id)
 
     def remove(self):
-        marker.remove(self._container._pipe, self.id)
+        common.remove_marker(self._container._pipe, self.id)
 
 
 class MultiMarker:
     """Non intrusive marker class"""
     def __init__(self, container, name):
         self._container = container
-        multi_marker.create(self._container._pipe, self.id, name)
+        common.create_multi_marker(self._container._pipe, self.id, name)
         self._items = set()
 
     @property
@@ -35,7 +32,7 @@ class MultiMarker:
 
     def add(self, item):
         if not item in self._items:
-            multi_marker.add(self._container._pipe, self.id, item.id)
+            common.multi_marker_add_item(self._container._pipe, self.id, item.id)
             self._items.add(item)
 
     def __contains__(self, item):
@@ -47,7 +44,7 @@ class Stats:
         object.__setattr__(self, '_pipe', pipe)
 
     def __setattr__(self, name, value):
-        stats.update(self._pipe, name, value)
+        common.update_stats(self._pipe, name, value)
         return object.__setattr__(self, name, value)
 
 
@@ -65,7 +62,7 @@ class Node(Item):
         super().__init__(container)
         self._value = value
         parent_id = parent.id if parent else self.id
-        node.create(self._container._pipe, self.id, parent_id, value)
+        base.create_node(self._container._pipe, self.id, parent_id, value)
 
     @property
     def value(self):
@@ -74,7 +71,7 @@ class Node(Item):
     @value.setter
     def value(self, v):
         self._value = v
-        node.update(self._container._pipe, self.id, v)
+        base.update_node(self._container._pipe, self.id, v)
 
 
 class Container:

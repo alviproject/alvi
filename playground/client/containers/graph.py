@@ -1,5 +1,5 @@
 from . import base
-import playground.client.api.node
+import playground.client.api.graph as graph
 
 
 class Node(base.Node):
@@ -25,7 +25,7 @@ class Node(base.Node):
         self._edges.add((node1, node2))
         node._edges.add((node1, node2))
         if call_api:
-            playground.client.api.node.create_edge(self._container._pipe, node1.id, node2.id)
+            graph.create_edge(self._container._pipe, node1.id, node2.id)
 
     def children(self):
         return (node1 if node2 == self else node2 for node1, node2 in self._edges)

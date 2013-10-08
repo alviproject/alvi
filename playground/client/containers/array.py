@@ -1,12 +1,12 @@
 from . import base
-from ..api import element
+import playground.client.api.array as array
 
 
 class Element(base.Item):
     def __init__(self, container):
         super().__init__(container)
         self._value = 0
-        element.create(self._container._pipe, self.id, self.value)
+        array.create_element(self._container._pipe, self.id, self.value)
 
     @property
     def value(self):
@@ -15,7 +15,7 @@ class Element(base.Item):
     @value.setter
     def value(self, v):
         self._value = v
-        element.update(self._container._pipe, self.id, self.value)
+        array.update_element(self._container._pipe, self.id, self.value)
 
 
 class Marker(base.Marker):

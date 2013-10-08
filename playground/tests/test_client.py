@@ -51,6 +51,7 @@ class TestContainer(unittest.TestCase):
 
     @classmethod
     def _setup_browser(cls):
+        os.system("killall chromium-browser")  # TODO
         logger.info("setting up browser")
         #TODO config
         #cls._browser = webdriver.Firefox()
@@ -70,7 +71,7 @@ class TestContainer(unittest.TestCase):
     @classmethod
     def _teardown_browser(cls):
         logger.info("terminating browser")
-        0 and cls._browser.quit()
+        0 and cls._browser.quit()  # TODO
 
     def test_check_scenes(self):
         home_page = pages.Home(self._browser)
