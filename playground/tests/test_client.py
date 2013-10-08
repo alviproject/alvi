@@ -1,6 +1,7 @@
 import time
 import logging
 import importlib
+import inspect
 import os
 import unittest
 import multiprocessing
@@ -8,6 +9,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from playground import service
 import playground.tests.pages as pages
+import playground.tests.scenes as scenes
 
 
 logger = logging.getLogger(__name__)
@@ -33,17 +35,17 @@ class TestContainer(unittest.TestCase):
         config_path = os.path.join(os.path.dirname(__file__), "config.py")
         cls._backend = multiprocessing.Process(target=service.run, args=(config_path, ))
         cls._backend.start()
+        time.sleep(1)  # TODO
 
     @classmethod
     def _setup_client(cls):
         logger.info("setting up clients")
-        scenes = ('playground.tests.scenes.graph.Graph', )
         cls._clients = []
-        for scene in scenes:
-            module_name, class_name = scene.rsplit(".", 1)
-            module = importlib.import_module(module_name)
-            class_ = getattr(module, class_name)
-            process = multiprocessing.Process(target=class_.start)
+        scene_objects = [getattr(scenes, name) for name in dir(scenes) if not name.startswith("__")]
+        for scene in scene_objects:
+            if not inspect.isclass(scene):
+                continue
+            process = multiprocessing.Process(target=scene.start)
             cls._clients.append(process)
             process.start()
 
@@ -75,9 +77,11 @@ class TestContainer(unittest.TestCase):
         home_page.goto()
         scene_links = home_page.scene_links
 
-        self.assertEqual(1, len(scene_links))
+        self.assertEqual(len(self._clients),
+                         len(scene_links),
+                         "not all client processes (scenes) were successfully connected")
 
-    def test_graph(self):
+    def test_create_graph(self):
         graph_page = pages.Graph(self._browser)
         graph_page.goto()
 
@@ -89,7 +93,16 @@ class TestContainer(unittest.TestCase):
         node_values = [int(element.find_element(By.CSS_SELECTOR, "text").text) for element in graph_page.svg.nodes]
         node_values.sort()
         created = node_values[:3]
-        updated = node_values[3:]
         self.assertEqual([0, 1, 2], created, "node.create does not work properly")
+
+    def test_update_graph(self):
+        graph_page = pages.Graph(self._browser)
+        graph_page.goto()
+
+        time.sleep(3)  # TODO
+
+        #TODO encapsulate
+        node_values = [int(element.find_element(By.CSS_SELECTOR, "text").text) for element in graph_page.svg.nodes]
+        updated = node_values[3]
         self.assertEqual([10], updated, "node.update does not work properly")
 
