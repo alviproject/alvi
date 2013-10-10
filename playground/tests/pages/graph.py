@@ -10,5 +10,6 @@ class Graph(scene.Scene):
 
     def goto(self):
         super().goto()
-        link = self._root.find_element(By.CSS_SELECTOR, "ul.scenes li a[href*=Graph]")
+        #TODO it would be a bit more elegant to base on text content (xpath should allow to do the right query)
+        link = self._root.find_element(By.CSS_SELECTOR, "ul.scenes li a[href*=CreateGraph]")
         link.click()

@@ -98,4 +98,11 @@ function update_stats(action) {
     stat.find(".value").text(value);
 }
 
+function finish(action) {
+    var state = $("#state");
+    state.attr("style", "color:red");
+    state.text("finished");
+}
+
 register_action("update_stats", update_stats);
+register_action("finish", finish);

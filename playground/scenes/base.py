@@ -1,7 +1,4 @@
 import abc
-import inspect
-import collections
-import playground.utils.enum as enum
 
 import django.forms.fields
 import django.forms
@@ -14,10 +11,6 @@ class Scene(metaclass=abc.ABCMeta):
         container_class = self.container_implementation()
         container = container_class(pipe)
         #self._container =
-
-    @enum.unique
-    class SyncPoints(enum.Enum):
-        basic = 1
 
     class Form(django.forms.Form):
         n = django.forms.fields.IntegerField(min_value=1, max_value=2048, initial=1024, label="Number of elements")
@@ -34,6 +27,6 @@ class Scene(metaclass=abc.ABCMeta):
         return self.container_class().implementations()[0]
 
     def template(self):
-        return self.container_implementation().space_class().template
+        return self.container_implementation().template
 
 

@@ -1,6 +1,7 @@
 from .. import base
 
 
+#TODO do we still need it?
 #TODO iterators
 class Array(base.Container):
     def init(self, size):

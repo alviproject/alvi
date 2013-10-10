@@ -85,8 +85,7 @@ class TestContainer(unittest.TestCase):
     def test_create_graph(self):
         graph_page = pages.Graph(self._browser)
         graph_page.goto()
-
-        time.sleep(1)  # TODO
+        graph_page.wait_to_finish()
 
         self.assertEqual(4, len(graph_page.svg.nodes), "node.create does not work properly")
         self.assertEqual(4, len(graph_page.svg.edges), "node.create_edge does not work properly")
@@ -99,11 +98,10 @@ class TestContainer(unittest.TestCase):
     def test_update_graph(self):
         graph_page = pages.Graph(self._browser)
         graph_page.goto()
-
-        time.sleep(3)  # TODO
+        graph_page.wait_to_finish()
 
         #TODO encapsulate
         node_values = [int(element.find_element(By.CSS_SELECTOR, "text").text) for element in graph_page.svg.nodes]
         updated = node_values[3]
-        self.assertEqual([10], updated, "node.update does not work properly")
+        self.assertEqual(10, updated, "node.update does not work properly")
 

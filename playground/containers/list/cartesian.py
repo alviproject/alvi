@@ -1,30 +1,27 @@
 from . import base
 from ..base import action
-import playground.spaces.cartesian
 
 
 class Cartesian(base.List):
+    template = 'spaces/cartesian.html'
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._next_x = 0
 
-    @classmethod
-    def space_class(cls):
-        return playground.spaces.cartesian.Cartesian
-
-    @action
-    def create_node(self, id, parent_id, value):
-        self._next_x += 1
-        return self._space.create_point(id, self._next_x, value)
-
-    @action
+    @action('update_point')
     def update_node(self, id, value):
-        return self._space.update_point(id, y=value)
+        return dict(id=id, y=value)
 
     @action
     def create_marker(self, id, name, item_id):
-        return self._space.create_marker(id, name, item_id)
+        return dict(id=id, name=name, point_id=item_id)
+
+    @action('create_point')
+    def create_node(self, id, parent_id, value):
+        self._next_x += 1
+        return dict(id=id, x=self._next_x, y=value)
 
     @action
     def move_marker(self, id, item_id):
-        return self._space.move_marker(id, item_id)
+        return dict(id=id, point_id=item_id)

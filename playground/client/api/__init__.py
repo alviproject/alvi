@@ -1,3 +1,7 @@
+"""
+low level API
+consider using higher level containers package instead this one
+"""
 import multiprocessing
 import collections
 from django.conf import settings
@@ -47,6 +51,12 @@ class BaseScene(metaclass=abc.ABCMeta):
     def create_instance(cls, instance_id):
         scene = cls()
         pipe = Pipe(instance_id)
+        cls.run_wrapper(scene, pipe)
+        pipe.send('finish', (0, ), {})
+        pipe.sync()
+
+    @classmethod
+    def run_wrapper(cls, scene, pipe):
         scene.run(pipe)
 
     @abc.abstractmethod

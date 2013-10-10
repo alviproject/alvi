@@ -5,9 +5,7 @@ from .. import api
 class Scene(api.BaseScene):
     """base class for container based scenes"""
     @classmethod
-    def create_instance(cls, instance_id):
-        scene = cls()
-        pipe = api.Pipe(instance_id)
+    def run_wrapper(cls, scene, pipe):
         container = cls.container_class()(pipe)
         scene.run(container)
 

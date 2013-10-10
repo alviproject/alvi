@@ -1,9 +1,9 @@
 from . import create_graph
-import playground.client.api.internal.node as node
+import playground.client.api.graph as graph
 
 
 class UpdateGraph(create_graph.CreateGraph):
     def run(self, pipe):
         super().run(pipe)
-        node.update(pipe, 3, 10)
+        graph.update_node(pipe, 3, 10)
         pipe.sync()
