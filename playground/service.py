@@ -34,16 +34,16 @@ class RegisterSceneHandler(tornado.web.RequestHandler):
 class SyncSceneHandler(tornado.web.RequestHandler):
     #@tornado.web.asynchronous
     def post(self, *args, **kwargs):
-        try:
+        #try:
             data = get_json_data(self)
             instance_id = data['instance_id']
             scene = scenes.scene_instances[instance_id]
             for message in data['messages']:
                 scene.evaluate_message(message)
             self.write("{}")
-        except Exception as x:
-            print(x)
-            raise x
+        #except Exception as x:
+        #    print(x)
+        #    raise x
 
 
 def run(config_file=None):

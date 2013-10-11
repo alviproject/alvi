@@ -43,8 +43,12 @@ class ContainerMeta(type):
 
 class Container(metaclass=ContainerMeta):
     def evaluate_action(self, action_name, **kwargs):
-        return_action_name, action = self.__class__.actions[action_name]
-        args = action(self, **kwargs)
+        try:
+            return_action_name, action_method = self.__class__.actions[action_name]
+        except KeyError as x:
+            raise RuntimeError("Class %s does not implement method %s that was called by client."
+                               % (self.__class__.__name__, action_name), x)
+        args = action_method(self, **kwargs)
         return return_action_name, args
 
     @classmethod

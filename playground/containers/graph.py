@@ -14,6 +14,14 @@ class Graph(base.Container):
         return kwargs
 
     @action
+    def update_node(self, **kwargs):
+        return kwargs
+
+    @action
+    def remove_node(self, **kwargs):
+        return kwargs
+
+    @action
     def create_edge(self, **kwargs):
         return kwargs
 

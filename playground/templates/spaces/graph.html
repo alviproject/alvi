@@ -188,7 +188,10 @@
                 if(d.kind == "marker") {
                     return d.color;
                 }
-            });
+            })
+            .select("text").text(function(d){
+                        return d.value;
+                    });
             //.classed("node_selected", function (d) {
             //    return d === selected_node;
             //})
@@ -198,8 +201,38 @@
             force.start();
         }
 
-        function set_node_value(action) {
-            console.log(action);
+        function update_node(action) {
+            var node = nodes[node_indexes[action.id]];
+            console.log(action.value, node.value);
+            node.value = action.value;
+            console.log(action.value, node.value);
+        }
+
+        function remove_node(action) {
+            var index = node_indexes[action.id];
+            nodes.splice(index, 1);
+            node_indexes = {};
+            var i;
+
+            //remove node
+            for(i = 0; i < nodes.length; ++i) {
+                var node = nodes[i];
+                node_indexes[node.id] = i;
+            }
+
+            //remove links pointing to node
+            var removed_links = [];
+            for(i = 0; i < nodes.length;) {
+                var link = links[i];
+                console.log(link, action.id);
+                if(link.source.index == action.id || link.target.index == action.id) {
+                    removed_links.push(i);
+                    links.splice(i, 1);
+                }
+                else {
+                    ++i;
+                }
+            }
         }
 
         function create_multi_marker(action) {
@@ -224,10 +257,11 @@
         }
 
         register_action("create_node", create_node);
+        register_action("remove_node", remove_node);
         register_action("create_edge", create_edge);
         register_action("create_multi_marker", create_multi_marker);
         register_action("multi_marker_add_item", multi_marker_add_item);
-        register_action("set_node_value", set_node_value);
+        register_action("update_node", update_node);
 
         $(".reset_graph").click(function() {
             force.charge(0);

@@ -5,7 +5,7 @@ import playground.client.api.graph as graph
 import playground.client.containers
 
 
-class CreateGraph(playground.client.api.BaseScene):
+class GraphCreateNode(playground.client.api.BaseScene):
     def run(self, pipe):
         n = 4
         graph.create_node(pipe, id=0, parent_id=0, value=0)
@@ -20,4 +20,4 @@ class CreateGraph(playground.client.api.BaseScene):
 
 
 if __name__ == "__main__":
-    CreateGraph.start()
+    GraphCreateNode.start()

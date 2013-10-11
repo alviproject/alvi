@@ -1,5 +1,6 @@
 from .base import create_node
 from .base import update_node
+from .base import remove_node
 
 CONTAINER = "Graph"
 

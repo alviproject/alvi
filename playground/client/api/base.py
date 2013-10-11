@@ -11,3 +11,9 @@ def update_node(pipe, id, value):
         id=id,
         value=value,
     ))
+
+
+def remove_node(pipe, id):
+    pipe.send('remove_node', (id, ), dict(
+        id=id,
+    ))

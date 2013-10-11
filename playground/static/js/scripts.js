@@ -2,6 +2,7 @@ window.actions = {};
 
 $(function () {
     connection = null;
+    action_in_progress = false;
 
     function connect() {
         disconnect();
@@ -26,9 +27,11 @@ $(function () {
 
         connection.onmessage = function (e) {
             function run_action(action) {
-                console.log(action);
+                //console.log(action);
                 var action_type = action[0];
+                action_in_progress = true;
                 actions[action_type](action[1]);
+                action_in_progress = false;
             }
 
             var data = JSON.parse(e.data);
@@ -98,7 +101,15 @@ function update_stats(action) {
     stat.find(".value").text(value);
 }
 
-function finish(action) {
+function finish() {
+    if(action_in_progress) {
+        //TODO
+        //setting delay to such high value (1000ms) is an ugly workaround
+        //the problem is to make sure that scene rendering was finished before reporting that scene is finished
+        //it would be much better to base on events than delay
+        setTimeout(finish, 1000);
+        return;
+    }
     var state = $("#state");
     state.attr("style", "color:red");
     state.text("finished");
