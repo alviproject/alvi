@@ -44,6 +44,7 @@ class TestContainer(unittest.TestCase):
             'playground.tests.scenes.graph.create_node.GraphCreateNode',
             'playground.tests.scenes.graph.update_node.GraphUpdateNode',
             'playground.tests.scenes.graph.remove_node.GraphRemoveNode',
+            'playground.tests.scenes.graph.add_multi_marker.GraphAddMultiMarker',
         )
         cls._clients = []
         for scene in scenes:
@@ -106,9 +107,7 @@ class TestContainer(unittest.TestCase):
         graph_page.goto()
         graph_page.wait_to_finish()
 
-        #TODO encapsulate
-        node_values = [int(element.find_element(By.CSS_SELECTOR, "text").text) for element in graph_page.svg.nodes]
-        updated = node_values[3]
+        updated = list(graph_page.svg.node_values)[3]
         self.assertEqual(10, updated, "update_node does not work properly")
 
     def test_remove_node(self):
@@ -117,6 +116,23 @@ class TestContainer(unittest.TestCase):
         graph_page.wait_to_finish()
 
         self.assertEqual(3, len(graph_page.svg.nodes), "remove_node does not work properly")
-        node_values = [int(element.find_element(By.CSS_SELECTOR, "text").text) for element in graph_page.svg.nodes]
+        node_values = list(graph_page.svg.node_values)
         node_values.sort()
         self.assertEqual([0, 1, 2], node_values, "remove_node does not work properly")
+
+    def test_add_multi_marker(self):
+        graph_page = pages.Graph(self._browser, "GraphAddMultiMarker")
+        graph_page.goto()
+        graph_page.wait_to_finish()
+
+        marker = [e for e in graph_page.svg.nodes if e.find_element(By.CSS_SELECTOR, "text").text == "multi marker"]
+        self.assertEquals(1, len(marker), "multi_marker was not created successfully")
+
+        #marked node have different color
+        marker = marker[0]
+        color = marker.value_of_css_property("stroke")
+        colors = map(lambda e: e.value_of_css_property("stroke"), graph_page.svg.nodes)
+        marked = [c for c in colors if c == color]
+
+        #expect 2 marked nodes + 1 node of multi_marker itself
+        self.assertEquals(3, len(marked), "nodes were not successfully added to multi_marker")

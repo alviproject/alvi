@@ -34,7 +34,7 @@ def create_multi_marker(pipe, id, name):
 
 
 def multi_marker_add_item(pipe, id, item_id):
-    pipe.send('multi_marker_add_item', (id,), dict(
+    pipe.send('multi_marker_add_item', (id, item_id), dict(
         id=id,
         item_id=item_id,
     ))

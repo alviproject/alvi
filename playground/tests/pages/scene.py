@@ -10,6 +10,10 @@ class Scene(home.Home):
         def __init__(self, root):
             self._root = root
 
+        @property
+        def root(self):
+            return self._root
+
     @property
     def svg(self):
         svg = self._root.find_element(By.CSS_SELECTOR, "svg")
