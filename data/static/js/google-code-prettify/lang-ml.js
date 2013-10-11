@@ -1,1 +1,1 @@
-/home/peter/projects/playground/playground/static/js/google-code-prettify/lang-ml.js
+/home/peter/projects/alvi/alvi/static/js/google-code-prettify/lang-ml.js

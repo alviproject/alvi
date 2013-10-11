@@ -1,1 +1,1 @@
-/home/peter/projects/playground/playground/static/js/sockjs-0.3.js
+/home/peter/projects/alvi/alvi/static/js/sockjs-0.3.js

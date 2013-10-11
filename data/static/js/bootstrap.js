@@ -1,1 +1,1 @@
-/home/peter/projects/playground/playground/static/js/bootstrap.js
+/home/peter/projects/alvi/alvi/static/js/bootstrap.js

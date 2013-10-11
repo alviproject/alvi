@@ -1,1 +1,1 @@
-/home/peter/projects/playground/playground/static/js/scripts.js
+/home/peter/projects/alvi/alvi/static/js/scripts.js

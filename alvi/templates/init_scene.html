@@ -1,0 +1,13 @@
+{% extends "index.html" %}
+
+{% block content %}
+    <h2>{{ scene.name }}</h2>
+    <hr />
+    <form method="post" action="{% url 'alvi.views.run' id=scene_id %}">
+        <div class="form-group">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Start</button>
+        </div>
+    </form>
+{% endblock %}

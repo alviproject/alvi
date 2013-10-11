@@ -1,1 +1,1 @@
-/home/peter/projects/playground/playground/static/js/google-code-prettify/prettify.js
+/home/peter/projects/alvi/alvi/static/js/google-code-prettify/prettify.js

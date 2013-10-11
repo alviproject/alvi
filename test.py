@@ -1,3 +1,3 @@
-from playground import service
+from alvi import service
 
 service.run()
