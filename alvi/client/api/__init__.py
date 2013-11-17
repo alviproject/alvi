@@ -30,7 +30,7 @@ class Pipe:
             messages=list(self._backlog.values()),
         )
         utils.post_to_server(settings.API_URL_SCENE_SYNC, data)
-        self._backlog.clear()
+        self._backlog = {}
         time.sleep(1)
 
 

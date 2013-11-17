@@ -57,7 +57,7 @@ def make_scene(name, container_name, request):
             self._message_evaluator = self._evaluate_message_after_init
             for message in self._message_backlog:
                 self.evaluate_message(message)
-            self._message_backlog.clear()
+            self._message_backlog = []
 
     return SceneWrapper
 

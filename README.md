@@ -2,7 +2,8 @@ AlVi: Algorithm Visualization framework
 ================================
 
 Requirements:
-* Python 3.3
+* Linux
+* Python 3.2
 * virtualenv
 
 Setup:
