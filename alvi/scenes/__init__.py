@@ -1,6 +1,6 @@
 import uuid
 
-import simplejson
+import json
 from .base import Scene
 from .. import containers
 
@@ -35,7 +35,7 @@ def make_scene(name, container_name, request):
         def create():
             scene = SceneWrapper(uuid.uuid4().hex)
             scene_instances[scene.id] = scene
-            response = simplejson.dumps({'scene_instance_id': scene.id})
+            response = json.dumps({'scene_instance_id': scene.id})
             request.write(response)
             #TODO request should not be finished, it would be better to keep persistent connection
             #similarly to browser<->service

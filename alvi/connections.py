@@ -1,6 +1,6 @@
 import logging
 import sockjs.tornado
-import simplejson
+import json
 from sockjs.tornado import proto
 
 import alvi.scenes
@@ -16,7 +16,7 @@ class Connection(sockjs.tornado.SockJSConnection):
     def on_message(self, message):
         #TODO catch errors (queue does not exists, cannot parse, etc)
         #TODO check rights to access the queue
-        message = simplejson.loads(message)
+        message = json.loads(message)
         scene_id = message['scene_id']
         logger.info("scene_id=%s" % scene_id)
         scene = alvi.scenes.scene_instances[scene_id]

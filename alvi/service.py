@@ -1,7 +1,7 @@
 import os
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "alvi.settings")
 
-import simplejson
+import json
 import django.core.handlers.wsgi
 from django.conf import settings
 import tornado.options
@@ -21,7 +21,7 @@ tornado.options.define("address", help="server address", default="localhost", ty
 
 def get_json_data(request):
     data = request.get_argument("data")
-    return simplejson.loads(data)
+    return json.loads(data)
 
 
 class RegisterSceneHandler(tornado.web.RequestHandler):
