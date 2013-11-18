@@ -62,7 +62,7 @@ class TestContainer(unittest.TestCase):
         logger.info("setting up browser")
         #TODO config
         #cls._browser = webdriver.Firefox()
-        cls._browser = webdriver.Chrome('/usr/lib/chromium-browser/chromedriver')
+        cls._browser = webdriver.Chrome()
 
     @classmethod
     def _teardown_backend(cls):

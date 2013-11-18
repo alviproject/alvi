@@ -32,6 +32,7 @@ $(function () {
                 action_in_progress = true;
                 actions[action_type](action[1]);
                 action_in_progress = false;
+                //console.log("action finished");
             }
 
             var data = JSON.parse(e.data);

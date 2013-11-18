@@ -30,7 +30,7 @@ class Pipe:
             messages=list(self._backlog.values()),
         )
         utils.post_to_server(settings.API_URL_SCENE_SYNC, data)
-        self._backlog = {}
+        self._backlog = self._backlog.__class__()  # python 3.2 does not support clear() on dicts
         time.sleep(1)
 
 
