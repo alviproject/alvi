@@ -6,4 +6,3 @@
 ^.idea$
 data/log.txt
 chromedriver.log$
-
