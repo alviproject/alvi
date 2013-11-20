@@ -1,4 +1,9 @@
 ^env/
+^build/
+^dist/
+^alvi.egg-info/
 \.pyc$
 ^.idea$
 data/log.txt
+chromedriver.log$
+

@@ -1,1 +1,0 @@
-/home/peter/projects/alvi/alvi/static/js/scripts.js

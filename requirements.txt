@@ -1,7 +1,0 @@
-django==1.6
-tornado==3.1.1
-sockjs-tornado==1.0.0
-futures==2.1.5
-nose2==0.4.7
-coverage==3.7
-selenium==2.37.2

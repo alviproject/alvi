@@ -61,8 +61,8 @@ class TestContainer(unittest.TestCase):
         os.system("killall chromium-browser")  # TODO
         logger.info("setting up browser")
         #TODO config
-        #cls._browser = webdriver.Firefox()
-        cls._browser = webdriver.Chrome()
+        cls._browser = webdriver.Firefox()
+        #cls._browser = webdriver.Chrome()
 
     @classmethod
     def _teardown_backend(cls):
@@ -78,7 +78,7 @@ class TestContainer(unittest.TestCase):
     @classmethod
     def _teardown_browser(cls):
         logger.info("terminating browser")
-        0 and cls._browser.quit()  # TODO
+        cls._browser.quit()  # TODO config
 
     def test_check_scenes(self):
         home_page = pages.Home(self._browser)

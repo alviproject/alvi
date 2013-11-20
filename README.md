@@ -16,8 +16,8 @@ python server.py         # run the server (by default listens at http://locahost
 ```
 
 ## Screens:
-![Insertion Sort](https://raw.github.com/alviproject/alvi/master/data/screens/insertion_sort.png)
+![Insertion Sort](https://raw.github.com/alviproject/alvi/master/screens/insertion_sort.png)
 
-![Tree](https://raw.github.com/alviproject/alvi/master/data/screens/tree.png)
+![Tree](https://raw.github.com/alviproject/alvi/master/screens/tree.png)
 
-![Graph](https://raw.github.com/alviproject/alvi/master/data/screens/graph.png)
+![Graph](https://raw.github.com/alviproject/alvi/master/screens/graph.png)

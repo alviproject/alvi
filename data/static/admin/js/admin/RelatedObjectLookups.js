@@ -1,1 +1,0 @@
-/home/peter/projects/alvi/env/lib/python3.3/site-packages/django/contrib/admin/static/admin/js/admin/RelatedObjectLookups.js

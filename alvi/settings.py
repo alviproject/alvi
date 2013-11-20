@@ -1,4 +1,5 @@
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+#TODO review settings
 import os
 
 
@@ -55,16 +56,6 @@ ROOT_URLCONF = 'alvi.urls'
 WSGI_APPLICATION = 'alvi.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/dev/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'data', 'db.sqlite3'),
-    }
-}
-
 # Internationalization
 # https://docs.djangoproject.com/en/dev/topics/i18n/
 
@@ -83,8 +74,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/dev/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = (os.path.join(PROJECT_BASE_DIR, 'static'),)
-STATIC_ROOT = 'data/static'
+#STATICFILES_DIRS = (os.path.join(PROJECT_BASE_DIR, 'static'),)
+STATIC_ROOT = os.path.join(PROJECT_BASE_DIR, 'static')
 
 #django debug toolbar setting
 INTERNAL_IPS = ('127.0.0.1',)
@@ -121,12 +112,12 @@ LOGGING = {
             'class': 'logging.StreamHandler',
             'formatter': 'simple'
             },
-        'file': {
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': '%s/data/log.txt' % BASE_DIR,
-            'formatter': 'simple'
-            },
+        #'file': {
+        #    'level': 'DEBUG',
+        #    'class': 'logging.FileHandler',
+        #    'filename': '%s/data/log.txt' % BASE_DIR,
+        #    'formatter': 'simple'
+        #    },
         },
     'loggers': {
         'django': {
