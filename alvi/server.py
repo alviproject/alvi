@@ -1,4 +1,5 @@
 import os
+import logging
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "alvi.settings")
 
 import json
@@ -14,6 +15,8 @@ from alvi import connections
 from alvi import scenes
 from alvi import scene_manager
 
+
+logger = logging.getLogger(__name__)
 
 tornado.options.define("port", help="server port", default=8000, type=int)
 tornado.options.define("address", help="server address", default="localhost", type=str)
@@ -67,6 +70,7 @@ def run(config_file=None):
     server = tornado.httpserver.HTTPServer(tornado_app)
     server.listen(tornado.options.options.port, tornado.options.options.address)
     scene_manager.load_default_scenes()
+    logger.info("listening at: http://%s:%s", tornado.options.options.address, tornado.options.options.port)
     tornado.ioloop.IOLoop.instance().start()
 
 
