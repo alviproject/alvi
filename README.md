@@ -6,11 +6,11 @@ AlVi: Algorithm Visualization framework
 * Python 3.2
 * virtualenv
 
-## Setting up development version:
+## Setting up a development version:
 ```bash
 git clone https://github.com/alviproject/alvi.git
 cd alvi
-virtualenv --clear -p python3 env   # setup virtualenv, install requirements
+virtualenv --clear -p python3 env   # setup virtualenv
 source env/bin/activate             # activate virtualenv
 python setup.py develop             # install required packages
 python -m alvi.server               # run the server

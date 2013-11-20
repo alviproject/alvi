@@ -18,7 +18,10 @@ setup(
         'sockjs-tornado==1.0.0',
     ],
     tests_require=[
+        'selenium==2.37.2',
+        'coverage==3.7',
     ],
+    test_suite="alvi.tests",
     include_package_data=True,
     #platform
     #keywords

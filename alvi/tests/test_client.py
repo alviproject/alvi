@@ -6,7 +6,7 @@ import unittest
 import multiprocessing
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from alvi import service
+from alvi import server
 import alvi.tests.pages as pages
 
 
@@ -31,7 +31,7 @@ class TestContainer(unittest.TestCase):
     def _setup_backend(cls):
         logger.info("setting up backend")
         config_path = os.path.join(os.path.dirname(__file__), "config.py")
-        cls._backend = multiprocessing.Process(target=service.run, args=(config_path, ))
+        cls._backend = multiprocessing.Process(target=server.run, args=(config_path, ))
         cls._backend.start()
         time.sleep(1)  # TODO
 
@@ -54,7 +54,6 @@ class TestContainer(unittest.TestCase):
             process = multiprocessing.Process(target=class_.start)
             cls._clients.append(process)
             process.start()
-
 
     @classmethod
     def _setup_browser(cls):
