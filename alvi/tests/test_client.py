@@ -60,19 +60,19 @@ class TestContainer(unittest.TestCase):
         #os.system("killall chromium-browser")  # TODO
         logger.info("setting up browser")
         #TODO config
-        #cls._browser = webdriver.Firefox()
+        cls._browser = webdriver.Firefox()
         #cls._browser = webdriver.Chrome()
-        username = os.environ["SAUCE_USERNAME"]
-        access_key = os.environ["SAUCE_ACCESS_KEY"]
-        capabilities = {
-            "tunnel-identifier": os.environ["TRAVIS_JOB_NUMBER"],
-            "build": os.environ["TRAVIS_BUILD_NUMBER"],
-            "tags": [os.environ["TRAVIS_PYTHON_VERSION"], "CI"],
-        }
-        hub_url = "%s:%s@localhost:4445" % (username, access_key)
-        cls._browser = webdriver.Remote(
-            desired_capabilities=capabilities,
-            command_executor="http://%s/wd/hub" % hub_url)
+        #username = os.environ["SAUCE_USERNAME"]
+        #access_key = os.environ["SAUCE_ACCESS_KEY"]
+        #capabilities = {
+        #    "tunnel-identifier": os.environ["TRAVIS_JOB_NUMBER"],
+        #    "build": os.environ["TRAVIS_BUILD_NUMBER"],
+        #    "tags": [os.environ["TRAVIS_PYTHON_VERSION"], "CI"],
+        #}
+        #hub_url = "%s:%s@localhost:4445" % (username, access_key)
+        #cls._browser = webdriver.Remote(
+        #    desired_capabilities=capabilities,
+        #    command_executor="http://%s/wd/hub" % hub_url)
 
     @classmethod
     def _teardown_backend(cls):

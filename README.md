@@ -2,7 +2,7 @@ AlVi: Algorithm Visualization framework
 ================================
 
 ## Requirements:
-* Linux
+* Linux/MacOS
 * Python 3.2
 * virtualenv
 
@@ -10,10 +10,10 @@ AlVi: Algorithm Visualization framework
 ```bash
 git clone https://github.com/alviproject/alvi.git
 cd alvi
-virtualenv --clear -p python3 env   # setup virtualenv
-source env/bin/activate             # activate virtualenv
-python setup.py develop             # install required packages
-python -m alvi.server               # run the server
+./create_dev_env.sh     # setup virtualenv, install requirements
+source env/bin/activate # activate virtualenv
+python setup.py test    # run tests (optional)
+python -m alvi.server   # run the server
 ```
 
 ## Screens:
