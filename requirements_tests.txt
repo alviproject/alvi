@@ -1,0 +1,2 @@
+selenium==2.37.2
+coverage==3.7

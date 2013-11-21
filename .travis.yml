@@ -1,12 +1,16 @@
 language: python
+
 python:
   - "3.2"
   - "3.3"
 
 install: python setup.py develop
+
 script:  python setup.py test
 
 addons:
   sauce_connect:
-    username: "piotrlewalski"
-    access_key: "GD+K+wgkSepHyyrCtl6pSdrpfr++QWVZycR60vrOcTChADHJb/AnLMEFsVOnIgIWFhagbfYJyJld1iEXNcaAMkQZ5N/QblS1TT1CoyOzFBNT6HIwKt/dHaJsUv/VXf31vrz4ne+gReYI+RwrRC4qyoJLx6jklHufMBAdPV5i/X8="
+    username:
+      secure: "FZHJTWbvpP9Yl7H1VkY6461ECeNsGCoGg1nbsjPa7vvmIFgPtdRTzfqcBqEpDXsGvaJLlET88M9LE+X0Stq4NuQP+gZ5IZwAjh5gBmQ8teGpoMmyvoaiUfQUT8zprmm/dEYEBKtGRm7mVCLt1pO9XVgcSSgOkzMPP1UZ4p4cGsY="
+    access_key:
+      secure: "t4bvZ2WX0GV15cQGhtM8EVrO+yr836PUjH8h9qvsVOEjkKGBiB1bw8HxamEGvfNqR/x4/YAcr3lWHSQ+1WVv70qMWRDYTVPB2NXy/Tc1xoCLgv8uFUoh6mtovca7ENQzl5lhahbEjFc/B4uLksujTMbZvMjZ+ChCr8KjTNi/8L8="
