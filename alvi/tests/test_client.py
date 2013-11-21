@@ -68,7 +68,6 @@ class TestContainer(unittest.TestCase):
             "tunnel-identifier": os.environ["TRAVIS_JOB_NUMBER"],
             "build": os.environ["TRAVIS_BUILD_NUMBER"],
             "tags": [os.environ["TRAVIS_PYTHON_VERSION"], "CI"],
-            "BROWSER": "chrome::Windows XP",
         }
         hub_url = "%s:%s@localhost:4445" % (username, access_key)
         cls._browser = webdriver.Remote(

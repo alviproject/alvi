@@ -12,15 +12,8 @@ setup(
     url='https://github.com/alviproject/alvi',
     description='Algorithm Visualization framework',
     long_description='Algorithm Visualization framework',
-    install_requires=[
-        'django==1.6',
-        'tornado==3.1.1',
-        'sockjs-tornado==1.0.0',
-    ],
-    tests_require=[
-        'selenium==2.37.2',
-        'coverage==3.7',
-    ],
+    install_requires=open("requirements.txt").read().split('\n'),
+    tests_require=open("requirements_tests.txt").read().split('\n'),
     test_suite="alvi.tests",
     include_package_data=True,
     #platform
