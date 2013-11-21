@@ -1,5 +1,6 @@
 AlVi: Algorithm Visualization framework
 ================================
+[![Build Status](https://travis-ci.org/alviproject/alvi.png?branch=master)](https://travis-ci.org/alviproject/alvi)
 
 ## Requirements:
 * Linux/MacOS
