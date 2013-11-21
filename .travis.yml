@@ -5,3 +5,8 @@ python:
 
 install: python setup.py develop
 script:  python setup.py test
+
+addons:
+  sauce_connect:
+    username: "piotrlewalski"
+    access_key: "GD+K+wgkSepHyyrCtl6pSdrpfr++QWVZycR60vrOcTChADHJb/AnLMEFsVOnIgIWFhagbfYJyJld1iEXNcaAMkQZ5N/QblS1TT1CoyOzFBNT6HIwKt/dHaJsUv/VXf31vrz4ne+gReYI+RwrRC4qyoJLx6jklHufMBAdPV5i/X8="
