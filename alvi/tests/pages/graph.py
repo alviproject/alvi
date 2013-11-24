@@ -26,3 +26,4 @@ class Graph(scene.Scene):
             raise RuntimeError("Scene %s cannot be found" % self._scene_name)
 
         link.click()
+        self.wait_to_finish()
