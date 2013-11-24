@@ -9,6 +9,7 @@ from selenium.webdriver.common.by import By
 import alvi.tests.pages as pages
 from alvi.tests.resources import Backend
 from alvi.tests.resources import Browser
+from alvi.tests.resources import Client
 
 logger = logging.getLogger(__name__)
 
@@ -18,47 +19,21 @@ class TestContainer(unittest.TestCase):
     def setUpClass(cls):
         config_path = os.path.join(os.path.dirname(__file__), "config.py")
         cls._backend = Backend.create(config_path)
-        cls._setup_client()
+        cls._client = Client.create()
         cls._browser = Browser.create()
 
     @classmethod
     def tearDownClass(cls):
         cls._browser.destroy()
-        cls._teardown_client()
+        cls._client.destroy()
         cls._backend.destroy()
-
-    @classmethod
-    def _setup_client(cls):
-        logger.info("setting up clients")
-        cls._clients = []
-
-        scenes = (
-            'alvi.tests.scenes.graph.create_node.GraphCreateNode',
-            'alvi.tests.scenes.graph.update_node.GraphUpdateNode',
-            'alvi.tests.scenes.graph.remove_node.GraphRemoveNode',
-            'alvi.tests.scenes.graph.add_multi_marker.GraphAddMultiMarker',
-        )
-        cls._clients = []
-        for scene in scenes:
-            module_name, class_name = scene.rsplit(".", 1)
-            module = importlib.import_module(module_name)
-            class_ = getattr(module, class_name)
-            process = multiprocessing.Process(target=class_.start)
-            cls._clients.append(process)
-            process.start()
-
-    @classmethod
-    def _teardown_client(cls):
-        logger.info("terminating client")
-        for client in cls._clients:
-            client.terminate()
 
     def test_check_scenes(self):
         home_page = pages.Home(self._browser.driver)
         home_page.goto()
         scene_links = home_page.scene_links
 
-        self.assertEqual(len(self._clients),
+        self.assertEqual(len(self._client.scenes),
                          len(scene_links),
                          "not all client processes (scenes) were successfully connected")
 
