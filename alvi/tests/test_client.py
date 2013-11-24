@@ -1,23 +1,24 @@
-import time
 import logging
+logging.basicConfig(level=logging.INFO)
+
 import importlib
 import os
 import unittest
 import multiprocessing
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from alvi import server
 import alvi.tests.pages as pages
+from alvi.tests.resources import Backend
 
 
 logger = logging.getLogger(__name__)
-logger.setLevel(level=logging.INFO)
 
 
 class TestContainer(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls._setup_backend()
+        config_path = os.path.join(os.path.dirname(__file__), "config.py")
+        cls._backend = Backend.create(config_path)
         cls._setup_client()
         cls._setup_browser()
 
@@ -25,15 +26,7 @@ class TestContainer(unittest.TestCase):
     def tearDownClass(cls):
         cls._teardown_browser()
         cls._teardown_client()
-        cls._teardown_backend()
-
-    @classmethod
-    def _setup_backend(cls):
-        logger.info("setting up backend")
-        config_path = os.path.join(os.path.dirname(__file__), "config.py")
-        cls._backend = multiprocessing.Process(target=server.run, args=(config_path, ))
-        cls._backend.start()
-        time.sleep(1)  # TODO
+        cls._backend.destroy()
 
     @classmethod
     def _setup_client(cls):
@@ -73,11 +66,6 @@ class TestContainer(unittest.TestCase):
         #cls._browser = webdriver.Remote(
         #    desired_capabilities=capabilities,
         #    command_executor="http://%s/wd/hub" % hub_url)
-
-    @classmethod
-    def _teardown_backend(cls):
-        logger.info("terminating backend")
-        cls._backend.terminate()
 
     @classmethod
     def _teardown_client(cls):
