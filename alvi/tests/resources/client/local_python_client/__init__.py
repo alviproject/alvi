@@ -6,13 +6,7 @@ from alvi.tests.resources.base import Resource
 logger = logging.getLogger(__name__)
 
 
-class Client(Resource):
-    @staticmethod
-    def create():
-        return LocalPythonClient()
-
-
-class LocalPythonClient(Client):
+class LocalPythonClient(Resource):
     def __init__(self):
         logger.info("setting up clients")
         self._clients = []
@@ -31,9 +25,10 @@ class LocalPythonClient(Client):
 
     @property
     def scenes(self):
+        PREFIX = 'alvi.tests.resources.client.local_python_client.scenes.'
         return (
-            'alvi.tests.scenes.graph.create_node.GraphCreateNode',
-            'alvi.tests.scenes.graph.update_node.GraphUpdateNode',
-            'alvi.tests.scenes.graph.remove_node.GraphRemoveNode',
-            'alvi.tests.scenes.graph.add_multi_marker.GraphAddMultiMarker',
+            PREFIX + 'graph.create_node.GraphCreateNode',
+            PREFIX + 'graph.update_node.GraphUpdateNode',
+            PREFIX + 'graph.remove_node.GraphRemoveNode',
+            PREFIX + 'graph.add_multi_marker.GraphAddMultiMarker',
         )

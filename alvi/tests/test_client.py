@@ -1,10 +1,8 @@
 import logging
 logging.basicConfig(level=logging.INFO)
 
-import importlib
 import os
 import unittest
-import multiprocessing
 from selenium.webdriver.common.by import By
 import alvi.tests.pages as pages
 from alvi.tests.resources import Backend

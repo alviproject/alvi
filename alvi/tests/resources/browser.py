@@ -1,17 +1,18 @@
 import logging
 from alvi.tests.resources.base import Resource
+from alvi.tests.resources.base import ResourceFactory
 from selenium import webdriver
 
 logger = logging.getLogger(__name__)
 
 
-class Browser(Resource):
+class Browser(ResourceFactory):
     @staticmethod
     def create():
         return LocalBrowser()
 
 
-class LocalBrowser(Browser):
+class LocalBrowser(Resource):
     def __init__(self):
         logger.info("setting up browser")
         #TODO config
