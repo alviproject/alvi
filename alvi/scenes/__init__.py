@@ -5,11 +5,11 @@ from .base import Scene
 from .. import containers
 
 
-def register(name, container_name, request):
-    scene_classes[name] = make_scene(name, container_name, request)
+def register(name, container_name, source, request):
+    scene_classes[name] = make_scene(name, container_name, source, request)
 
 
-def make_scene(name, container_name, request):
+def make_scene(name, container_name, _source, request):
     #TODO this wrapper does not make sens anymore
     class SceneWrapper(Scene):
         def __init__(self, _id):
@@ -46,8 +46,7 @@ def make_scene(name, container_name, request):
             return name
 
         def source(self):
-            pass
-            #return inspect.getsource(function)
+            return _source
 
         def evaluate_message(self, message):
             self._message_evaluator(message)

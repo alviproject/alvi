@@ -7,6 +7,7 @@ import collections
 from django.conf import settings
 import time
 import abc
+import inspect
 
 from .. import utils
 
@@ -38,9 +39,11 @@ class BaseScene(metaclass=abc.ABCMeta):
     @classmethod
     def start(cls):
         while True:
+            #TODO send this data just once
             post_data = dict(
                 name=cls.__name__,
                 container=cls.container_name(),
+                source=inspect.getsource(cls),
             )
             response = utils.post_to_server(settings.API_URL_SCENE_REGISTER, post_data)
             scene_instance_id = response['scene_instance_id']
