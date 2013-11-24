@@ -5,11 +5,10 @@ import importlib
 import os
 import unittest
 import multiprocessing
-from selenium import webdriver
 from selenium.webdriver.common.by import By
 import alvi.tests.pages as pages
 from alvi.tests.resources import Backend
-
+from alvi.tests.resources import Browser
 
 logger = logging.getLogger(__name__)
 
@@ -20,11 +19,11 @@ class TestContainer(unittest.TestCase):
         config_path = os.path.join(os.path.dirname(__file__), "config.py")
         cls._backend = Backend.create(config_path)
         cls._setup_client()
-        cls._setup_browser()
+        cls._browser = Browser.create()
 
     @classmethod
     def tearDownClass(cls):
-        cls._teardown_browser()
+        cls._browser.destroy()
         cls._teardown_client()
         cls._backend.destroy()
 
@@ -49,37 +48,13 @@ class TestContainer(unittest.TestCase):
             process.start()
 
     @classmethod
-    def _setup_browser(cls):
-        #os.system("killall chromium-browser")  # TODO
-        logger.info("setting up browser")
-        #TODO config
-        cls._browser = webdriver.Firefox()
-        #cls._browser = webdriver.Chrome()
-        #username = os.environ["SAUCE_USERNAME"]
-        #access_key = os.environ["SAUCE_ACCESS_KEY"]
-        #capabilities = {
-        #    "tunnel-identifier": os.environ["TRAVIS_JOB_NUMBER"],
-        #    "build": os.environ["TRAVIS_BUILD_NUMBER"],
-        #    "tags": [os.environ["TRAVIS_PYTHON_VERSION"], "CI"],
-        #}
-        #hub_url = "%s:%s@localhost:4445" % (username, access_key)
-        #cls._browser = webdriver.Remote(
-        #    desired_capabilities=capabilities,
-        #    command_executor="http://%s/wd/hub" % hub_url)
-
-    @classmethod
     def _teardown_client(cls):
         logger.info("terminating client")
         for client in cls._clients:
             client.terminate()
 
-    @classmethod
-    def _teardown_browser(cls):
-        logger.info("terminating browser")
-        cls._browser.quit()  # TODO config
-
     def test_check_scenes(self):
-        home_page = pages.Home(self._browser)
+        home_page = pages.Home(self._browser.driver)
         home_page.goto()
         scene_links = home_page.scene_links
 
@@ -88,7 +63,7 @@ class TestContainer(unittest.TestCase):
                          "not all client processes (scenes) were successfully connected")
 
     def test_create_node(self):
-        graph_page = pages.Graph(self._browser, "GraphCreateNode")
+        graph_page = pages.Graph(self._browser.driver, "GraphCreateNode")
         graph_page.goto()
         graph_page.wait_to_finish()
 
@@ -101,7 +76,7 @@ class TestContainer(unittest.TestCase):
         self.assertEqual([0, 1, 2], created, "create_node does not work properly")
 
     def test_update_node(self):
-        graph_page = pages.Graph(self._browser, "GraphUpdateNode")
+        graph_page = pages.Graph(self._browser.driver, "GraphUpdateNode")
         graph_page.goto()
         graph_page.wait_to_finish()
 
@@ -109,7 +84,7 @@ class TestContainer(unittest.TestCase):
         self.assertEqual(10, updated, "update_node does not work properly")
 
     def test_remove_node(self):
-        graph_page = pages.Graph(self._browser, "GraphRemoveNode")
+        graph_page = pages.Graph(self._browser.driver, "GraphRemoveNode")
         graph_page.goto()
         graph_page.wait_to_finish()
 
@@ -119,7 +94,7 @@ class TestContainer(unittest.TestCase):
         self.assertEqual([0, 1, 2], node_values, "remove_node does not work properly")
 
     def test_add_multi_marker(self):
-        graph_page = pages.Graph(self._browser, "GraphAddMultiMarker")
+        graph_page = pages.Graph(self._browser.driver, "GraphAddMultiMarker")
         graph_page.goto()
         graph_page.wait_to_finish()
 

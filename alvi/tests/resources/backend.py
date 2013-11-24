@@ -1,21 +1,13 @@
-import abc
 import time
 import logging
 import multiprocessing
 from alvi import server
+from alvi.tests.resources.base import Resource
 
 logger = logging.getLogger(__name__)
 
 
-class Backend(metaclass=abc.ABCMeta):
-    @abc.abstractmethod
-    def __init__(self):
-        raise NotImplemented
-
-    @abc.abstractmethod
-    def destroy(self):
-        raise NotImplemented
-
+class Backend(Resource):
     @staticmethod
     def create(config_path):
         return LocalBackend(config_path)
