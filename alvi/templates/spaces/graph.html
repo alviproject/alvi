@@ -1,7 +1,7 @@
 {% extends "spaces/index.html" %}
 
 {% block space_content %}
-    <a href="#" class="reset_graph">reset</a>
+    <!--<a href="#" class="reset_graph">reset</a>-->
     <style type="text/css">
         .node {
             fill: #fff;
@@ -43,6 +43,8 @@
         var charge = -100;
 
         var svg = d3.select("svg")
+                .attr("width", scene_width)
+                .attr("height", scene_height)
                 .attr("pointer-events", "all")
                 .call(d3.behavior.zoom().on("zoom", rescale))
                 .append('svg:g');
