@@ -10,7 +10,5 @@ class Cartesian(scene.Scene):
         @property
         def node_data(self):
             driver = base.get_driver_from_element(self._root)
-            #generally it is preferred to base on visible data in client tests,
-            #however at the moment there is no simple way to get data basing on circle that visualises this data on
-            #cartesian scene, that's why we have to get this data directly from JS variables
+            #TODO use d3.selectAll("circle")XXXX.__data__
             return driver.execute_script("return points")

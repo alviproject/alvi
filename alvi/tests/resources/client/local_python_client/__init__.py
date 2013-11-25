@@ -32,4 +32,5 @@ class LocalPythonClient(Resource):
             PREFIX + 'graph.remove_node.GraphRemoveNode',
             PREFIX + 'graph.add_multi_marker.GraphAddMultiMarker',
             PREFIX + 'array.create_element.ArrayCreateElement',
+            PREFIX + 'tree.create_node.TreeCreateNode',
         )
