@@ -23,4 +23,13 @@ class Page:
 
     def goto(self):
         """get to the page by loading home page and clicking through subpages"""
+        #TODO get url from backend resource
         self._root.get("http://%s:%d" % (options.address, options.port))
+
+
+def get_driver_from_element(element):
+    try:
+        return get_driver_from_element(element.parent)
+    except AttributeError:
+        #if it has no parent it has to be a driver
+        return element
