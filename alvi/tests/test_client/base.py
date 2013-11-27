@@ -20,6 +20,6 @@ class TestContainer(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        #cls._browser.destroy()
+        cls._browser.destroy()
         cls._client.destroy()
         cls._backend.destroy()
