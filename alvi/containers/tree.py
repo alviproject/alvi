@@ -16,3 +16,7 @@ class Tree(base.Container):
     @action
     def update_node(self, **kwargs):
         return kwargs
+
+    @action
+    def change_parent(self, **kwargs):
+        return kwargs

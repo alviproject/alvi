@@ -187,9 +187,7 @@
                 init_root(node);
                 return;
             }
-            var parent = d3.selectAll("circle").filter(function (d) {
-                return d.id == node.parent_id
-            })[0][0].__data__;
+            var parent = get_node(node.parent_id);
             if (!parent.children) {
                 parent.children = [];
             }
@@ -198,11 +196,32 @@
         }
 
         function update_node(action) {
-            var node = d3.selectAll("circle").filter(function (d) {
-                return d.id == action.id
-            })[0][0].__data__;
+            var node = get_node(action.id);
             node.name = action.value;
             update(root);
+        }
+
+        function change_parent(action) {
+            var node = get_node(action.id);
+            var old_parent = node.parent;
+            var new_parent = get_node(action.parent_id);
+            node.parent = new_parent;
+            for(var i = old_parent.children.length - 1; i >= 0; i--) {
+               if(old_parent.children[i].id === node.id) {
+                    old_parent.children.splice(i, 1);
+                }
+            }
+            if(!new_parent.children) {
+                new_parent.children = [];
+            }
+            new_parent.children.push(node);
+            update(root);
+        }
+
+        function get_node(id) {
+            return d3.selectAll("circle").filter(function (d) {
+                return d.id == id
+            })[0][0].__data__;
         }
 
         function update_data() {
@@ -211,6 +230,7 @@
 
         register_action("create_node", create_node);
         register_action("update_node", update_node);
+        register_action("change_parent", change_parent);
 
     </script>
 {% endblock %}

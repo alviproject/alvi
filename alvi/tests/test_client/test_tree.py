@@ -10,10 +10,35 @@ class TestTree(TestContainer):
         page = pages.Tree(self._browser.driver, "TreeCreateNode")
         page.goto()
 
-        self.assertEqual(4, len(page.svg.nodes), "create_node does not work properly")
+        self.assertEqual(7, len(page.svg.nodes), "create_node does not work properly")
 
-        print(page.svg.node_data)
-        #node_values = [d['name']int(element.find_element(By.CSS_SELECTOR, "text").text) for element in graph_page.svg.nodes]
-        #node_values.sort()
-        #created = node_values[:3]
-        #self.assertEqual([0, 1, 2], created, "create_node does not work properly")
+        node_data = sorted(page.svg.node_data, key=lambda d: d['id'])
+        expected = [
+            {'name': 0, 'id': 0, 'parent': 0},
+            {'name': 1, 'id': 1, 'parent': 0},
+            {'name': 2, 'id': 2, 'parent': 0},
+            {'name': 3, 'id': 3, 'parent': 1},
+            {'name': 4, 'id': 4, 'parent': 1},
+            {'name': 5, 'id': 5, 'parent': 4},
+            {'name': 6, 'id': 6, 'parent': 4}
+        ]
+        self.assertEqual(expected, node_data, "create_node does not work properly")
+
+    def test_change_parent(self):
+        page = pages.Tree(self._browser.driver, "TreeChangeParent")
+        page.goto()
+
+        self.assertEqual(7, len(page.svg.nodes), "create_node does not work properly")
+
+        node_data = sorted(page.svg.node_data, key=lambda d: d['id'])
+        print(node_data)
+        expected = [
+            {'name': 0, 'id': 0, 'parent': 0},
+            {'name': 1, 'id': 1, 'parent': 0},
+            {'name': 2, 'id': 2, 'parent': 0},
+            {'name': 3, 'id': 3, 'parent': 1},
+            {'name': 4, 'id': 4, 'parent': 2},
+            {'name': 5, 'id': 5, 'parent': 4},
+            {'name': 6, 'id': 6, 'parent': 4}
+        ]
+        self.assertEqual(expected, node_data, "change_parent does not work properly")

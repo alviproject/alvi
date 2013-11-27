@@ -33,4 +33,5 @@ class LocalPythonClient(Resource):
             PREFIX + 'graph.add_multi_marker.GraphAddMultiMarker',
             PREFIX + 'array.create_element.ArrayCreateElement',
             PREFIX + 'tree.create_node.TreeCreateNode',
+            PREFIX + 'tree.change_parent.TreeChangeParent',
         )
