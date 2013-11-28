@@ -6,7 +6,7 @@ python:
 
 install: pip install coveralls==0.3; python setup.py develop
 
-script:  python coverage run --source=alvi setup.py test
+script:  python -m coverage run --source=alvi setup.py test
 
 before_install:
   - "export DISPLAY=:99.0"
