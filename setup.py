@@ -14,7 +14,7 @@ setup(
     long_description='Algorithm Visualization framework',
     install_requires=open("requirements.txt").read().split('\n'),
     tests_require=open("requirements_tests.txt").read().split('\n'),
-    test_suite="alvi.tests",
+    test_suite='discover_tests',
     include_package_data=True,
     #platform
     #keywords
