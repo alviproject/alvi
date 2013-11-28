@@ -1,7 +1,7 @@
 import unittest
-from unittest.mock import MagicMock, PropertyMock
-from unittest.mock import patch
-from unittest.mock import call
+from mock import MagicMock
+from mock import patch
+from mock import call
 from alvi.client.containers.tree import Tree
 from alvi.client.api import Pipe
 
