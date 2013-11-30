@@ -72,3 +72,22 @@ class TestTree(unittest.TestCase):
         self.assertEquals(node4.parent, node2)
         self.assertEquals(len(node1.children), 1)
         self.assertEquals(len(node2.children), 1)
+
+    def test_change_root(self):
+        tree = self.create_sample_tree()
+        node0 = tree.root
+        node1 = tree.root.children[0]
+        self.assertEquals(len(node1.children), 2)
+        self.assertEquals(len(node0.children), 2)
+        self.assertEquals(tree.root, node0)
+        self.assertEquals(node1.parent, node0)
+        self.assertEquals(node0.parent, None)
+
+        tree.change_root(node1)
+
+        self.assertEquals(len(node1.children), 3)
+        self.assertEquals(len(node0.children), 1)
+        self.assertEquals(tree.root, node1)
+        self.assertEquals(node1.parent, None)
+        self.assertEquals(node0.parent, node1)
+        self.pipe.send.assert_called_with('change_root', (1,), {'id': 1})

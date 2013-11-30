@@ -33,3 +33,14 @@ class Tree(base.Container):
             raise RuntimeError("Cannot set root more that once")
         self._root = Node(self, None, value)
         return self._root
+
+    def change_root(self, node):
+        old_root = self.root
+        parent = node.parent
+        node.parent.children.remove(node)
+        node.children.append(node)
+        parent.parent = node
+        #TODO remove inconsistency - root node has parent set to None in containers and to self in low level API
+        node.parent = None
+        self._root = node
+        alvi.client.api.tree.change_root(self._pipe, node.id)

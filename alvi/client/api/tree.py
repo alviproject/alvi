@@ -9,4 +9,10 @@ def change_parent(pipe, id, parent_id):
     ))
 
 
+def change_root(pipe, id):
+    pipe.send('change_root', (id, ), dict(
+        id=id,
+    ))
+
+
 CONTAINER = "Tree"

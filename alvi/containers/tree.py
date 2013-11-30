@@ -20,3 +20,7 @@ class Tree(base.Container):
     @action
     def change_parent(self, **kwargs):
         return kwargs
+
+    @action
+    def change_root(self, **kwargs):
+        return kwargs

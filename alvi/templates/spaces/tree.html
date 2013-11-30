@@ -228,9 +228,26 @@
             update(root);
         }
 
+        function change_root(action) {
+            var node = get_node(action.id);
+            var parent = node.parent;
+            for(var i = parent.children.length - 1; i >= 0; i--) {
+               if(parent.children[i].id === node.id) {
+                    parent.children.splice(i, 1);
+                }
+            }
+            if(!node.children) {
+                node.children = [];
+            }
+            node.children.push(parent);
+            root = node;
+            update(root);
+        }
+
         register_action("create_node", create_node);
         register_action("update_node", update_node);
         register_action("change_parent", change_parent);
+        register_action("change_root", change_root);
 
     </script>
 {% endblock %}

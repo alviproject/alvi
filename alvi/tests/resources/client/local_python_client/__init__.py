@@ -25,6 +25,7 @@ class LocalPythonClient(Resource):
 
     @property
     def scenes(self):
+        #TODO following scenes could be autodiscovered
         PREFIX = 'alvi.tests.resources.client.local_python_client.scenes.'
         return (
             PREFIX + 'graph.create_node.GraphCreateNode',
@@ -34,4 +35,5 @@ class LocalPythonClient(Resource):
             PREFIX + 'array.create_element.ArrayCreateElement',
             PREFIX + 'tree.create_node.TreeCreateNode',
             PREFIX + 'tree.change_parent.TreeChangeParent',
+            PREFIX + 'tree.change_root.TreeChangeRoot',
         )
