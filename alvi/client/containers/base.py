@@ -2,17 +2,13 @@ import alvi.client.api.base as base
 import alvi.client.api.common as common
 
 
-def generate_id(obj):
-    return id(obj)
-
-
 class Item:
     def __init__(self, container):
         self._container = container
 
     @property
     def id(self):
-        return generate_id(self)
+        return self._container._pipe.generate_id(self)
 
 
 class Marker(Item):
@@ -57,7 +53,10 @@ class Node(Item):
     def __init__(self, container, parent, value):
         super().__init__(container)
         self._value = value
-        parent_id = parent.id if parent else self.id
+        if parent:
+            parent_id = parent.id
+        else:
+            parent_id = self.id
         base.create_node(self._container._pipe, self.id, parent_id, value)
 
     @property
@@ -82,7 +81,6 @@ class Container:
         return Marker(name, item)
 
     def create_multi_marker(self, name):
-        #TODO move it to Container (same for create_marker)
         return MultiMarker(self, name)
 
     @classmethod

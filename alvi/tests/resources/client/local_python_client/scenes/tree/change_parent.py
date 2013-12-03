@@ -1,12 +1,11 @@
-import alvi.client.api.tree as tree
 from alvi.tests.resources.client.local_python_client.scenes.tree.create_node import TreeCreateNode
 
 
 class TreeChangeParent(TreeCreateNode):
-    def run(self, pipe):
-        super().run(pipe)
-        tree.change_parent(pipe, id=4, parent_id=2)
-        pipe.sync()
+    def run(self, tree):
+        super().run(tree)
+        self.nodes[4].change_parent(self.nodes[2])
+        tree.sync()
 
 
 if __name__ == "__main__":

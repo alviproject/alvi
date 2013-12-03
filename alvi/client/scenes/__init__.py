@@ -1,3 +1,5 @@
+from .base import Scene
+
 from .booble_sort import BoobleSort
 from .insertion_sort import InsertionSort
 from .linear_search import LinearSearch

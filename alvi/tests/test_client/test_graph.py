@@ -1,4 +1,5 @@
 import logging
+import unittest
 from selenium.webdriver.common.by import By
 import alvi.tests.pages as pages
 from alvi.tests.test_client.base import TestContainer
@@ -19,6 +20,7 @@ class TestGraph(TestContainer):
         created = node_values[:3]
         self.assertEqual([0, 1, 2], created, "create_node does not work properly")
 
+    @unittest.skip("graph container does not support updating nodes at the moment")
     def test_update_node(self):
         graph_page = pages.Graph(self._browser.driver, "GraphUpdateNode")
         graph_page.goto()
@@ -26,6 +28,7 @@ class TestGraph(TestContainer):
         updated = list(graph_page.svg.node_values)[3]
         self.assertEqual(10, updated, "update_node does not work properly")
 
+    @unittest.skip("graph container does not support removing nodes at the moment")
     def test_remove_node(self):
         graph_page = pages.Graph(self._browser.driver, "GraphRemoveNode")
         graph_page.goto()

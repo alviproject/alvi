@@ -49,7 +49,6 @@ class TestTree(TestContainer):
         self.assertEqual(7, len(page.svg.nodes), "create_node does not work properly")
 
         node_data = sorted(page.svg.node_data, key=lambda d: d['id'])
-        print(node_data)
         expected = [
             {'id': 0, 'parent': 1, 'name': 0},
             {'id': 1, 'parent': 0, 'name': 1},

@@ -1,22 +1,32 @@
-import alvi.client.api
-import alvi.client.api.tree as tree
-import alvi.client.containers
+from alvi.client.scenes import Scene
+from alvi.client.containers.tree import Tree
 
 
-class TreeCreateNode(alvi.client.api.BaseScene):
-    def run(self, pipe):
-        tree.create_node(pipe, id=0, parent_id=0, value=0)
-        tree.create_node(pipe, id=1, parent_id=0, value=1)
-        tree.create_node(pipe, id=2, parent_id=0, value=2)
-        tree.create_node(pipe, id=3, parent_id=1, value=3)
-        tree.create_node(pipe, id=4, parent_id=1, value=4)
-        tree.create_node(pipe, id=5, parent_id=4, value=5)
-        tree.create_node(pipe, id=6, parent_id=4, value=6)
-        pipe.sync()
+class TreeCreateNode(Scene):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.nodes = []
+
+    def run(self, tree):
+        node = tree.create_root(value=0)
+        self.nodes.append(node)
+        node = self.nodes[0].create_child(value=1)
+        self.nodes.append(node)
+        node = self.nodes[0].create_child(value=2)
+        self.nodes.append(node)
+        node = self.nodes[1].create_child(value=3)
+        self.nodes.append(node)
+        node = self.nodes[1].create_child(value=4)
+        self.nodes.append(node)
+        node = self.nodes[4].create_child(value=5)
+        self.nodes.append(node)
+        node = self.nodes[4].create_child(value=6)
+        self.nodes.append(node)
+        tree.sync()
 
     @classmethod
-    def container_name(cls):
-        return "Tree"
+    def container_class(cls):
+        return Tree
 
 
 if __name__ == "__main__":

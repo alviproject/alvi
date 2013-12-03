@@ -6,17 +6,8 @@ from alvi.client.containers.tree import Tree
 from alvi.client.api import Pipe
 
 
-_cache = dict()
-
-
-def generate_id(obj):
-    return _cache.setdefault(id(obj), len(_cache))
-
-
-@patch('alvi.client.containers.base.generate_id', MagicMock(side_effect=generate_id))
 class TestTree(unittest.TestCase):
     def setUp(self):
-        _cache.clear()
         self.pipe = Pipe("test_scene")
         self.pipe.send = MagicMock()
 

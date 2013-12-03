@@ -1,22 +1,25 @@
-"""various graph operations"""
-
-import alvi.client.api
-import alvi.client.api.graph as graph
-import alvi.client.containers
+from alvi.client.scenes import Scene
+from alvi.client.containers.graph import Graph
 
 
-class GraphCreateNode(alvi.client.api.BaseScene):
-    def run(self, pipe):
+class GraphCreateNode(Scene):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.nodes = []
+
+    def run(self, graph):
         n = 4
-        graph.create_node(pipe, id=0, parent_id=0, value=0)
+        node = graph.create_node(0)
+        self.nodes.append(node)
         for i in range(n-1):
-            graph.create_node(pipe, id=i+1, parent_id=i, value=i+1)
-        graph.create_edge(pipe, node1_id=0, node2_id=n-1)
-        pipe.sync()
+            node = node.create_child(i+1)
+            self.nodes.append(node)
+        node.create_edge(self.nodes[0])
+        graph.sync()
 
     @classmethod
-    def container_name(cls):
-        return "Graph"
+    def container_class(cls):
+        return Graph
 
 
 if __name__ == "__main__":
