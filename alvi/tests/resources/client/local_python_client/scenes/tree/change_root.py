@@ -4,7 +4,7 @@ from alvi.tests.resources.client.local_python_client.scenes.tree.create_node imp
 class TreeChangeRoot(TreeCreateNode):
     def run(self, tree):
         super().run(tree)
-        tree.change_root(self.nodes[1])
+        tree.root = self.nodes[1]
         tree.sync()
 
 

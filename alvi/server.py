@@ -19,7 +19,7 @@ from alvi import scene_manager
 logger = logging.getLogger(__name__)
 
 tornado.options.define("port", help="server port", default=8000, type=int)
-tornado.options.define("address", help="server address", default="localhost", type=str)
+tornado.options.define("address", help="server address", default="0.0.0.0", type=str)
 
 
 def get_json_data(request):

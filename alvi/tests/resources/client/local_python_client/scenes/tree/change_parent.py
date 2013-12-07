@@ -4,8 +4,11 @@ from alvi.tests.resources.client.local_python_client.scenes.tree.create_node imp
 class TreeChangeParent(TreeCreateNode):
     def run(self, tree):
         super().run(tree)
-        self.nodes[4].change_parent(self.nodes[2])
+        self.nodes[2].append(self.nodes[4])
         tree.sync()
+        self.nodes[2].insert(0, self.nodes[3])
+        tree.sync()
+        self.nodes[2].append(self.nodes[5])
 
 
 if __name__ == "__main__":

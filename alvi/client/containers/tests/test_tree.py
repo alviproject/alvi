@@ -57,8 +57,8 @@ class TestTree(unittest.TestCase):
         self.assertEquals(node4.id, 4)
         self.assertEquals(node4.parent, node1)
 
-        node4.change_parent(node2)
-        self.pipe.send.assert_called_with('change_parent', (4,), {'parent_id': 2, 'id': 4})
+        node2.append(node4)
+        self.pipe.send.assert_called_with('insert_child', (4,), {'parent_id': 2, 'child_id': 4, 'index': 0})
 
         self.assertEquals(node4.parent, node2)
         self.assertEquals(len(node1.children), 1)
@@ -74,7 +74,7 @@ class TestTree(unittest.TestCase):
         self.assertEquals(node1.parent, node0)
         self.assertEquals(node0.parent, None)
 
-        tree.change_root(node1)
+        tree.root = node1
 
         self.assertEquals(len(node1.children), 3)
         self.assertEquals(len(node0.children), 1)

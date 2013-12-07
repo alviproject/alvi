@@ -201,9 +201,10 @@
             update(root);
         }
 
-        function change_parent(action) {
-            var node = get_node(action.id);
+        function insert_child(action) {
+            var node = get_node(action.child_id);
             var old_parent = node.parent;
+            var index = action.index;
             var new_parent = get_node(action.parent_id);
             node.parent = new_parent;
             for(var i = old_parent.children.length - 1; i >= 0; i--) {
@@ -214,7 +215,7 @@
             if(!new_parent.children) {
                 new_parent.children = [];
             }
-            new_parent.children.push(node);
+            new_parent.children.splice(index, 0, node);
             update(root);
         }
 
@@ -246,7 +247,7 @@
 
         register_action("create_node", create_node);
         register_action("update_node", update_node);
-        register_action("change_parent", change_parent);
+        register_action("insert_child", insert_child);
         register_action("change_root", change_root);
 
     </script>

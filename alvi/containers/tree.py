@@ -18,7 +18,7 @@ class Tree(base.Container):
         return kwargs
 
     @action
-    def change_parent(self, **kwargs):
+    def insert_child(self, **kwargs):
         return kwargs
 
     @action
