@@ -2,11 +2,11 @@ from . import base
 import alvi.client.api.array as array
 
 
-class Element(base.Item):
+class Node(base.Item):
     def __init__(self, container):
         super().__init__(container)
         self._value = 0
-        array.create_element(self._container._pipe, self.id, self.value)
+        array.create_node(self._container._pipe, self.id, self.value)
 
     @property
     def value(self):
@@ -15,36 +15,36 @@ class Element(base.Item):
     @value.setter
     def value(self, v):
         self._value = v
-        array.update_element(self._container._pipe, self.id, self.value)
+        array.update_node(self._container._pipe, self.id, self.value)
 
 
 class Marker(base.Marker):
     def move(self, index):
-        element = self._container._elements[index]
-        return super().move(element)
+        node = self._container._nodes[index]
+        return super().move(node)
 
 
 #TODO iterators, etc
 class Array(base.Container):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self._elements = []
+        self._nodes = []
 
     def init(self, size):
-        if self._elements:
+        if self._nodes:
             raise RuntimeError("Array was already initialized")
         for i in range(size):
-            self._elements.append(Element(self))
+            self._nodes.append(Node(self))
 
     def __getitem__(self, index):
-        return self._elements[index].value
+        return self._nodes[index].value
 
     def __setitem__(self, index, value):
-        self._elements[index].value = value
+        self._nodes[index].value = value
 
     def size(self):
-        return len(self._elements)
+        return len(self._nodes)
 
-    def create_marker(self, name, element_id):
-        element = self._elements[element_id]
-        return Marker(name, element)
+    def create_marker(self, name, node_id):
+        node = self._nodes[node_id]
+        return Marker(name, node)

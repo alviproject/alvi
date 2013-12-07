@@ -12,13 +12,13 @@ class Item:
 
 
 class Marker(Item):
-    def __init__(self, name, item):
+    def __init__(self, name, node):
         #TODO get container as first argument to be consistent with MM
-        super().__init__(item._container)
-        common.create_marker(self._container._pipe, self.id, name, item.id)
+        super().__init__(node._container)
+        common.create_marker(self._container._pipe, self.id, name, node.id)
 
-    def move(self, item):
-        common.move_marker(self._container._pipe, self.id, item.id)
+    def move(self, node):
+        common.move_marker(self._container._pipe, self.id, node.id)
 
     def remove(self):
         common.remove_marker(self._container._pipe, self.id)
@@ -29,15 +29,15 @@ class MultiMarker(Item):
     def __init__(self, container, name):
         super().__init__(container)
         common.create_multi_marker(self._container._pipe, self.id, name)
-        self._items = set()
+        self._nodes = set()
 
-    def add(self, item):
-        if not item in self._items:
-            common.multi_marker_add_item(self._container._pipe, self.id, item.id)
-            self._items.add(item)
+    def add(self, node):
+        if not node in self._nodes:
+            common.multi_marker_add_node(self._container._pipe, self.id, node.id)
+            self._nodes.add(node)
 
-    def __contains__(self, item):
-        return item in self._items
+    def __contains__(self, node):
+        return node in self._nodes
 
 
 class Stats:
@@ -77,8 +77,8 @@ class Container:
     def sync(self):
         self._pipe.sync()
 
-    def create_marker(self, name, item):
-        return Marker(name, item)
+    def create_marker(self, name, node):
+        return Marker(name, node)
 
     def create_multi_marker(self, name):
         return MultiMarker(self, name)

@@ -30,5 +30,5 @@ class Graph(base.Container):
         return kwargs
 
     @action
-    def multi_marker_add_item(self, **kwargs):
+    def multi_marker_add_node(self, **kwargs):
         return kwargs

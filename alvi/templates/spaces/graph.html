@@ -252,8 +252,8 @@
             nodes.push(node);
         }
 
-        function multi_marker_add_item(action) {
-            var node = nodes[node_indexes[action.item_id]];
+        function multi_marker_add_node(action) {
+            var node = nodes[node_indexes[action.node_id]];
             var marker = nodes[node_indexes[action.id]];
             node.markers.push(marker);
         }
@@ -262,7 +262,7 @@
         register_action("remove_node", remove_node);
         register_action("create_edge", create_edge);
         register_action("create_multi_marker", create_multi_marker);
-        register_action("multi_marker_add_item", multi_marker_add_item);
+        register_action("multi_marker_add_node", multi_marker_add_node);
         register_action("update_node", update_node);
 
         $(".reset_graph").click(function() {
