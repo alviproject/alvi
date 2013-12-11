@@ -5,13 +5,14 @@ from . import base
 
 class Tree(scene.Scene):
     class SVG(scene.Scene.SVG):
-        nodes = base.make_elements(By.CSS_SELECTOR, "g circle")
+        nodes = base.make_elements(By.CSS_SELECTOR, "g.node circle")
+        markers = base.make_elements(By.CSS_SELECTOR, "g.marker circle")
 
         @property
         def node_data(self):
             driver = base.get_driver_from_element(self._root)
             script = """
-var nodes = d3.selectAll("svg g circle")[0];
+var nodes = d3.selectAll("svg g.node circle")[0];
 function mapper(val, i) {
     var data = val.__data__;
     return {

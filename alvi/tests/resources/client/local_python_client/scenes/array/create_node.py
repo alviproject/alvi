@@ -13,7 +13,3 @@ class ArrayCreateNode(Scene):
     @classmethod
     def container_class(cls):
         return Array
-
-
-if __name__ == "__main__":
-    ArrayCreateNode.start()

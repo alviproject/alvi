@@ -30,6 +30,7 @@ $(function () {
                 //console.log(action);
                 var action_type = action[0];
                 action_in_progress = true;
+                //console.log(action);
                 actions[action_type](action[1]);
                 action_in_progress = false;
                 //console.log("action finished");

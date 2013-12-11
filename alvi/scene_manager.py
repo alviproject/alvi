@@ -1,9 +1,7 @@
 import importlib
 import multiprocessing
 import tornado.options
-
-
-tornado.options.define("default_scenes", help="list of auto-loaded scenes", multiple=True)
+import alvi.options
 
 
 def load_default_scenes():

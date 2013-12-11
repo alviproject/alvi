@@ -27,7 +27,3 @@ class TreeCreateNode(Scene):
     @classmethod
     def container_class(cls):
         return Tree
-
-
-if __name__ == "__main__":
-    TreeCreateNode.start()

@@ -8,13 +8,13 @@ class CreateTree(base.Scene):
     def run(self, tree):
         n = 8
         nodes = []
-        node = tree.create_root(random.randint(0, n))
+        node = tree.create_root(0)
         nodes.append(node)
         tree.sync()
         for i in range(n-1):
             x = random.randint(0, i)
             parent = nodes[x]
-            node = parent.create_child(i)
+            node = parent.create_child(i+1)
             nodes.append(node)
             tree.sync()
 

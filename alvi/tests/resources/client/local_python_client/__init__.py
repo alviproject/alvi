@@ -37,4 +37,6 @@ class LocalPythonClient(Resource):
             PREFIX + 'tree.create_node.TreeCreateNode',
             PREFIX + 'tree.change_parent.TreeChangeParent',
             PREFIX + 'tree.change_root.TreeChangeRoot',
+            PREFIX + 'tree.marker.TreeMarker',
+            PREFIX + 'tree.multi_marker.TreeMultiMarker',
         )

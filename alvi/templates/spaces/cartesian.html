@@ -81,7 +81,7 @@
 
         function update_scale() {
             var maxX = d3.max(points, function(d) { return d.x; });
-            var maxY = points.length;
+            var maxY = d3.max(points, function(d) { return d.y; });
             xScale.domain([0, maxX]);
             yScale.domain([0, maxY]);
 

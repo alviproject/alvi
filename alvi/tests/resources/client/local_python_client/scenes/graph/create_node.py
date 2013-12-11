@@ -20,7 +20,3 @@ class GraphCreateNode(Scene):
     @classmethod
     def container_class(cls):
         return Graph
-
-
-if __name__ == "__main__":
-    GraphCreateNode.start()

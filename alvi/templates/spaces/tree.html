@@ -25,8 +25,11 @@
     </style>
 
     <script type="text/javascript">
-        var i = 0;//TODO remove
+        var markers = [];
+        var marker_count = 0;
         var root;
+
+        var marker_color = d3.scale.category10();
 
         var tree = d3.layout.tree().size([scene_height, scene_width-padding*2]);
 
@@ -42,14 +45,10 @@
                 .attr("transform", "translate(" + padding + ")");
 
         function init_root(d) {
-            root = {
-                "name": d.value,
-                "id": d.id,
-                "children": []
-            }
+            root = d;
             root.x0 = scene_height / 2;
             root.y0 = 0;
-            root.children.forEach(collapse);
+            //root.children.forEach(collapse);
             update(root);
         }
 
@@ -61,13 +60,20 @@
             }
         }
 
+        function node_fill(node) {
+            if(node.markers.length > 0) {
+                return marker_color(node.markers[0].number);
+            }
+            return "#fff";
+        }
+
         function update(source) {
             var nodes = tree.nodes(root).reverse();
             var links = tree.links(nodes);
 
             var node = svg.selectAll("g.node")
                     .data(nodes, function (d) {
-                        return d._id || (d._id = ++i);
+                        return d.id;
                     });
 
             // Enter any new nodes at the parent's previous position.
@@ -80,9 +86,7 @@
 
             nodeEnter.append("circle")
                     .attr("r", 1e-6)
-                    .style("fill", function (d) {
-                        return d._children ? "lightsteelblue" : "#fff";
-                    });
+                    .style("fill", node_fill);
 
             nodeEnter.append("text")
                     .attr("x", function (d) {
@@ -106,9 +110,7 @@
 
             nodeUpdate.select("circle")
                     .attr("r", 10)
-                    .style("fill", function (d) {
-                        return d._children ? "lightsteelblue" : "#fff";
-                    });
+                    .style("fill", node_fill);
 
             nodeUpdate.select("text")
                     .style("fill-opacity", 1)
@@ -133,7 +135,7 @@
             // Update the links…
             var link = svg.selectAll("path.link")
                     .data(links, function (d) {
-                        return d.target._id;
+                        return d.target.id;
                     });
 
             // Enter any new links at the parent's previous position.
@@ -165,6 +167,34 @@
             });
         }
 
+        function update_markers() {
+
+            var marker = svg.selectAll("g.marker")
+                    .data(markers);
+
+            // Enter any new nodes at the parent's previous position.
+            var nodeEnter = marker.enter().append("g")
+                    .attr("class", "marker")
+                    .attr("transform", function (d) {
+                        var y = 25 * (d.number+1);
+                        return "translate(0, "+y+")";
+                    });
+
+            nodeEnter.append("circle")
+                    .attr("r", 10)
+                    .style("fill", function (d) {
+                        return marker_color(d.number);
+                    });
+
+            nodeEnter.append("text")
+                    .attr("x", 20)
+                    .attr("y", ".35em")
+                    .attr("text-anchor", "start")
+                    .text(function (d) {
+                        return d.name;
+                    });
+        }
+
         // Toggle children on click.
         function click(d) {
             if (d.children) {
@@ -179,20 +209,73 @@
 
         function create_node(action) {
             var node = {};
-            node.parent_id = action.parent_id;
             node.id = action.id;
-            node.value = action.value;
+            node.name = action.value;
+            node.markers = [];
 
             if (!root) {
                 init_root(node);
                 return;
             }
-            var parent = get_node(node.parent_id);
+            var parent = get_node(action.parent_id);
             if (!parent.children) {
                 parent.children = [];
             }
-            parent.children.push({"name": node.value, "id": node.id});
+            parent.children.push(node);
             update(parent);
+        }
+
+        function create_marker(action) {
+            var marker = create_marker_common(action);
+            var node = get_node(action.node_id);
+            node.markers.push(marker);
+            marker.node = node;
+            update_markers();
+        }
+
+        function create_multi_marker(action) {
+            var marker = create_marker_common(action);
+            update_markers();
+        }
+
+        function create_marker_common(action) {
+            var marker = {
+                'id': action.id,
+                'name': action.name,
+                'number': marker_count++,
+            };
+            markers.push(marker);
+            return marker;
+        }
+
+        function get_marker(id) {
+            for(var i=0; i<markers.length; i++) {
+                var marker = markers[i];
+                if (marker.id == id) {
+                    return marker;
+                }
+            }
+        }
+
+        function move_marker(action) {
+            var marker = get_marker(action.id);
+
+            for(var i = 0; i < marker.node.markers.length; ++i) {
+                var m = marker.node.markers[i];
+                if(m.id === marker.id) {
+                    marker.node.markers.splice(i, 1);
+                    break;
+                }
+            }
+            multi_marker_append(action);
+        }
+
+        function multi_marker_append(action) {
+            var marker = get_marker(action.id);
+            var node = get_node(action.node_id);
+            marker.node = node;
+            node.markers.push(marker);
+            update(root);
         }
 
         function update_node(action) {
@@ -249,6 +332,9 @@
         register_action("update_node", update_node);
         register_action("insert_child", insert_child);
         register_action("change_root", change_root);
-
+        register_action("create_marker", create_marker);
+        register_action("move_marker", move_marker);
+        register_action("create_multi_marker", create_multi_marker);
+        register_action("multi_marker_append", multi_marker_append);
     </script>
 {% endblock %}

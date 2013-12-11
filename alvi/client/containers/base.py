@@ -31,9 +31,9 @@ class MultiMarker(Item):
         common.create_multi_marker(self._container._pipe, self.id, name)
         self._nodes = set()
 
-    def add(self, node):
+    def append(self, node):
         if not node in self._nodes:
-            common.multi_marker_add_node(self._container._pipe, self.id, node.id)
+            common.multi_marker_append(self._container._pipe, self.id, node.id)
             self._nodes.add(node)
 
     def __contains__(self, node):

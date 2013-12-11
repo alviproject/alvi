@@ -38,7 +38,7 @@ class TestGraph(TestContainer):
         node_values.sort()
         self.assertEqual([0, 1, 2], node_values, "remove_node does not work properly")
 
-    def test_add_multi_marker(self):
+    def test_multi_marker_append(self):
         graph_page = pages.Graph(self._browser.driver, "GraphAddMultiMarker")
         graph_page.goto()
 

@@ -33,8 +33,8 @@ def create_multi_marker(pipe, id, name):
     ))
 
 
-def multi_marker_add_node(pipe, id, node_id):
-    pipe.send('multi_marker_add_node', (id, node_id), dict(
+def multi_marker_append(pipe, id, node_id):
+    pipe.send('multi_marker_append', (id, node_id), dict(
         id=id,
         node_id=node_id,
     ))

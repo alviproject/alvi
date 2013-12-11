@@ -24,11 +24,3 @@ class Graph(base.Container):
     @action
     def create_edge(self, **kwargs):
         return kwargs
-
-    @action
-    def create_multi_marker(self, **kwargs):
-        return kwargs
-
-    @action
-    def multi_marker_add_node(self, **kwargs):
-        return kwargs

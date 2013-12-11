@@ -61,3 +61,30 @@ class TestTree(TestContainer):
         ]
 
         self.assertEqual(expected, node_data, "change_parent does not work properly")
+
+    def test_marker(self):
+        page = pages.Tree(self._browser.driver, "TreeMarker")
+        page.goto()
+
+        self.assertEqual(7, len(page.svg.nodes), "create_node does not work properly")
+        self.assertEqual(2, len(page.svg.markers), "create_marker does not work properly")
+
+        marker0_color = page.svg.markers[0].value_of_css_property('fill')
+        marker1_color = page.svg.markers[1].value_of_css_property('fill')
+
+        marked = [n for n in page.svg.nodes if n.value_of_css_property('fill') == marker0_color]
+        self.assertEquals(len(marked), 1, "create_marker does not work properly")
+
+        marked = [n for n in page.svg.nodes if n.value_of_css_property('fill') == marker1_color]
+        self.assertEquals(len(marked), 1, "create_marker or move_marker does not work properly")
+
+    def test_multi_marker(self):
+        page = pages.Tree(self._browser.driver, "TreeMultiMarker")
+        page.goto()
+
+        self.assertEqual(7, len(page.svg.nodes), "create_node does not work properly")
+        self.assertEqual(1, len(page.svg.markers), "create_multi_marker does not work properly")
+
+        marker_color = page.svg.markers[0].value_of_css_property('fill')
+        marked = [n for n in page.svg.nodes if n.value_of_css_property('fill') == marker_color]
+        self.assertEquals(len(marked), 3, "multi_marker_append does not work properly")

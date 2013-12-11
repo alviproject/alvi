@@ -9,7 +9,3 @@ class TreeChangeParent(TreeCreateNode):
         self.nodes[2].insert(0, self.nodes[3])
         tree.sync()
         self.nodes[2].append(self.nodes[5])
-
-
-if __name__ == "__main__":
-    TreeChangeParent.start()

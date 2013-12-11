@@ -62,3 +62,23 @@ class Container(metaclass=ContainerMeta):
     @action
     def finish(self, **kwargs):
         return kwargs
+
+    @action
+    def create_marker(self, **kwargs):
+        return kwargs
+
+    @action
+    def move_marker(self, **kwargs):
+        return kwargs
+
+    @action
+    def remove_marker(self, **kwargs):
+        return kwargs
+
+    @action
+    def create_multi_marker(self, **kwargs):
+        return kwargs
+
+    @action
+    def multi_marker_append(self, **kwargs):
+        return kwargs
