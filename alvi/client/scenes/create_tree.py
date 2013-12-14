@@ -14,7 +14,7 @@ class CreateTree(base.Scene):
         for i in range(n-1):
             x = random.randint(0, i)
             parent = nodes[x]
-            node = parent.create_child(i+1)
+            node = parent.children.create(i+1)
             nodes.append(node)
             tree.sync()
 
