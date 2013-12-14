@@ -5,6 +5,7 @@ import selenium.common.exceptions
 
 
 class Scene(home.Home):
+    SCENE_TIMEOUT = 10
     """abstract scene, not to be used directly"""
     class SVG:
         """abstract SVG element, to be overloaded in inherited scenes"""
@@ -27,7 +28,7 @@ class Scene(home.Home):
     def wait_to_finish(self):
         """wait until algorithm scene is finished"""
         #TODO don't hardcode values
-        WebDriverWait(self._root, 10, 0.1)\
+        WebDriverWait(self._root, self.SCENE_TIMEOUT, 0.1)\
             .until(lambda driver: driver.find_element(By.CSS_SELECTOR, "#state").text == "finished")
 
     def goto(self):

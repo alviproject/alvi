@@ -1,5 +1,5 @@
 from alvi.client.containers import Array
-from alvi.client.scenes import Scene
+from alvi.client.scenes.base import Scene
 
 
 class ArrayCreateNode(Scene):

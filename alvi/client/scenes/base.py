@@ -1,5 +1,8 @@
 import abc
+import logging
 from .. import api
+
+logger = logging.getLogger(__name__)
 
 
 class Scene(api.BaseScene):
@@ -17,3 +20,6 @@ class Scene(api.BaseScene):
     @abc.abstractmethod
     def container_class(cls):
         raise NotImplementedError
+
+    def test(self, cotainer, test_case):
+        logger.warning("skipping test for %s" % self.__class__.__name__)

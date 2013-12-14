@@ -27,7 +27,7 @@ class TraverseGraph(base.Scene):
     def traverse(self, marker, graph, node):
         if node in marker:
             return
-        marker.add(node)
+        marker.append(node)
         graph.stats.traversed_nodes += 1
         graph.sync()
         for child in node.children():

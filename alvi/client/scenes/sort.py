@@ -37,3 +37,9 @@ class Sort(base.Scene):
     @staticmethod
     def container_class():
         return alvi.client.containers.Array
+
+    def test(self, array, test_case):
+        for i in range(1, array.size()):
+            previous = array[i-1]
+            current = array[i]
+            test_case.assertLessEqual(previous, current)

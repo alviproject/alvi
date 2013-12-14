@@ -1,4 +1,4 @@
-from alvi.client.scenes import Scene
+from alvi.client.scenes.base import Scene
 from alvi.client.containers.graph import Graph
 
 

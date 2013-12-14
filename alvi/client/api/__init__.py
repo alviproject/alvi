@@ -4,12 +4,13 @@ consider using higher level containers package instead this one
 """
 import multiprocessing
 import collections
-from django.conf import settings
 import time
 import abc
 import inspect
 
 from .. import utils
+
+API_URL_SCENE_SYNC = 'api/scene/register'
 
 
 class SubsequenceIDGenerator:
@@ -42,7 +43,7 @@ class Pipe:
             instance_id=self._scene_instance_id,
             messages=list(self._backlog.values()),
         )
-        utils.post_to_server(settings.API_URL_SCENE_SYNC, data)
+        utils.post_to_server(API_URL_SCENE_SYNC, data)
         self._backlog = self._backlog.__class__()  # python 3.2 does not support clear() on dicts
         time.sleep(1)
 
