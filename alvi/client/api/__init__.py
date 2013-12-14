@@ -11,6 +11,7 @@ import inspect
 from .. import utils
 
 API_URL_SCENE_SYNC = 'api/scene/register'
+API_URL_SCENE_REGISTER = 'api/scene/register'
 
 
 class SubsequenceIDGenerator:
@@ -61,7 +62,7 @@ class BaseScene(metaclass=abc.ABCMeta):
                 container=cls.container_name(),
                 source=inspect.getsource(cls),
             )
-            response = utils.post_to_server(settings.API_URL_SCENE_REGISTER, post_data)
+            response = utils.post_to_server(API_URL_SCENE_REGISTER, post_data)
             scene_instance_id = response['scene_instance_id']
             process = multiprocessing.Process(target=cls.create_instance, args=(scene_instance_id,))
             process.start()

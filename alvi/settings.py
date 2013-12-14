@@ -132,8 +132,3 @@ LOGGING = {
 # make all loggers use the console.
 for logger in LOGGING['loggers']:
     LOGGING['loggers'][logger]['handlers'] = ['console']
-
-#define API urls to make sure that they are the same on client and server
-#url reversing was not used to make sure that no code (except settings) will be reused between client and server
-API_URL_SCENE_REGISTER = 'api/scene/register'
-API_URL_SCENE_SYNC = 'api/scene/sync'
