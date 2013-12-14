@@ -1,7 +1,6 @@
 from . import base
 import alvi.client.api.tree
 
-
 class Node(base.Node):
     def __init__(self, container, parent, value):
         super().__init__(container, parent, value)
@@ -18,11 +17,18 @@ class Node(base.Node):
         self.insert(len(self.children), child)
 
     def insert(self, index, child):
-        child.parent.children.remove(child)
+        #a node does not always have a parent e.g: attaching node that was formerly root
+        if child.parent:
+            child.parent.children.remove(child)
         alvi.client.api.tree.insert_child(self._container._pipe, self.id, index, child.id)
         self.children.insert(index, child)
         child.parent = self
 
+    def __repr__(self):
+        if self.value:
+            return str(self.value)
+        else:
+            return str(id(self))
 
 class Tree(base.Container):
     @property
@@ -34,10 +40,7 @@ class Tree(base.Container):
 
     @root.setter
     def root(self, node):
-        parent = node.parent
         node.parent.children.remove(node)
-        node.children.append(node)
-        parent.parent = node
         #TODO remove inconsistency - root node has parent set to None in containers and to self in low level API
         node.parent = None
         self._root = node
