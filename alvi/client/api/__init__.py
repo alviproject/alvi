@@ -10,7 +10,7 @@ import inspect
 
 from .. import utils
 
-API_URL_SCENE_SYNC = 'api/scene/register'
+API_URL_SCENE_SYNC = 'api/scene/sync'
 API_URL_SCENE_REGISTER = 'api/scene/register'
 
 

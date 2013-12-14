@@ -16,6 +16,8 @@ from alvi import scenes
 from alvi import scene_manager
 import alvi.options
 
+API_URL_SCENE_REGISTER = 'api/scene/register'
+API_URL_SCENE_SYNC = 'api/scene/sync'
 
 logger = logging.getLogger(__name__)
 
@@ -61,8 +63,8 @@ def run(config_file=None):
         router.urls +
         [
             (r"/static/(.*)", tornado.web.StaticFileHandler, {"path": os.path.join(settings.PROJECT_BASE_DIR, 'static')}),
-            ("/" + settings.API_URL_SCENE_REGISTER, RegisterSceneHandler),
-            ("/" + settings.API_URL_SCENE_SYNC, SyncSceneHandler),
+            ("/" + API_URL_SCENE_REGISTER, RegisterSceneHandler),
+            ("/" + API_URL_SCENE_SYNC, SyncSceneHandler),
             ('.*', tornado.web.FallbackHandler, dict(fallback=wsgi_app)),
         ])
     server = tornado.httpserver.HTTPServer(tornado_app)
