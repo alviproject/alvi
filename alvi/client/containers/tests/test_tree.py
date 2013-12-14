@@ -14,12 +14,12 @@ class TestTree(unittest.TestCase):
     def create_sample_tree(self):
         tree = Tree(self.pipe)
         root = tree.create_root(0)
-        node1 = root.create_child(1)
-        root.create_child(2)
-        node1.create_child(3)
-        node4 = node1.create_child(4)
-        node4.create_child(5)
-        node4.create_child(6)
+        node1 = root.children.create(1)
+        root.children.create(2)
+        node1.children.create(3)
+        node4 = node1.children.create(4)
+        node4.children.create(5)
+        node4.children.create(6)
         return tree
 
     def test_create_root(self):
@@ -57,7 +57,7 @@ class TestTree(unittest.TestCase):
         self.assertEquals(node4.id, 4)
         self.assertEquals(node4.parent, node1)
 
-        node2.append(node4)
+        node2.children.append(node4)
         self.pipe.send.assert_called_with('insert_child', (4,), {'parent_id': 2, 'child_id': 4, 'index': 0})
 
         self.assertEquals(node4.parent, node2)
