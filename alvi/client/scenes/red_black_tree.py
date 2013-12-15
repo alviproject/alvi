@@ -19,7 +19,7 @@ class Colors:
 class RedBlackNode:
     def __init__(self, container, parent, value, color):
         if parent is not None:
-            self._node = parent._node.create_child(value)
+            self._node = parent._node.children.create(value)
         else:
             self._node = tree.Node(container, None, value)
         self.parent = parent
@@ -93,7 +93,7 @@ class RedBlackNode:
 
     @left_child.setter
     def left_child(self, node):
-        self._node.insert(0, node._node)
+        self._node.children.insert(0, node._node)
         if node.parent:
             if 'left' in node.parent._children and node.parent._children['left'] == node:
                 del node.parent._children['left']
@@ -111,7 +111,7 @@ class RedBlackNode:
 
     @right_child.setter
     def right_child(self, node):
-        self._node.append(node._node)
+        self._node.children.append(node._node)
         if node.parent:
             if 'left' in node.parent._children and node.parent._children['left'] == node:
                 del node.parent._children['left']

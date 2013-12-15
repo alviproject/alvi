@@ -23,6 +23,8 @@ class Children:
         self._children.insert(index, child)
         child.parent = self._node
 
+    def remove(self, child):
+        self._children.remove(child)
 
     def __getitem__(self, index):
         return self._children[index]
@@ -48,9 +50,10 @@ class Tree(base.Container):
 
     @root.setter
     def root(self, node):
-        parent = node.parent
+        #FIXME
+        #parent = node.parent
         node.parent.children.remove(node)
-        parent.parent = node
+        #parent.parent = node
         #TODO remove inconsistency - root node has parent set to None in containers and to self in low level API
         node.parent = None
         self._root = node
