@@ -22,12 +22,15 @@ class BinarySearch(base.Scene):
         array.sync()
         while left <= right:
             mid = (right + left) // 2
+            print(left, mid, right)
             if array[mid] > value:
                 right = mid - 1
-                right_marker.move(right)
+                if right >= 0:
+                    right_marker.move(right)
             elif array[mid] < value:
                 left = mid + 1
-                left_marker.move(left)
+                if left < array.size():
+                    left_marker.move(left)
             else:
                 array.stats.found_id = mid
                 array.create_marker("found", mid)
