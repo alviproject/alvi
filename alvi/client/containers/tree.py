@@ -16,13 +16,13 @@ class Children:
         self.insert(len(self), child)
 
     def insert(self, index, child):
-        child.parent.children.remove(child)
+        #a node does not always have a parent e.g: attaching node that was formerly root
+        if child.parent:
+            child.parent.children.remove(child)
         alvi.client.api.tree.insert_child(self._node._container._pipe, self._node.id, index, child.id)
         self._children.insert(index, child)
         child.parent = self._node
 
-    def remove(self, child):
-        self._children.remove(child)
 
     def __getitem__(self, index):
         return self._children[index]
@@ -50,7 +50,6 @@ class Tree(base.Container):
     def root(self, node):
         parent = node.parent
         node.parent.children.remove(node)
-        node.children._children.append(node)
         parent.parent = node
         #TODO remove inconsistency - root node has parent set to None in containers and to self in low level API
         node.parent = None
