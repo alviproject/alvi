@@ -55,12 +55,12 @@ class SyncSceneHandler(tornado.web.RequestHandler):
 
 def parse_config_file(config_file):
     if config_file:
-        logger.info("parsing options from config file: ", config_file)
+        logger.info("parsing options from config file: %s", config_file)
         tornado.options.parse_config_file(config_file)
         return
     path = os.path.dirname(__file__)
     config_path = os.path.join(path, CONFIG_DEFAULT)
-    logger.info("parsing options from default config file: ", config_path)
+    logger.info("parsing options from default config file: %s", config_path)
     tornado.options.parse_config_file(config_path)
     try:
         config_path = os.path.join(path, CONFIG_LOCAL)

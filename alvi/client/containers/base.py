@@ -37,8 +37,15 @@ class MultiMarker(Item):
             common.multi_marker_append(self._container._pipe, self.id, node.id)
             self._nodes.add(node)
 
+    def remove(self, node):
+        self._nodes.remove(node)
+        common.multi_marker_remove(self._container._pipe, self.id, node.id)
+
     def __contains__(self, node):
         return node in self._nodes
+
+    def __len__(self):
+        return len(self._nodes)
 
 
 class Stats:

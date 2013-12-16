@@ -10,3 +10,5 @@ from .binary_search_tree import BinarySearchTree
 from .create_graph import CreateGraph
 from .traverse_graph import TraverseGraph
 from .red_black_tree import RedBlackTree
+from .traverse_tree_breadth_first import TraverseTreeBreadthFirst
+from .traverse_tree_depth_first import TraverseTreeDepthFirst

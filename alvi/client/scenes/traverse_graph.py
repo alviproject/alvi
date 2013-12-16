@@ -1,7 +1,4 @@
-import random
-
 from alvi.client.scenes.create_graph import CreateGraph
-import alvi.client.containers
 
 
 class TraverseGraph(CreateGraph):
@@ -21,10 +18,6 @@ class TraverseGraph(CreateGraph):
         marker = graph.create_multi_marker("Traversed")
         graph.stats.traversed_nodes = 0
         self.traverse(marker, graph, first_node)
-
-    @staticmethod
-    def container_class():
-        return alvi.client.containers.Graph
 
 
 if __name__ == "__main__":

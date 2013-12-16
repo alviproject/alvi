@@ -82,3 +82,7 @@ class Container(metaclass=ContainerMeta):
     @action
     def multi_marker_append(self, **kwargs):
         return kwargs
+
+    @action
+    def multi_marker_remove(self, **kwargs):
+        return kwargs

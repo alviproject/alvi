@@ -273,8 +273,18 @@
         function multi_marker_append(action) {
             var marker = get_marker(action.id);
             var node = get_node(action.node_id);
-            marker.node = node;
             node.markers.push(marker);
+            update(root);
+        }
+
+        function multi_marker_remove(action) {
+            var marker = get_marker(action.id);
+            var node = get_node(action.node_id);
+            for(var i = node.markers.length - 1; i >= 0; i--) {
+               if(node.markers[i].id === marker.id) {
+                    node.markers.splice(i, 1);
+                }
+            }
             update(root);
         }
 
@@ -336,5 +346,6 @@
         register_action("move_marker", move_marker);
         register_action("create_multi_marker", create_multi_marker);
         register_action("multi_marker_append", multi_marker_append);
+        register_action("multi_marker_remove", multi_marker_remove);
     </script>
 {% endblock %}

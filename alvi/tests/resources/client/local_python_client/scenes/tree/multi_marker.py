@@ -9,4 +9,5 @@ class TreeMultiMarker(TreeCreateNode):
         marker.append(self.nodes[0])
         marker.append(self.nodes[1])
         marker.append(self.nodes[3])
+        marker.remove(self.nodes[1])
         tree.sync()

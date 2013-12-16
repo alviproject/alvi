@@ -11,6 +11,6 @@ default_scenes = [
     'alvi.client.scenes.CreateGraph',
     'alvi.client.scenes.TraverseGraph',
     'alvi.client.scenes.RedBlackTree',
-    #test scenes
-    #'alvi.tests.resources.client.local_python_client.scenes.tree.multi_marker.TreeMultiMarker',
+    'alvi.client.scenes.TraverseTreeDepthFirst',
+    'alvi.client.scenes.TraverseTreeBreadthFirst',
 ]

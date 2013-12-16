@@ -40,6 +40,8 @@ class Pipe:
         self._backlog[repr(key)] = message
 
     def sync(self):
+        if not self._backlog:
+            return
         data = dict(
             instance_id=self._scene_instance_id,
             messages=list(self._backlog.values()),

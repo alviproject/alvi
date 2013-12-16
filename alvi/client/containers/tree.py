@@ -39,6 +39,9 @@ class Node(base.Node):
         self.children = Children(self)
         self.parent = parent
 
+    def __repr__(self):
+        return self._value.__repr__()
+
 
 class Tree(base.Container):
     @property

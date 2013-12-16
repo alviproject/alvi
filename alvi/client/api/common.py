@@ -38,3 +38,10 @@ def multi_marker_append(pipe, id, node_id):
         id=id,
         node_id=node_id,
     ))
+
+
+def multi_marker_remove(pipe, id, node_id):
+    pipe.send('multi_marker_remove', (id, node_id), dict(
+        id=id,
+        node_id=node_id,
+    ))

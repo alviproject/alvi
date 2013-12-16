@@ -87,4 +87,4 @@ class TestTree(TestContainer):
 
         marker_color = page.svg.markers[0].value_of_css_property('fill')
         marked = [n for n in page.svg.nodes if n.value_of_css_property('fill') == marker_color]
-        self.assertEquals(len(marked), 3, "multi_marker_append does not work properly")
+        self.assertEquals(len(marked), 2, "multi_marker_append or multi_marker_remove does not work properly")
