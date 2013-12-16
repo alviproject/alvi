@@ -14,7 +14,7 @@ import tornado.wsgi
 from alvi import connections
 from alvi import scenes
 from alvi import scene_manager
-import alvi.options
+import alvi.config_options
 
 API_URL_SCENE_REGISTER = 'api/scene/register'
 API_URL_SCENE_SYNC = 'api/scene/sync'
@@ -66,8 +66,10 @@ def parse_config_file(config_file):
         config_path = os.path.join(path, CONFIG_LOCAL)
         tornado.options.parse_config_file(config_path)
     except FileNotFoundError:
-        logger.warning("config file was not provided as a command line argument and %s was not found, starting with "
-                       "default options", config_path)
+        logger.warning("""
+cannot find local config file: %s
+create one basing on config_local_example.py
+starting with default options""", config_path)
 
 
 def run(config_file=None):

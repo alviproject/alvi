@@ -2,7 +2,8 @@ import urllib.parse
 import tornado.httpclient
 import json
 from tornado.options import options
-import alvi.options
+#TODO don't use server options
+import alvi.config_options
 
 
 def post_to_server(path, data):
