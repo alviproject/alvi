@@ -2,3 +2,4 @@ __pycache__/
 env
 alvi.egg-info/
 \.idea/
+alvi/config_local.py

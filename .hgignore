@@ -7,3 +7,4 @@
 data/log.txt
 chromedriver.log$
 \.coverage
+alvi/config_local.py

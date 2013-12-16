@@ -22,7 +22,6 @@ class BinarySearch(base.Scene):
         array.sync()
         while left <= right:
             mid = (right + left) // 2
-            print(left, mid, right)
             if array[mid] > value:
                 right = mid - 1
                 if right >= 0:
