@@ -1,5 +1,6 @@
 import alvi.client.api.base as base
 import alvi.client.api.common as common
+from contextlib import contextmanager
 
 
 class Item:
@@ -72,10 +73,24 @@ class Node(Item):
 class Container:
     def __init__(self, pipe):
         self._pipe = pipe
+        self._sync_postponed = False
+        self._sync_waiting = False
         self.stats = Stats(self._pipe)
 
     def sync(self):
-        self._pipe.sync()
+        if self._sync_postponed:
+            self._sync_waiting = True
+        else:
+            self._pipe.sync()
+
+    @contextmanager
+    def postpone_sync(self):
+        self._sync_postponed = True
+        yield
+        self._sync_postponed = False
+        if self._sync_waiting:
+            self._sync_waiting = False
+            self.sync()
 
     def create_marker(self, name, node):
         return Marker(name, node)

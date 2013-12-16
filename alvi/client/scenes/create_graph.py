@@ -24,6 +24,7 @@ class CreateGraph(base.Scene):
                 node.create_edge(node1)
                 graph.sync()
         graph.sync()
+        return node
 
     @staticmethod
     def container_class():
