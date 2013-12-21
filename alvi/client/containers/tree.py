@@ -51,17 +51,6 @@ class Tree(base.Container):
         except AttributeError:
             return None
 
-    @root.setter
-    def root(self, node):
-        #FIXME
-        #parent = node.parent
-        node.parent.children.remove(node)
-        #parent.parent = node
-        #TODO remove inconsistency - root node has parent set to None in containers and to self in low level API
-        node.parent = None
-        self._root = node
-        alvi.client.api.tree.change_root(self._pipe, node.id)
-
     def create_root(self, value):
         if self.root:
             raise RuntimeError("Cannot set root more that once")

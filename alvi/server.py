@@ -20,7 +20,7 @@ API_URL_SCENE_REGISTER = 'api/scene/register'
 API_URL_SCENE_SYNC = 'api/scene/sync'
 
 CONFIG_LOCAL = "config_local.py"  # can be optionally created, is ignored in VCS
-CONFIG_DEFAULT = "config.py"  # default config file, used is no command line arg is provided, and config_local does
+CONFIG_DEFAULT = "config.py"  # default config file, used if no command line arg is provided, and config_local.py does
                               # not exists
 
 logger = logging.getLogger(__name__)

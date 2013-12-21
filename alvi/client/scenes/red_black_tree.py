@@ -1,6 +1,7 @@
 from alvi.client.containers import tree
 from . import base
 import logging
+import alvi.client.api.tree
 
 log = logging.getLogger(__package__)
 
@@ -150,6 +151,15 @@ class RedBlackTreeContainer:
         self._root = RedBlackNode(self, None, value, Colors.BLACK)
         return self._root
 
+    def change_root(self, node):
+        n = node._node
+        n.parent.children.remove(n)
+        n.parent = None
+        self._root = node
+        self._tree._root = n
+        alvi.client.api.tree.change_root(self._tree._pipe, n.id)
+
+
     @property
     def _pipe(self):
         return self._tree._pipe
@@ -223,8 +233,7 @@ class RedBlackTreeContainer:
         y = x.right_child
         x.right_child = y.left_child
         if x == self.root:
-            self._root = y
-            self._tree.root = y._node
+            self.change_root(y)
         elif x.is_left_child():
             x.parent.left_child = y
         else:
@@ -237,8 +246,7 @@ class RedBlackTreeContainer:
         y = x.left_child
         x.left_child = y.right_child
         if x == self.root:
-            self._root = y
-            self._tree.root = y._node
+            self.change_root(y)
         elif x.is_left_child():
             x.parent.left_child = y
         else:

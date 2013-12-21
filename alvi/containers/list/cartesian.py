@@ -14,8 +14,8 @@ class Cartesian(base.List):
         return dict(id=id, y=value)
 
     @action
-    def create_marker(self, id, name, item_id):
-        return dict(id=id, name=name, point_id=item_id)
+    def create_marker(self, id, name, node_id):
+        return dict(id=id, name=name, point_id=node_id)
 
     @action('create_point')
     def create_node(self, id, parent_id, value):
@@ -23,5 +23,5 @@ class Cartesian(base.List):
         return dict(id=id, x=self._next_x, y=value)
 
     @action
-    def move_marker(self, id, item_id):
-        return dict(id=id, point_id=item_id)
+    def move_marker(self, id, node_id):
+        return dict(id=id, point_id=node_id)
