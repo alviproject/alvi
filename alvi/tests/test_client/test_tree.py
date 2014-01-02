@@ -24,8 +24,8 @@ class TestTree(TestContainer):
         ]
         self.assertEqual(expected, node_data, "create_node does not work properly")
 
-    def test_change_parent(self):
-        page = pages.Tree(self._browser.driver, "TreeChangeParent")
+    def test_append_and_insert(self):
+        page = pages.Tree(self._browser.driver, "TreeAppendAndInsert")
         page.goto()
 
         self.assertEqual(7, len(page.svg.nodes), "create_node does not work properly")
@@ -41,7 +41,7 @@ class TestTree(TestContainer):
             {'id': 6, 'parent': 4, 'name': 6}
         ]
 
-        self.assertEqual(expected, node_data, "change_parent does not work properly")
+        self.assertEqual(expected, node_data, "insert or append does not work properly")
 
     def test_marker(self):
         page = pages.Tree(self._browser.driver, "TreeMarker")

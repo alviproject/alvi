@@ -1,7 +1,7 @@
 from alvi.tests.resources.client.local_python_client.scenes.tree.create_node import TreeCreateNode
 
 
-class TreeChangeParent(TreeCreateNode):
+class TreeAppendAndInsert(TreeCreateNode):
     def run(self, tree):
         super().run(tree)
         self.nodes[2].children.append(self.nodes[4])

@@ -12,7 +12,7 @@ class GraphCreateNode(Scene):
         node = graph.create_node(0)
         self.nodes.append(node)
         for i in range(n-1):
-            node = node.create_child(i+1)
+            node = node.children.create(i+1)
             self.nodes.append(node)
         node.create_edge(self.nodes[0])
         graph.sync()

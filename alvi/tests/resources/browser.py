@@ -17,6 +17,7 @@ class LocalBrowser(Resource):
         logger.info("setting up browser")
         #TODO config
         self._driver = webdriver.Firefox()
+        #self._driver = webdriver.PhantomJS()
         #self._driver = webdriver.Chrome()
         #username = os.environ["SAUCE_USERNAME"]
         #access_key = os.environ["SAUCE_ACCESS_KEY"]

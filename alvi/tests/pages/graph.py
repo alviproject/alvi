@@ -6,6 +6,7 @@ from . import base
 class Graph(scene.Scene):
     class SVG(scene.Scene.SVG):
         nodes = base.make_elements(By.CSS_SELECTOR, "g.node")
+        markers = base.make_elements(By.CSS_SELECTOR, "g.marker")
         edges = base.make_elements(By.CSS_SELECTOR, "line.link")
 
         @property

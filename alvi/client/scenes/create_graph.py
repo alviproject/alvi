@@ -15,7 +15,7 @@ class CreateGraph(base.Scene):
         for i in range(n-1):
             x = random.randint(0, i)
             parent = nodes[x]
-            node = parent.create_child(i+1)
+            node = parent.children.create(i+1)
             graph.sync()
             nodes.append(node)
             if i % edge_factor == 0:

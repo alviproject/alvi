@@ -153,7 +153,7 @@ class RedBlackTreeContainer:
 
     def change_root(self, node):
         n = node._node
-        n.parent.children.remove(n)
+        n.parent.children._children.remove(n)
         n.parent = None
         self._root = node
         self._tree._root = n

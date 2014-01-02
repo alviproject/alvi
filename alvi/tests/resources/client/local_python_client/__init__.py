@@ -32,10 +32,11 @@ class LocalPythonClient(Resource):
             PREFIX + 'graph.update_node.GraphUpdateNode',
             PREFIX + 'graph.remove_node.GraphRemoveNode',
             PREFIX + 'graph.add_multi_marker.GraphAddMultiMarker',
+            PREFIX + 'graph.marker.GraphMarker',
             PREFIX + 'array.create_node.ArrayCreateNode',
             PREFIX + 'array.update_node.ArrayUpdateNode',
             PREFIX + 'tree.create_node.TreeCreateNode',
-            PREFIX + 'tree.change_parent.TreeChangeParent',
+            PREFIX + 'tree.append_and_insert.TreeAppendAndInsert',
             PREFIX + 'tree.marker.TreeMarker',
             PREFIX + 'tree.multi_marker.TreeMultiMarker',
         )

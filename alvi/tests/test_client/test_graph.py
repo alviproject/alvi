@@ -38,7 +38,7 @@ class TestGraph(TestContainer):
         node_values.sort()
         self.assertEqual([0, 1, 2], node_values, "remove_node does not work properly")
 
-    def test_multi_marker_append(self):
+    def test_multi_marker(self):
         graph_page = pages.Graph(self._browser.driver, "GraphAddMultiMarker")
         graph_page.goto()
 
@@ -53,3 +53,21 @@ class TestGraph(TestContainer):
 
         #expect 2 marked nodes + 1 node of multi_marker itself
         self.assertEquals(3, len(marked), "nodes were not successfully added to multi_marker")
+
+    def test_marker(self):
+        graph_page = pages.Graph(self._browser.driver, "GraphMarker")
+        graph_page.goto()
+
+        marker0 = [e for e in graph_page.svg.nodes if e.find_element(By.CSS_SELECTOR, "text").text == "marker 0"]
+        marker1 = [e for e in graph_page.svg.nodes if e.find_element(By.CSS_SELECTOR, "text").text == "marker 1"]
+        self.assertEquals(1, len(marker0), "marker 0 was not created successfully")
+        self.assertEquals(1, len(marker0), "marker 1 was not created successfully")
+
+        #marked node have different color
+        marker = marker0[0]
+        color = marker.value_of_css_property("stroke")
+        colors = map(lambda e: e.value_of_css_property("stroke"), graph_page.svg.nodes)
+        marked = [c for c in colors if c == color]
+
+        #expect 1 marked nodes + 1 node of marker itself
+        self.assertEquals(2, len(marked), "node was not successfully marked")

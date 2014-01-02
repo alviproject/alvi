@@ -9,7 +9,7 @@ class TraverseGraph(CreateGraph):
         marker.append(node)
         graph.stats.traversed_nodes += 1
         graph.sync()
-        for child in node.children():
+        for child in node.children:
             self.traverse(marker, graph, child)
 
     def run(self, graph):

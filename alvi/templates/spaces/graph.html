@@ -80,7 +80,7 @@
 
             node.attr("transform", function (d) {
                 if(d.kind=="marker") {
-                    return "translate(20, 20)";
+                    return "translate(20, "+ (d.number+1) * 25+")";
                 }
                 return "translate(" + d.x + "," + d.y + ")";
             });
@@ -237,7 +237,7 @@
             }
         }
 
-        function create_multi_marker(action) {
+        function create_marker_common(action) {
             //marker is a regular node with special kind property and without edges
             var node = {};
             node.value = action.name;
@@ -246,16 +246,45 @@
             node.kind = "marker";
             node.markers = [];
             node.color = marker_color(marker_count);
-            marker_count++;
+            node.number = marker_count++;
 
             node_indexes[action.id] = nodes.length;
             nodes.push(node);
+            return node;
         }
 
-        function multi_marker_append(action) {
+        function create_multi_marker(action) {
+            create_marker_common(action);
+        }
+
+        function marker_append_common(action) {
             var node = nodes[node_indexes[action.node_id]];
             var marker = nodes[node_indexes[action.id]];
             node.markers.push(marker);
+        }
+
+        function create_marker(action) {
+            var marker = create_marker_common(action);
+            var node = nodes[node_indexes[action.node_id]];
+            marker.node = node;
+            marker_append_common(action);
+        }
+
+        function multi_marker_append(action) {
+            marker_append_common(action);
+        }
+
+        function move_marker(action) {
+            var marker = nodes[node_indexes[action.id]];
+
+            for(var i = 0; i < marker.node.markers.length; ++i) {
+                var m = marker.node.markers[i];
+                if(m.id === marker.id) {
+                    marker.node.markers.splice(i, 1);
+                    break;
+                }
+            }
+            marker_append_common(action);
         }
 
         register_action("create_node", create_node);
@@ -264,6 +293,8 @@
         register_action("create_multi_marker", create_multi_marker);
         register_action("multi_marker_append", multi_marker_append);
         register_action("update_node", update_node);
+        register_action("create_marker", create_marker);
+        register_action("move_marker", move_marker);
 
         $(".reset_graph").click(function() {
             force.charge(0);
