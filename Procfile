@@ -1,1 +1,1 @@
-web: python -m alvi.server
+web: python -m alvi.server --port=80

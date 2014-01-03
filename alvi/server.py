@@ -76,6 +76,7 @@ def run(config_file=None):
     #load configuration
     #TODO support command line args and help
     parse_config_file(config_file)
+    tornado.options.parse_command_line()
 
 
     wsgi_app = tornado.wsgi.WSGIContainer(django.core.handlers.wsgi.WSGIHandler())
