@@ -1,1 +1,1 @@
-web: python -m alvi.server --port=80 --address=localhost
+web: python -m alvi.server --port=$PORT --address=
