@@ -1,1 +1,1 @@
-web: python -m alvi.server --port=$PORT --address=
+web: newrelic-admin python -m alvi.server --port=$PORT --address=
