@@ -1,6 +1,7 @@
 from alvi.client.containers import tree
 from . import base
 import logging
+import random
 import alvi.client.api.tree
 
 log = logging.getLogger(__package__)
@@ -27,50 +28,14 @@ class RedBlackNode:
         self._color = None
         self.color = color
         if value is not None:
-            self._init_nil_nodes()
+            self.init_nil_nodes()
 
-    def _init_nil_nodes(self):
+    def init_nil_nodes(self):
         self.create_left_child(None, Colors.BLACK)
         self.create_right_child(None, Colors.BLACK)
 
-    @property
-    def color(self):
-        return self._color
-
-    @color.setter
-    def color(self, value):
-        previous_color = self._color
-        if value == Colors.BLACK:
-            if previous_color == Colors.RED:
-                self._container.red_nodes.remove(self._node)
-            self._container.black_nodes.append(self._node)
-        if value == Colors.RED:
-            if previous_color == Colors.BLACK:
-                self._container.black_nodes.remove(self._node)
-            self._container.red_nodes.append(self._node)
-        self._color = value
-
-    @property
-    def _container(self):
-        return self._node._container
-
-    @property
-    def id(self):
-        return self._node.id
-
-    @property
-    def value(self):
-        return self._node.value
-
-    @value.setter
-    def value(self, value):
-        self._node.value = value
-
-    def _create_children(self):
-        left = RedBlackNode(self._container, self, None, Colors.BLACK)
-        right = RedBlackNode(self._container, self, None, Colors.BLACK)
-        self._children = {'left': left, 'right': right}
-        return self._children
+    def create_left_child(self, value, color):
+        return self._create_child('left', value, color)
 
     def _create_child(self, index, value, color):
         try:
@@ -80,13 +45,16 @@ class RedBlackNode:
 
         created = children[index]
         if created.value is None and value is not None:  # we are substituting nilnode for non-nil node
-            created._init_nil_nodes()
+            created.init_nil_nodes()
         created.value = value
         created.color = color
         return children[index]
 
-    def create_left_child(self, value, color):
-        return self._create_child('left', value, color)
+    def _create_children(self):
+        left = RedBlackNode(self._container, self, None, Colors.BLACK)
+        right = RedBlackNode(self._container, self, None, Colors.BLACK)
+        self._children = {'left': left, 'right': right}
+        return self._children
 
     def create_right_child(self, value, color):
         return self._create_child('right', value, color)
@@ -145,11 +113,38 @@ class RedBlackNode:
     def is_not_nilnode(self):
         return self.value is not None
 
-    def __str__(self):
-        return '{{value:{0}, color:{1}, id:{2}}}'.format(self.value, self.color, id(self))
+    @property
+    def _container(self):
+        return self._node._container
 
-    def __repr__(self):
-        return self.__str__()
+    @property
+    def id(self):
+        return self._node.id
+
+    @property
+    def value(self):
+        return self._node.value
+
+    @value.setter
+    def value(self, value):
+        self._node.value = value
+
+    @property
+    def color(self):
+        return self._color
+
+    @color.setter
+    def color(self, value):
+        previous_color = self._color
+        if value == Colors.BLACK:
+            if previous_color == Colors.RED:
+                self._container.red_nodes.remove(self._node)
+            self._container.black_nodes.append(self._node)
+        if value == Colors.RED:
+            if previous_color == Colors.BLACK:
+                self._container.black_nodes.remove(self._node)
+            self._container.red_nodes.append(self._node)
+        self._color = value
 
 
 class RedBlackTreeContainer:
@@ -157,6 +152,7 @@ class RedBlackTreeContainer:
         self._tree = tree.Tree(*args, **kwargs)
         self.red_nodes = self._tree.create_multi_marker('red nodes', color='red')
         self.black_nodes = self._tree.create_multi_marker('black nodes', color='grey')
+        self.color_nodes = {Colors.RED: self.red_nodes, Colors.BLACK: self.black_nodes}
 
     @property
     def root(self):
@@ -171,11 +167,11 @@ class RedBlackTreeContainer:
         self._root = RedBlackNode(self, None, value, Colors.BLACK)
         return self._root
 
-    def change_root(self, node):
-        n = node._node
+    def change_root(self, new_root):
+        n = new_root._node
         n.parent.children._children.remove(n)
         n.parent = None
-        self._root = node
+        self._root = new_root
         self._tree._root = n
         alvi.client.api.tree.change_root(self._tree._pipe, n.id)
 
@@ -213,8 +209,6 @@ class RedBlackTreeContainer:
 
     def _fix_rb_insert(self, z):
         while z is not self.root and z.parent.color == Colors.RED:
-            log.info('--> z: %s' % z)
-            log.info('z.parent: %s' % z.parent)
             if z.parent.is_left_child():
                 y = z.parent.parent.right_child
                 if y.color == Colors.RED:
@@ -231,8 +225,6 @@ class RedBlackTreeContainer:
                     self._right_rotate(z.parent.parent)
             else:
                 y = z.parent.parent.left_child
-                log.info('--> y: %s' % y)
-                log.info('y.parent: %s' % y.parent)
                 if y.color == Colors.RED:
                     z.parent.color = Colors.BLACK
                     y.color = Colors.BLACK
@@ -248,8 +240,6 @@ class RedBlackTreeContainer:
         self.root.color = Colors.BLACK
 
     def _left_rotate(self, x):
-        log.info('left_rotate x: %s' % x)
-        log.info('left_rotate x.parent: %s' % x.parent)
         y = x.right_child
         x.right_child = y.left_child
         if x == self.root:
@@ -261,8 +251,6 @@ class RedBlackTreeContainer:
         y.left_child = x
 
     def _right_rotate(self, x):
-        log.info('right_rotate x: %s' % x)
-        log.info('right_rotate x.parent: %s' % x.parent)
         y = x.left_child
         x.left_child = y.right_child
         if x == self.root:
@@ -273,31 +261,19 @@ class RedBlackTreeContainer:
             x.parent.right_child = y
         y.right_child = x
 
-    def walk(self):
-        log.info('walk')
-        self.walk_internal(self.root)
-        log.info('-'*40)
-
-    def walk_internal(self, node):
-        log.info('-> node: %s' % node)
-        log.info('node.parent: %s' % node.parent)
-        if hasattr(node, '_children'):
-            log.info('node._children: %s' % node._children)
-        if node.right_child != None:
-            self.walk_internal(node.right_child)
-        if node.left_child != None:
-            self.walk_internal(node.left_child)
-
 
 class RedBlackTree(base.Scene):
-    def run(self, tree):
-        self.run5(tree)
+    #more complete test cases in test/test_red_black_tree.py
+    def test(self, tree, test_case):
+        self.run(tree)
 
-    def run5(self, tree):
-        import random
-        for i in range(0, 24):
-            x = random.randint(0, 100)
-            tree.insert(x)
+    def run(self, tree):
+        sequence = (random.randint(0, 100) for i in range(0, 24))
+        self.run_sequence(tree, sequence)
+
+    def run_sequence(self, tree, sequence):
+        for node_value in sequence:
+            tree.insert(node_value)
             tree.sync()
 
     @staticmethod
