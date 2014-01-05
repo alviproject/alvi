@@ -27,9 +27,9 @@ class Marker(Item):
 
 class MultiMarker(Item):
     """Non intrusive marker class"""
-    def __init__(self, container, name):
+    def __init__(self, container, name, **kwargs):
         super().__init__(container)
-        common.create_multi_marker(self._container._pipe, self.id, name)
+        common.create_multi_marker(self._container._pipe, self.id, name, **kwargs)
         self._nodes = set()
 
     def append(self, node):
@@ -102,8 +102,8 @@ class Container:
     def create_marker(self, name, node):
         return Marker(name, node)
 
-    def create_multi_marker(self, name):
-        return MultiMarker(self, name)
+    def create_multi_marker(self, name, **kwargs):
+        return MultiMarker(self, name, **kwargs)
 
     @classmethod
     def name(cls):

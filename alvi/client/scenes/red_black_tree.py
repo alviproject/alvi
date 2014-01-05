@@ -155,8 +155,8 @@ class RedBlackNode:
 class RedBlackTreeContainer:
     def __init__(self, *args, **kwargs):
         self._tree = tree.Tree(*args, **kwargs)
-        self.red_nodes = self._tree.create_multi_marker('red nodes')
-        self.black_nodes = self._tree.create_multi_marker('black nodes')
+        self.red_nodes = self._tree.create_multi_marker('red nodes', color='red')
+        self.black_nodes = self._tree.create_multi_marker('black nodes', color='grey')
 
     @property
     def root(self):
