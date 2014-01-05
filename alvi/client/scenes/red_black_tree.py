@@ -265,7 +265,7 @@ class RedBlackTreeContainer:
 class RedBlackTree(base.Scene):
     #more complete test cases in test/test_red_black_tree.py
     def test(self, tree, test_case):
-        self.run(tree)
+        pass
 
     def run(self, tree, options):
         n = int(options['n'])
