@@ -71,7 +71,7 @@ def parse_config_file(config_file):
     try:
         config_path = os.path.join(path, CONFIG_LOCAL)
         tornado.options.parse_config_file(config_path)
-    except FileNotFoundError:
+    except IOError:
         logger.warning("""
 cannot find local config file: %s
 create one basing on config_local_example.py

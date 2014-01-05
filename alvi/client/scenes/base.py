@@ -25,5 +25,5 @@ class Scene(api.BaseScene):
     def container_class(cls):
         raise NotImplementedError
 
-    def test(self, cotainer, test_case):
+    def test(self, container, test_case):
         logger.warning("skipping test for %s" % self.__class__.__name__)
