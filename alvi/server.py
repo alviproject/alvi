@@ -86,7 +86,11 @@ def run(config_file=None):
 
 
     wsgi_app = tornado.wsgi.WSGIContainer(django.core.handlers.wsgi.WSGIHandler())
-    router = connections.sockjs.tornado.SockJSRouter(connections.Connection, '/rt')
+    router = connections.sockjs.tornado.SockJSRouter(
+        connections.Connection,
+        '/rt',
+        dict(disabled_transports=['websocket'])
+    )
     tornado_app = tornado.web.Application(
         router.urls +
         [

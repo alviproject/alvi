@@ -2,6 +2,7 @@ from selenium.webdriver.common.by import By
 from . import home
 from selenium.webdriver.support.wait import WebDriverWait
 import selenium.common.exceptions
+from selenium.webdriver.support import expected_conditions
 
 
 class Scene(home.Home):
@@ -39,7 +40,8 @@ class Scene(home.Home):
             raise RuntimeError("Scene %s cannot be found" % self._scene_name)
 
         link.click()
+        wait = WebDriverWait(self._root, 10)
+        start_scene = wait.until(expected_conditions.element_to_be_clickable((By.CSS_SELECTOR, "button#start_scene")))
 
-        start_scene = self._root.find_element(By.CSS_SELECTOR, "button#start_scene")
         start_scene.click()
         self.wait_to_finish()
