@@ -24,6 +24,7 @@ class RedBlackNode:
         else:
             self._node = tree.Node(container, None, value)
         self.parent = parent
+        self._color = None
         self.color = color
         if value is not None:
             self._init_nil_nodes()
@@ -31,6 +32,23 @@ class RedBlackNode:
     def _init_nil_nodes(self):
         self.create_left_child(None, Colors.BLACK)
         self.create_right_child(None, Colors.BLACK)
+
+    @property
+    def color(self):
+        return self._color
+
+    @color.setter
+    def color(self, value):
+        previous_color = self._color
+        if value == Colors.BLACK:
+            if previous_color == Colors.RED:
+                self._container.red_nodes.remove(self._node)
+            self._container.black_nodes.append(self._node)
+        if value == Colors.RED:
+            if previous_color == Colors.BLACK:
+                self._container.black_nodes.remove(self._node)
+            self._container.red_nodes.append(self._node)
+        self._color = value
 
     @property
     def _container(self):
@@ -137,6 +155,8 @@ class RedBlackNode:
 class RedBlackTreeContainer:
     def __init__(self, *args, **kwargs):
         self._tree = tree.Tree(*args, **kwargs)
+        self.red_nodes = self._tree.create_multi_marker('red nodes', color='red')
+        self.black_nodes = self._tree.create_multi_marker('black nodes', color='grey')
 
     @property
     def root(self):

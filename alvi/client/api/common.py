@@ -26,10 +26,11 @@ def update_stats(pipe, name, value):
     ))
 
 
-def create_multi_marker(pipe, id, name):
+def create_multi_marker(pipe, id, name, **kwargs):
     pipe.send('create_multi_marker', (id,), dict(
         id=id,
         name=name,
+        **kwargs
     ))
 
 

@@ -62,7 +62,7 @@
 
         function node_fill(node) {
             if(node.markers.length > 0) {
-                return marker_color(node.markers[0].number);
+                return get_marker_color(node.markers[0]);
             }
             return "#fff";
         }
@@ -183,7 +183,7 @@
             nodeEnter.append("circle")
                     .attr("r", 10)
                     .style("fill", function (d) {
-                        return marker_color(d.number);
+                        return get_marker_color(d)
                     });
 
             nodeEnter.append("text")
@@ -238,11 +238,22 @@
             update_markers();
         }
 
+        function get_marker_color(marker){
+            if (marker.hasOwnProperty('color')){
+                return marker.color;
+            } else {
+                return marker_color(marker.number);
+            }
+        }
+
         function create_marker_common(action) {
             var marker = {
                 'id': action.id,
                 'name': action.name,
                 'number': marker_count++
+            };
+            if (action.hasOwnProperty('color')){
+                marker.color = action.color;
             };
             markers.push(marker);
             return marker;
