@@ -9,9 +9,9 @@ class TraverseTreeDepthFirst(CreateTree):
         for child in node.children:
             self.traverse(marker, tree, child)
 
-    def run(self, tree):
+    def run(self, tree, options):
         with tree.postpone_sync():
-            super().run(tree)
+            super().run(tree, options)
         marker = tree.create_multi_marker("Traversed")
         tree.stats.traversed_nodes = 0
         self.traverse(marker, tree, tree.root)

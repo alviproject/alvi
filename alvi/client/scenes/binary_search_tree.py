@@ -5,8 +5,8 @@ import alvi.containers
 
 
 class BinarySearchTree(base.Scene):
-    def run(self, tree):
-        n = 8
+    def run(self, tree, options):
+        n = int(options['n'])
         x = random.randint(0, n)
         tree.create_root(x)
         tree.sync()

@@ -7,7 +7,7 @@ class TreeCreateNode(Scene):
         super().__init__(*args, **kwargs)
         self.nodes = []
 
-    def run(self, tree):
+    def run(self, tree, options):
         node = tree.create_root(value=0)
         self.nodes.append(node)
         node = self.nodes[0].children.create(value=1)

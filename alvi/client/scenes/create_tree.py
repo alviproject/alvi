@@ -5,8 +5,8 @@ import alvi.client.containers
 
 
 class CreateTree(base.Scene):
-    def run(self, tree):
-        n = 32
+    def run(self, tree, options):
+        n = int(options['n'])
         nodes = []
         node = tree.create_root(0)
         nodes.append(node)

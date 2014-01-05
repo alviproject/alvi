@@ -40,3 +40,20 @@ def run(request, name):
     #    form = scene.Form()
     #context['form'] = form
     return render(request, scene.template(), context_instance=context)
+
+
+def run(request, name):
+    scene_class = scenes.scene_classes[name]
+    if request.method == "POST":
+        options = dict(request.POST.items())
+        del options['csrfmiddlewaretoken']
+        scene = scene_class.create(options)
+        context = RequestContext(request, {
+            'scene': scene,
+        })
+        return render(request, scene.template(), context_instance=context)
+    context = RequestContext(request, {
+        'name': scene_class.name(),
+        'form': scene_class.form(),
+    })
+    return render(request, "init_scene.html", context_instance=context)

@@ -8,7 +8,6 @@ class Cartesian(base.Array):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self._next_x = 0
 
     @action('update_point')
     def update_node(self, id, value):
@@ -16,8 +15,7 @@ class Cartesian(base.Array):
 
     @action('create_point')
     def create_node(self, id, value):
-        self._next_x += 1
-        return dict(id=id, x=self._next_x, y=value)
+        return dict(id=id, x=id+1, y=value)
 
     @action
     def create_marker(self, id, name, node_id):

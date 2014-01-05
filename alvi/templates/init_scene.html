@@ -1,13 +1,13 @@
 {% extends "index.html" %}
 
 {% block content %}
-    <h2>{{ scene.name }}</h2>
+    <h2>{{ name }}</h2>
     <hr />
-    <form method="post" action="{% url 'alvi.views.run' id=scene_id %}">
+    <form method="post" action="{% url 'alvi.views.run' name=name %}">
         <div class="form-group">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Start</button>
+            {{ form | safe }}
+            <button type="submit" id="start_scene">Start</button>
         </div>
     </form>
 {% endblock %}

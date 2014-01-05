@@ -39,4 +39,7 @@ class Scene(home.Home):
             raise RuntimeError("Scene %s cannot be found" % self._scene_name)
 
         link.click()
+
+        start_scene = self._root.find_element(By.CSS_SELECTOR, "button#start_scene")
+        start_scene.click()
         self.wait_to_finish()

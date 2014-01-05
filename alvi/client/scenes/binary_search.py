@@ -40,8 +40,8 @@ class BinarySearch(base.Scene):
             array.sync()
         array.stats.not_found = ""
 
-    def run(self, array):
-        n = 8
+    def run(self, array, options):
+        n = int(options['n'])
         wanted_value = random.randint(1, n)
         array.stats.wanted_value = wanted_value
 

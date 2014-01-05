@@ -1,4 +1,5 @@
 import abc
+from django import forms
 import random
 
 from . import base
@@ -28,8 +29,9 @@ class Sort(base.Scene):
     def sort(self, array):
         raise NotImplementedError
 
-    def run(self, array):
-        self.n = 8
+    def run(self, array, options):
+        self.n = int(options['n'])
+        array.stats.elements = self.n
         self.init(array)
         self.generate_points(array)
         self.sort(array)

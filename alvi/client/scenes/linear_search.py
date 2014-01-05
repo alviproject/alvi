@@ -34,8 +34,8 @@ class LinearSearch(base.Scene):
             list.stats.not_found = ""
         list.sync()
 
-    def run(self, list):
-        n = 8
+    def run(self, list, options):
+        n = int(options['n'])
         wanted_value = random.randint(0, n)
         list.stats.wanted_value = wanted_value
 

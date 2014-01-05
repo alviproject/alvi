@@ -5,8 +5,8 @@ import alvi.client.containers
 
 
 class CreateGraph(base.Scene):
-    def run(self, graph):
-        n = 64
+    def run(self, graph, options):
+        n = int(options['n'])
         edge_factor = 3
         nodes = []
         node = graph.create_node(0)

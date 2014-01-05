@@ -270,12 +270,12 @@ class RedBlackTreeContainer:
 
 
 class RedBlackTree(base.Scene):
-    def run(self, tree):
-        self.run5(tree)
+    def run(self, tree, options):
+        self.run5(tree, options)
 
-    def run5(self, tree):
+    def run5(self, tree, options):
         import random
-        for i in range(0, 24):
+        for i in range(0, int(options['n'])):
             x = random.randint(0, 100)
             tree.insert(x)
             tree.sync()

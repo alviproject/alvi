@@ -2,8 +2,8 @@ from alvi.tests.resources.client.local_python_client.scenes.tree.create_node imp
 
 
 class TreeAppendAndInsert(TreeCreateNode):
-    def run(self, tree):
-        super().run(tree)
+    def run(self, tree, options):
+        super().run(tree, options)
         self.nodes[2].children.append(self.nodes[4])
         tree.sync()
         self.nodes[2].children.insert(0, self.nodes[3])

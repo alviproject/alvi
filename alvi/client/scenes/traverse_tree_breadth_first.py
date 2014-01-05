@@ -18,9 +18,9 @@ class TraverseTreeBreadthFirst(CreateTree):
                 frontier_marker.append(child)
             tree.sync()
 
-    def run(self, tree):
+    def run(self, tree, options):
         with tree.postpone_sync():
-            super().run(tree)
+            super().run(tree, options)
         traversed_marker = tree.create_multi_marker("Traversed")
         frontier_marker = tree.create_multi_marker("Frontier")
         tree.stats.traversed_nodes = 0

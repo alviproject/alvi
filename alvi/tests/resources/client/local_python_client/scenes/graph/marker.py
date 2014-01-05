@@ -2,8 +2,8 @@ from alvi.tests.resources.client.local_python_client.scenes.graph.create_node im
 
 
 class GraphMarker(GraphCreateNode):
-    def run(self, graph):
-        super().run(graph)
+    def run(self, graph, options):
+        super().run(graph, options)
         marker0 = graph.create_marker("marker 0", self.nodes[2])
         marker1 = graph.create_marker("marker 1", self.nodes[3])
         graph.sync()

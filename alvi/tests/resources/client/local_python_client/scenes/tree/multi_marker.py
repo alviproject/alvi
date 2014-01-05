@@ -2,8 +2,8 @@ from alvi.tests.resources.client.local_python_client.scenes.tree.create_node imp
 
 
 class TreeMultiMarker(TreeCreateNode):
-    def run(self, tree):
-        super().run(tree)
+    def run(self, tree, options):
+        super().run(tree, options)
         marker = tree.create_multi_marker("multi marker")
         tree.sync()
         marker.append(self.nodes[0])

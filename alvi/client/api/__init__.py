@@ -63,23 +63,28 @@ class BaseScene(metaclass=abc.ABCMeta):
                 name=cls.__name__,
                 container=cls.container_name(),
                 source=inspect.getsource(cls),
+                form=cls.Form().as_p()
             )
             response = utils.post_to_server(API_URL_SCENE_REGISTER, post_data)
             scene_instance_id = response['scene_instance_id']
-            process = multiprocessing.Process(target=cls.create_instance, args=(scene_instance_id,))
+            options = response['options']
+            q = multiprocessing.Queue()
+            process = multiprocessing.Process(target=cls.create_instance, args=(scene_instance_id, q))
             process.start()
+            q.put(options)
 
     @classmethod
-    def create_instance(cls, instance_id):
+    def create_instance(cls, instance_id, q):
+        options = q.get()
         scene = cls()
         pipe = Pipe(instance_id)
-        cls.run_wrapper(scene, pipe)
+        cls.run_wrapper(scene, pipe, options)
         pipe.send('finish', (0, ), {})
         pipe.sync()
 
     @classmethod
-    def run_wrapper(cls, scene, pipe):
-        scene.run(pipe)
+    def run_wrapper(cls, scene, pipe, options):
+        scene.run(pipe, options)
 
     @abc.abstractmethod
     def run(self, pipe):
