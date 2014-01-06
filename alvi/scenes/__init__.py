@@ -5,11 +5,18 @@ from .base import Scene
 from .. import containers
 
 
-def register(name, container_name, source, form, request):
-    scene_classes[name] = make_scene(name, container_name, source, form, request)
+def register(data, request):
+    name = data['name']
+    scene_classes[name] = make_scene(data, request)
 
 
-def make_scene(name, container_name, _source, _form, request):
+def make_scene(data, request):
+    name = data['name']
+    container_name = data['container']
+    _source = data['source']
+    _form = data['form']
+    available_generators = data['available_generators']
+
     #TODO this wrapper does not make sens anymore
     class SceneWrapper(Scene):
         def __init__(self, _id):
@@ -55,6 +62,10 @@ def make_scene(name, container_name, _source, _form, request):
         @staticmethod
         def form():
             return _form
+
+        @staticmethod
+        def generators():
+            return available_generators
 
         def evaluate_message(self, message):
             self._message_evaluator(message)

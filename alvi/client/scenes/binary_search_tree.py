@@ -5,17 +5,21 @@ import alvi.containers
 
 
 class BinarySearchTree(base.Scene):
-    def run(self, tree, options):
-        n = int(options['n'])
-        x = random.randint(0, n)
-        tree.create_root(x)
+    def run(self, **kwargs):
+        data_generator = kwargs['data_generator']
+        tree = kwargs['container']
+
+        #create root
+        tree.create_root(next(data_generator.values))
         tree.sync()
-        for i in range(n-1):
-            x = random.randint(0, n)
-            self.insert(tree, x)
+
+        #create all other elements
+        for value in data_generator.values:
+            self.insert(tree, value)
             tree.sync()
 
-    def insert(self, tree, value):
+    @staticmethod
+    def insert(tree, value):
         node = tree.root
         while True:
             if node.value > value:
@@ -31,6 +35,7 @@ class BinarySearchTree(base.Scene):
     @staticmethod
     def container_class():
         return alvi.client.containers.BinaryTree
+
 
 if __name__ == "__main__":
     BinarySearchTree.start()

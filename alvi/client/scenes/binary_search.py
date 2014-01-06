@@ -9,9 +9,9 @@ class BinarySearch(base.Scene):
         array.init(n)
         array.sync()
 
-    def generate_points(self, array, n):
-        for i in range(n):
-            array[i] = random.randint(1, n)
+    def generate_points(self, array, data_generator):
+        for i, value in enumerate(data_generator.values):
+            array[i] = value
         array.sync()
 
     def search(self, array, value):
@@ -40,13 +40,14 @@ class BinarySearch(base.Scene):
             array.sync()
         array.stats.not_found = ""
 
-    def run(self, array, options):
-        n = int(options['n'])
-        wanted_value = random.randint(1, n)
+    def run(self, **kwargs):
+        array = kwargs['container']
+        data_generator = kwargs['data_generator']
+        wanted_value = random.randint(1, data_generator.quantity())
         array.stats.wanted_value = wanted_value
 
-        self.init(array, n)
-        self.generate_points(array, n)
+        self.init(array, data_generator.quantity())
+        self.generate_points(array, data_generator)
 
         for i, value in enumerate(sorted(array)):
             array[i] = value

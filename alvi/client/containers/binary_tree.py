@@ -2,7 +2,7 @@ from . import tree
 
 
 class Node:
-    def __init__(self, container, parent, value):
+    def __init__(self, container, parent, value=None):
         self._node = tree.Node(container, parent, value)
 
     @property
@@ -22,8 +22,8 @@ class Node:
         self._node.value = value
 
     def _create_children(self):
-        left = Node(self._container, self, None)
-        right = Node(self._container, self, None)
+        left = Node(self._container, self)
+        right = Node(self._container, self)
         self._children = [left, right]
         return self._children
 

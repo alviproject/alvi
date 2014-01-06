@@ -6,13 +6,13 @@ from . import base
 
 
 class LinearSearch(base.Scene):
-    def generate_nodes(self, list, n):
-        if n == 0:
+    def generate_nodes(self, list, data_generator):
+        if data_generator.quantity() == 0:
             return
-        list.create_head(random.randint(1, n))
+        value = next(data_generator.values)
+        list.create_head(value)
         node = list.head
-        for i in range(n-1):
-            value = random.randint(1, n)
+        for value in data_generator.values:
             node = node.create_child(value)
         list.sync()
 
@@ -34,12 +34,14 @@ class LinearSearch(base.Scene):
             list.stats.not_found = ""
         list.sync()
 
-    def run(self, list, options):
-        n = int(options['n'])
-        wanted_value = random.randint(0, n)
+    def run(self, **kwargs):
+        list = kwargs['container']
+        data_generator = kwargs['data_generator']
+        #TODO add marker for wanted value
+        wanted_value = random.randint(0, data_generator.quantity())
         list.stats.wanted_value = wanted_value
 
-        self.generate_nodes(list, n)
+        self.generate_nodes(list, data_generator)
         self.search(list, wanted_value)
 
     @staticmethod

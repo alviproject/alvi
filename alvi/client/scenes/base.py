@@ -6,15 +6,22 @@ from django import forms
 logger = logging.getLogger(__name__)
 
 
+class SceneArgs:
+    def __init__(self, container, options):
+        self.container = container
+        self.options = options
+
+
 class Scene(api.BaseScene):
     """base class for container based scenes"""
     class Form(forms.Form):
-        n = forms.IntegerField(min_value=1, max_value=256, label='Elements', initial=64)
+        pass
 
     @classmethod
-    def run_wrapper(cls, scene, pipe, options):
+    def run_wrapper(cls, scene, pipe, **kwargs):
         container = cls.container_class()(pipe)
-        scene.run(container, options)
+        kwargs['container'] = container
+        scene.run(**kwargs)
 
     @classmethod
     def container_name(cls):

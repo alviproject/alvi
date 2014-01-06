@@ -35,13 +35,7 @@ class RegisterSceneHandler(tornado.web.RequestHandler):
     @tornado.web.asynchronous
     def post(self, *args, **kwargs):
         data = get_json_data(self)
-        scenes.register(
-            name=data['name'],
-            container_name=data['container'],
-            source=data['source'],
-            form=data['form'],
-            request=self
-        )
+        scenes.register(data=data, request=self)
 
 
 class SyncSceneHandler(tornado.web.RequestHandler):

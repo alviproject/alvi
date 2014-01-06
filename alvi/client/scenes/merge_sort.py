@@ -31,9 +31,11 @@ class MergeSort(Sort):
         self._sort(array, left, mid)
         self._sort(array, mid, right)
         self.merge(array, left, mid, right)
-        if (right-left) > self.n // 50:
+        if (right-left) > array.size() // 50:
             array.sync()
 
-    def sort(self, array):
-        self._sort(array, 0, self.n)
+    def sort(self, **kwargs):
+        array = kwargs['container']
+
+        self._sort(array, 0, array.size())
         array.sync()

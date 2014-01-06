@@ -7,6 +7,7 @@ import collections
 import time
 import abc
 import inspect
+import alvi.client.data_generators
 
 from .. import utils
 
@@ -58,36 +59,48 @@ class BaseScene(metaclass=abc.ABCMeta):
     @classmethod
     def start(cls):
         while True:
+
+            available_generators = dict(list(
+                (name, generator.Form().as_p()) for name, generator in alvi.client.data_generators.generators.items()
+            ))
             #TODO send this data just once
             post_data = dict(
                 name=cls.__name__,
                 container=cls.container_name(),
                 source=inspect.getsource(cls),
-                form=cls.Form().as_p()
+                form=cls.Form().as_p(),
+                available_generators=available_generators,
             )
             response = utils.post_to_server(API_URL_SCENE_REGISTER, post_data)
             scene_instance_id = response['scene_instance_id']
             options = response['options']
             q = multiprocessing.Queue()
-            process = multiprocessing.Process(target=cls.create_instance, args=(scene_instance_id, q))
+            process = multiprocessing.Process(target=cls.create_instance, args=(q, ))
             process.start()
+            q.put(scene_instance_id)
             q.put(options)
 
     @classmethod
-    def create_instance(cls, instance_id, q):
+    def create_instance(cls, q):
+        instance_id = q.get()
         options = q.get()
         scene = cls()
         pipe = Pipe(instance_id)
-        cls.run_wrapper(scene, pipe, options)
+        cls.run_wrapper(
+            scene,
+            pipe,
+            options=options,
+            data_generator=alvi.client.data_generators.make_data_generator(options),
+        )
         pipe.send('finish', (0, ), {})
         pipe.sync()
 
     @classmethod
-    def run_wrapper(cls, scene, pipe, options):
-        scene.run(pipe, options)
+    def run_wrapper(cls, scene, pipe, **kwargs):
+        scene.run(pipe, **kwargs)
 
     @abc.abstractmethod
-    def run(self, pipe):
+    def run(self, **kwargs):
         raise NotImplementedError
 
     @classmethod

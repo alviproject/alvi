@@ -267,10 +267,10 @@ class RedBlackTree(base.Scene):
     def test(self, tree, test_case):
         pass
 
-    def run(self, tree, options):
-        n = int(options['n'])
-        sequence = (random.randint(0, 100) for i in range(0, n))
-        self.run_sequence(tree, sequence)
+    def run(self, **kwargs):
+        _tree = kwargs['container']
+        data_generator = kwargs['data_generator']
+        self.run_sequence(_tree, data_generator.values)
 
     def run_sequence(self, tree, sequence):
         for node_value in sequence:

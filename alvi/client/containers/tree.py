@@ -31,8 +31,8 @@ class Children:
 
 
 class Node(base.Node):
-    def __init__(self, container, parent, value):
-        super().__init__(container, parent, value)
+    def __init__(self, container, parent, data):
+        super().__init__(container, parent, data)
         self.children = Children(self)
         self.parent = parent
 

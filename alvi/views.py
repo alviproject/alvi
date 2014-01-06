@@ -55,5 +55,6 @@ def run(request, name):
     context = RequestContext(request, {
         'name': scene_class.name(),
         'form': scene_class.form(),
+        'generators': scene_class.generators(),
     })
     return render(request, "init_scene.html", context_instance=context)

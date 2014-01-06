@@ -2,19 +2,20 @@ from alvi.client.scenes.sort import Sort
 
 
 class ShellSort(Sort):
-    def sort(self, array):
+    def sort(self, **kwargs):
+        array = kwargs['container']
         right_marker = array.create_marker("right", 0)
         left_marker = array.create_marker("left", 0)
         left_h_marker = array.create_marker("left+h", 0)
         array.sync()
         h = 1
-        while h < self.n // 3:
+        while h < array.size() // 3:
             h = 3 * h + 1
         while h >= 1:
             array.stats.h = h
             array.sync()
             right = 0
-            while right < self.n-h:
+            while right < array.size()-h:
                 right_marker.move(right+h)
                 left = right
                 while left >= 0:

@@ -1,12 +1,43 @@
 {% extends "index.html" %}
 
 {% block content %}
+    <script type="text/javascript">
+    function select_generator(generator) {
+        var name = generator.val();
+        var form = $("#generator_"+name).clone();
+        $("#generator_options").empty().append(form);
+    }
+    $(function () {
+        $("#id_generator").change(function(){
+            select_generator($(this));
+        });
+        select_generator($("#id_generator"));
+    });
+    </script>
+    <div class="hide">
+        {% for name, form in generators.items %}
+            <div id="generator_{{ name }}" class="generator">
+                {{ form | safe }}
+            </div>
+        {% endfor %}
+    </div>
     <h2>{{ name }}</h2>
     <hr />
     <form method="post" action="{% url 'alvi.views.run' name=name %}">
         <div class="form-group">
             {% csrf_token %}
+            <h3>Data generator</h3>
+            <label for="id_generator">Name:</label>
+            <select id="id_generator" name="generator">
+                {% for name, form in generators.items %}
+                    <option value="{{ name }}">{{ name }}</option>
+                {% endfor %}
+            </select>
+            <div id="generator_options">
+            </div>
+            <h3>Options</h3>
             {{ form | safe }}
+            <br />
             <button type="submit" id="start_scene">Start</button>
         </div>
     </form>

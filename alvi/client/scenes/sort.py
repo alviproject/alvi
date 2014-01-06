@@ -1,6 +1,4 @@
 import abc
-from django import forms
-import random
 
 from . import base
 import alvi.client.containers
@@ -14,27 +12,28 @@ class Sort(base.Scene):
         array[index_b] = t
         array.stats.assignments += 2
 
-    def init(self, array):
+    def init(self, array, n):
         array.stats.comparisons = 0
         array.stats.assignments = 0
-        array.init(self.n)
+        array.init(n)
         array.sync()
 
-    def generate_points(self, array):
-        for i in range(self.n):
-            array[i] = random.randint(1, self.n)
+    def generate_points(self, array, data_generator):
+        for i, value in enumerate(data_generator.values):
+            array[i] = value
         array.sync()
 
     @abc.abstractmethod
-    def sort(self, array):
+    def sort(self, **kwargs):
         raise NotImplementedError
 
-    def run(self, array, options):
-        self.n = int(options['n'])
-        array.stats.elements = self.n
-        self.init(array)
-        self.generate_points(array)
-        self.sort(array)
+    def run(self, **kwargs):
+        data_generator = kwargs['data_generator']
+        array = kwargs['container']
+        array.stats.elements = data_generator.quantity()
+        self.init(array, data_generator.quantity())
+        self.generate_points(array, data_generator)
+        self.sort(**kwargs)
 
     @staticmethod
     def container_class():

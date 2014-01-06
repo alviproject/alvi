@@ -2,7 +2,8 @@ from alvi.client.scenes.sort import Sort
 
 
 class BoobleSort(Sort):
-    def sort(self, array):
+    def sort(self, **kwargs):
+        array = kwargs['container']
         changed = True
         right_marker = array.create_marker("right", array.size()-1)
         array.sync()

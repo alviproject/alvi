@@ -5,16 +5,18 @@ import alvi.client.containers
 
 
 class CreateTree(base.Scene):
-    def run(self, tree, options):
-        n = int(options['n'])
+    def run(self, **kwargs):
+        tree = kwargs['container']
+        data_generator = kwargs['data_generator']
         nodes = []
-        node = tree.create_root(0)
+        value = next(data_generator.values)
+        node = tree.create_root(value)
         nodes.append(node)
         tree.sync()
-        for i in range(n-1):
+        for i, value in enumerate(data_generator.values):
             x = random.randint(0, i)
             parent = nodes[x]
-            node = parent.children.create(i+1)
+            node = parent.children.create(value)
             nodes.append(node)
             tree.sync()
 

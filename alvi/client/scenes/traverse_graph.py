@@ -12,9 +12,10 @@ class TraverseGraph(CreateGraph):
         for child in node.children:
             self.traverse(marker, graph, child)
 
-    def run(self, graph, options):
+    def run(self, **kwargs):
+        graph = kwargs['container']
         with graph.postpone_sync():
-            first_node = super().run(graph, options)
+            first_node = super().run(**kwargs)
         marker = graph.create_multi_marker("Traversed")
         graph.stats.traversed_nodes = 0
         self.traverse(marker, graph, first_node)

@@ -1,9 +1,11 @@
+import logging
+logging.basicConfig(level=logging.INFO)
 import unittest
 import inspect
 import alvi.client.scenes as scenes
 from alvi.client.api import Pipe
 from mock import MagicMock
-import logging
+from alvi.client.data_generators import RandomDataGenerator
 
 
 logger = logging.getLogger(__name__)
@@ -22,13 +24,24 @@ class TestDefaultScene(unittest.TestCase):
 
     def scene_test(self, scene):
         logger.info(scene)
+
+        logger.debug("instantiating scene class")
         container_class = scene.container_class()
         container = container_class(self.pipe)
         scene_instance = scene()
+
+        logger.debug("initializing default options")
         form = scene_instance.Form()
-        #intentionaly convert field.value() to str to make sure it behaves in the same way as in production
-        # (when options are being sent through all layers of the system
-        options = dict(((field.name, str(field.value())) for field in form))
-        scene_instance.run(container, options)
+        options = dict(((field.name, field.value()) for field in form))
+
+        logger.debug("creating data generator")
+        data_generator_form = RandomDataGenerator.Form()
+        data_generator_options = dict(((field.name, field.value()) for field in data_generator_form))
+        data_generator = RandomDataGenerator(data_generator_options)
+
+        logger.debug("running the scene")
+        scene_instance.run(container=container, options=options, data_generator=data_generator)
         #TODO implement test for all existing scenes
+
+        logger.debug("performing the test")
         scene_instance.test(container, self)

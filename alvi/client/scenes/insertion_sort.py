@@ -2,12 +2,13 @@ from alvi.client.scenes.sort import Sort
 
 
 class InsertionSort(Sort):
-    def sort(self, array):
+    def sort(self, **kwargs):
+        array = kwargs['container']
         right_marker = array.create_marker("right", 0)
         left_marker = array.create_marker("left", 0)
         left1_marker = array.create_marker("left+1", 0)
         array.sync()
-        for right in range(0, self.n-1):
+        for right in range(0, array.size()-1):
             right_marker.move(right+1)
             for i in range(0, right+1):
                 left = right - i
