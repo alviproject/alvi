@@ -27,3 +27,7 @@ python -m alvi.server   # run the server
 ![Tree](https://raw.github.com/alviproject/alvi/master/screens/tree.png)
 
 ![Graph](https://raw.github.com/alviproject/alvi/master/screens/graph.png)
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/alviproject/alvi/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
