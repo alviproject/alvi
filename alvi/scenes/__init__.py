@@ -3,10 +3,15 @@ import uuid
 import json
 from .base import Scene
 from .. import containers
+import logging
+
+
+logger = logging.getLogger(__file__)
 
 
 def register(data, request):
     name = data['name']
+    logger.info("registering new scene: %s" % name)
     scene_classes[name] = make_scene(data, request)
 
 

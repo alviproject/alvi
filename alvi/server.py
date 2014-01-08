@@ -1,5 +1,6 @@
 import os
 import logging
+logging.basicConfig(format="%(levelname)s:%(name)s: %(message)s")
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "alvi.settings")
 
 import json
