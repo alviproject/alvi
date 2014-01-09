@@ -1,5 +1,6 @@
 from selenium.webdriver.common.by import By
 from . import home
+from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.wait import WebDriverWait
 import selenium.common.exceptions
 from selenium.webdriver.support import expected_conditions
@@ -40,8 +41,19 @@ class Scene(home.Home):
             raise RuntimeError("Scene %s cannot be found" % self._scene_name)
 
         link.click()
+
+    def run(self, data_generator_name="sequenced", options={}):
+        self.goto()
         wait = WebDriverWait(self._root, 10)
         start_scene = wait.until(expected_conditions.element_to_be_clickable((By.CSS_SELECTOR, "button#start_scene")))
+
+        data_generator = Select(self._root.find_element(By.CSS_SELECTOR, "#id_generator"))
+        data_generator.select_by_visible_text(data_generator_name)
+
+        for name, value in options.items():
+            element = self._root.find_element(By.CSS_SELECTOR, "form [name=%s]" % name)
+            element.clear()
+            element.send_keys(value)
 
         start_scene.click()
         self.wait_to_finish()

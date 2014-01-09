@@ -1,17 +1,14 @@
 from alvi.client.containers import Array
 from alvi.client.scenes.base import Scene
-from django import forms
 
 
 class ArrayCreateNode(Scene):
-    class Form(Scene.Form):
-        n = forms.IntegerField(initial=4)
-
-    def run(self, array, options):
-        n = int(options['n'])
-        array.init(n)
-        for i in range(n):
-            array[i] = i
+    def run(self, **kwargs):
+        data_generator = kwargs['data_generator']
+        array = kwargs['container']
+        array.init(data_generator.quantity())
+        for i, value in enumerate(data_generator.values):
+            array[i] = value
         array.sync()
 
     @classmethod

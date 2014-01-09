@@ -6,9 +6,11 @@ logger = logging.getLogger(__name__)
 
 
 class TestTree(TestContainer):
+    options = dict(n=7, parents="0, 0, 1, 1, 4, 4")
+
     def test_create_node(self):
         page = pages.Tree(self._browser.driver, "TreeCreateNode")
-        page.goto()
+        page.run(options=TestTree.options)
 
         self.assertEqual(7, len(page.svg.nodes), "create_node does not work properly")
 
@@ -26,7 +28,7 @@ class TestTree(TestContainer):
 
     def test_append_and_insert(self):
         page = pages.Tree(self._browser.driver, "TreeAppendAndInsert")
-        page.goto()
+        page.run(options=TestTree.options)
 
         self.assertEqual(7, len(page.svg.nodes), "create_node does not work properly")
 
@@ -45,7 +47,7 @@ class TestTree(TestContainer):
 
     def test_marker(self):
         page = pages.Tree(self._browser.driver, "TreeMarker")
-        page.goto()
+        page.run(options=TestTree.options)
 
         self.assertEqual(7, len(page.svg.nodes), "create_node does not work properly")
         self.assertEqual(2, len(page.svg.markers), "create_marker does not work properly")
@@ -61,7 +63,7 @@ class TestTree(TestContainer):
 
     def test_multi_marker(self):
         page = pages.Tree(self._browser.driver, "TreeMultiMarker")
-        page.goto()
+        page.run(options=TestTree.options)
 
         self.assertEqual(7, len(page.svg.nodes), "create_node does not work properly")
         self.assertEqual(1, len(page.svg.markers), "create_multi_marker does not work properly")

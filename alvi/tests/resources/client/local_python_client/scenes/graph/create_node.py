@@ -1,21 +1,19 @@
 from alvi.client.scenes.base import Scene
 from alvi.client.containers.graph import Graph
-from django import forms
 
 
 class GraphCreateNode(Scene):
-    class Form(Scene.Form):
-        n = forms.IntegerField(initial=4)
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.nodes = []
 
-    def run(self, graph, options):
-        n = int(options['n'])
-        node = graph.create_node(0)
+    def run(self, **kwargs):
+        data_generator = kwargs['data_generator']
+        graph = kwargs['container']
+        value = next(data_generator.values)
+        node = graph.create_node(value)
         self.nodes.append(node)
-        for i in range(n-1):
+        for i, value in enumerate(data_generator.values):
             node = node.children.create(i+1)
             self.nodes.append(node)
         node.create_edge(self.nodes[0])

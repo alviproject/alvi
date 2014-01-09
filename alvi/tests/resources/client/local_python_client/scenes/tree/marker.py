@@ -2,8 +2,9 @@ from alvi.tests.resources.client.local_python_client.scenes.tree.create_node imp
 
 
 class TreeMarker(TreeCreateNode):
-    def run(self, tree, options):
-        super().run(tree, options)
+    def run(self, **kwargs):
+        super().run(**kwargs)
+        tree = kwargs['container']
         #TODO removing marker0 variable causes test to fail
         #looks like pipe message (see api.Pipe) is garbage collected too soon
         #it is worth to investigate that... someday

@@ -7,17 +7,17 @@ logger = logging.getLogger(__name__)
 
 class TestArray(TestContainer):
     def test_array(self):
-        cartesian_page = pages.Cartesian(self._browser.driver, "ArrayCreateNode")
-        cartesian_page.goto()
+        cartesian_scene = pages.Cartesian(self._browser.driver, "ArrayCreateNode")
+        cartesian_scene.run(options=dict(n=4))
 
-        self.assertEqual(4, len(cartesian_page.svg.nodes), "create_element does not work properly")
+        self.assertEqual(4, len(cartesian_scene.svg.nodes), "create_element does not work properly")
 
-        node_values = [d['y'] for d in cartesian_page.svg.node_data]
+        node_values = [d['y'] for d in cartesian_scene.svg.node_data]
         self.assertEqual([0, 1, 2, 3], node_values, "create_element does not work properly")
 
     def test_update(self):
         cartesian_page = pages.Cartesian(self._browser.driver, "ArrayUpdateNode")
-        cartesian_page.goto()
+        cartesian_page.run(options=dict(n=4))
 
         self.assertEqual(4, len(cartesian_page.svg.nodes), "create_element does not work properly")
 

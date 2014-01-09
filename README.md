@@ -4,6 +4,8 @@ AlVi: Algorithm Visualization framework
 [![Coverage Status](https://coveralls.io/repos/alviproject/alvi/badge.png)](https://coveralls.io/r/alviproject/alvi)
 
 ## Contact:
+http://www.alviproject.net
+
 piotr@lewalski.pl
 
 ## Requirements:
