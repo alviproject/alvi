@@ -68,6 +68,9 @@
         }
 
         function update(source) {
+            if(!root) {
+                return;
+            }
             var nodes = tree.nodes(root).reverse();
             var links = tree.links(nodes);
 
@@ -250,11 +253,14 @@
             var marker = {
                 'id': action.id,
                 'name': action.name,
-                'number': marker_count++
+                'number': marker_count++,
+                'parent_id': action.id,
+                'markers': []
             };
             if (action.hasOwnProperty('color')){
                 marker.color = action.color;
             };
+
             markers.push(marker);
             return marker;
         }

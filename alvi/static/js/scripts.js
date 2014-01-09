@@ -27,7 +27,7 @@ $(function () {
 
         connection.onmessage = function (e) {
             function run_action(action) {
-                //console.log(action);
+                console.log(action);
                 var action_type = action[0];
                 action_in_progress = true;
                 //console.log(action);

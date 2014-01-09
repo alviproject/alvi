@@ -5,7 +5,7 @@ from django import forms
 
 class TreeCreateNode(Scene):
     class Form(Scene.Form):
-        parents = forms.CharField()
+        parents = forms.CharField(initial="0, 0, 1, 1, 4, 4")
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
