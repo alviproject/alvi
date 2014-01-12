@@ -48,13 +48,13 @@
         {%  block sidebar %}
             <div class="well sidebar-nav">
                 <ul class="nav nav-list scenes">
-                    <li class="nav-header">Algorithms</li>
-                    <!--<li class="active"><a href="#">Session1</a></li>-->
+                    <li class="nav-header">Default Algorithms</li>
                     {% for scene in scene_classes.keys %}
                         <li>
                             <a href="{% url 'alvi.views.run' scene %}">{{ scene }}</a>
                         </li>
                     {% endfor %}
+                    <li class="nav-header">Loaded Algorithms</li>
                 </ul>
             </div>
         {% endblock %}
@@ -65,9 +65,7 @@
                 {% endblock %}
             </div>
         </div>
-        <!--/span-->
     </div>
-    <!--/row-->
 
     <hr>
 

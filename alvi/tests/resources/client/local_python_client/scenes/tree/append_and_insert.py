@@ -10,3 +10,7 @@ class TreeAppendAndInsert(TreeCreateNode):
         self.nodes[2].children.insert(0, self.nodes[3])
         tree.sync()
         self.nodes[2].children.append(self.nodes[5])
+
+
+if __name__ == "__main__":
+    TreeAppendAndInsert.start()

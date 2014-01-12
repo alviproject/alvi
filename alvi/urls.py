@@ -7,6 +7,4 @@ urlpatterns = patterns(
     '',
     url(r'^$', 'alvi.views.home', name='home'),
     url(r'^run/(?P<name>.*)$', 'alvi.views.run'),
-
-    url(r'^admin/', include(admin.site.urls)),
 )

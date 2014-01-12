@@ -1,7 +1,6 @@
 import importlib
 import multiprocessing
 import tornado.options
-import alvi.config_options
 
 
 def load_default_scenes():

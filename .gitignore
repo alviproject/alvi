@@ -2,5 +2,5 @@ __pycache__/
 env
 alvi.egg-info/
 \.idea/
-alvi/config_local.py
+alvi/config/settings_local.py
 alvi/client/local_scenes/

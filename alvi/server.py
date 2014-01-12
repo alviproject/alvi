@@ -1,7 +1,7 @@
 import os
 import logging
-logging.basicConfig(format="%(levelname)s:%(name)s: %(message)s")
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "alvi.settings")
+import alvi.config
+alvi.config.configure()
 
 import json
 import django.core.handlers.wsgi
@@ -15,14 +15,9 @@ import tornado.wsgi
 from alvi import connections
 from alvi import scenes
 from alvi import scene_manager
-import alvi.config_options
 
 API_URL_SCENE_REGISTER = 'api/scene/register'
 API_URL_SCENE_SYNC = 'api/scene/sync'
-
-CONFIG_LOCAL = "config_local.py"  # can be optionally created, is ignored in VCS
-CONFIG_DEFAULT = "config.py"  # default config file, used if no command line arg is provided, and config_local.py does
-                              # not exists
 
 logger = logging.getLogger(__name__)
 
@@ -54,32 +49,7 @@ class SyncSceneHandler(tornado.web.RequestHandler):
         #    raise x
 
 
-def parse_config_file(config_file):
-    if config_file:
-        logger.info("parsing options from config file: %s", config_file)
-        tornado.options.parse_config_file(config_file)
-        return
-    path = os.path.dirname(__file__)
-    config_path = os.path.join(path, CONFIG_DEFAULT)
-    logger.info("parsing options from default config file: %s", config_path)
-    tornado.options.parse_config_file(config_path)
-    try:
-        config_path = os.path.join(path, CONFIG_LOCAL)
-        tornado.options.parse_config_file(config_path)
-    except IOError:
-        logger.warning("""
-cannot find local config file: %s
-create one basing on config_local_example.py
-starting with default options""", config_path)
-
-
-def run(config_file=None):
-    #load configuration
-    #TODO support command line args and help
-    parse_config_file(config_file)
-    tornado.options.parse_command_line()
-
-
+def run():
     wsgi_app = tornado.wsgi.WSGIContainer(django.core.handlers.wsgi.WSGIHandler())
     router = connections.sockjs.tornado.SockJSRouter(
         connections.Connection,
