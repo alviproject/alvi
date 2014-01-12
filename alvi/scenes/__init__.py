@@ -4,15 +4,18 @@ import json
 from .base import Scene
 from .. import containers
 import logging
+import tornado.options
 
 
 logger = logging.getLogger(__file__)
 
 
 def register(data, request):
+    #FIXME don't allow to overwrite already loaded scene
     name = data['name']
     logger.info("registering new scene: %s" % name)
-    scene_classes[name] = make_scene(data, request)
+    scene = make_scene(data, request)
+    return scene
 
 
 def make_scene(data, request):
@@ -82,6 +85,16 @@ def make_scene(data, request):
                 self.evaluate_message(message)
             self._message_backlog = self._message_backlog.__class__()  # Python 3.2 does not support clear()
 
+        @staticmethod
+        def is_default():
+            names = [key.split('.')[-1] for key in tornado.options.options.default_scenes]
+            return name in names
+
+        @staticmethod
+        def close():
+            del scene_classes[name]
+
+    scene_classes[name] = SceneWrapper
     return SceneWrapper
 
 

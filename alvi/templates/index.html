@@ -49,12 +49,21 @@
             <div class="well sidebar-nav">
                 <ul class="nav nav-list scenes">
                     <li class="nav-header">Default Algorithms</li>
-                    {% for scene in scene_classes.keys %}
+                    {% for name, is_default in scenes %}
+                        {% if is_default %}
                         <li>
-                            <a href="{% url 'alvi.views.run' scene %}">{{ scene }}</a>
+                            <a href="{% url 'alvi.views.run' name %}">{{ name }}</a>
                         </li>
+                        {%  endif %}
                     {% endfor %}
                     <li class="nav-header">Loaded Algorithms</li>
+                    {% for name, is_default in scenes %}
+                        {% if not is_default %}
+                        <li>
+                            <a href="{% url 'alvi.views.run' name %}">{{ name }}</a>
+                        </li>
+                        {%  endif %}
+                    {% endfor %}
                 </ul>
             </div>
         {% endblock %}

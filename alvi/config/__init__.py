@@ -25,33 +25,36 @@ def parse_config_file(config_file):
     try:
         #config file was not specified try to load local config
         config_path = os.path.join(path, CONFIG_LOCAL)
+        logger.info("parsing options from config file: %s", config_path)
         tornado.options.parse_config_file(config_path)
     except IOError:
         logger.warning("""
-cannot find local config file: %s
-create one basing on config_local_example.py
+cannot find local config file: %s, create one basing on config_local_example.py
 starting with default options""", config_path)
 
 
-def configure(_already_loaded=[]):
+def configure(config_path=None, already_loaded=[]):
     """loads default and user defined config options, subsequent calls are ignored"""
-    if _already_loaded:
+    if already_loaded and not config_path:
         return
-    _already_loaded.append(True)
+    if not already_loaded:
+        already_loaded.append(True)
 
-    tornado.options.define("port", help="server port", default=8000, type=int)
-    tornado.options.define("address", help="server address", default="127.0.0.1", type=str)
-    tornado.options.define("default_scenes", help="list of auto-loaded scenes", multiple=True)
+        tornado.options.define("config", help="config file", type=str)
+        tornado.options.define("port", help="server port", default=8000, type=int)
+        tornado.options.define("address", help="server address", default="127.0.0.1", type=str)
+        tornado.options.define("default_scenes", help="list of auto-loaded scenes", multiple=True)
 
-    #configure logging
-    logging.basicConfig(
-        format="%(levelname)s:%(name)s: %(message)s",
-        level=logging.INFO,
-    )
+        #configure logging
+        logging.basicConfig(
+            format="%(levelname)s:%(name)s: %(message)s",
+            level=logging.INFO,
+        )
 
-    #setup django settings
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "alvi.config.django_settings")
+        #setup django settings
+        os.environ.setdefault("DJANGO_SETTINGS_MODULE", "alvi.config.django_settings")
 
-    #parse options
-    config_file = sys.argv[1] if len(sys.argv) > 1 else None
-    parse_config_file(config_file)
+    if not config_path:
+        tornado.options.parse_command_line()
+        config_path = tornado.options.options.config
+    parse_config_file(config_path)

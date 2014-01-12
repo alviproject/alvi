@@ -31,7 +31,10 @@ class RegisterSceneHandler(tornado.web.RequestHandler):
     @tornado.web.asynchronous
     def post(self, *args, **kwargs):
         data = get_json_data(self)
-        scenes.register(data=data, request=self)
+        self.scene = scenes.register(data=data, request=self)
+
+    def on_connection_close(self):
+        self.scene.close()
 
 
 class SyncSceneHandler(tornado.web.RequestHandler):
@@ -49,7 +52,9 @@ class SyncSceneHandler(tornado.web.RequestHandler):
         #    raise x
 
 
-def run():
+def run(config_path=""):
+    if config_path:
+        alvi.config.configure(config_path)
     wsgi_app = tornado.wsgi.WSGIContainer(django.core.handlers.wsgi.WSGIHandler())
     router = connections.sockjs.tornado.SockJSRouter(
         connections.Connection,
