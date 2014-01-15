@@ -52,10 +52,10 @@
         //actions
         function action_update_point(point) {
             var index = point_indexes[point.id];
-            if(point.x){
+            if(point.hasOwnProperty('x')){
                 points[index].x = point.x;
             }
-            if(point.y){
+            if(point.hasOwnProperty('y')){
                 points[index].y = point.y;
             }
         }

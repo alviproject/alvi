@@ -7,7 +7,8 @@ import alvi.client.scenes as scenes
 from alvi.client.api import Pipe
 from mock import MagicMock
 from alvi.client.data_generators import RandomDataGenerator
-
+from alvi.client.data_generators import generators
+from unittest_data_provider import data_provider
 
 logger = logging.getLogger(__name__)
 
@@ -25,7 +26,9 @@ class TestDefaultScene(unittest.TestCase):
         self.pipe.send = MagicMock()
         self.pipe.sync = MagicMock()
 
-    def runTest(self):
+    #TODO work on data_provider itself and possibly send a pull request
+    @data_provider(lambda: ((generator, ) for generator in generators.values()))
+    def runTest(self, generator_class):
         logger.info(self.scene)
 
         logger.debug("instantiating scene class")
@@ -38,9 +41,9 @@ class TestDefaultScene(unittest.TestCase):
         options = dict(((field.name, field.value()) for field in form))
 
         logger.debug("creating data generator")
-        data_generator_form = RandomDataGenerator.Form()
+        data_generator_form = generator_class.Form()
         data_generator_options = dict(((field.name, field.value()) for field in data_generator_form))
-        data_generator = RandomDataGenerator(data_generator_options)
+        data_generator = generator_class(data_generator_options)
 
         logger.debug("running the scene")
         scene_instance.run(container=container, options=options, data_generator=data_generator)

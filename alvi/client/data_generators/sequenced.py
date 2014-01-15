@@ -4,7 +4,7 @@ from django import forms
 
 class SequencedDataGenerator(DataGenerator):
     class Form(DataGenerator.Form):
-        descending = forms.BooleanField(label="Descending", initial=False, required=False)
+        descending = forms.BooleanField(label="Descending", initial=True, required=False)
 
     def _values(self):
         return ((self.quantity()-i-1 if self.descending else i) for i in range(self.quantity())).__iter__()
