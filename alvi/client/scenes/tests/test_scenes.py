@@ -1,5 +1,6 @@
 import logging
-logging.basicConfig(level=logging.INFO)
+import alvi.config
+alvi.config.configure()
 import unittest
 import inspect
 import alvi.client.scenes as scenes
@@ -12,23 +13,25 @@ logger = logging.getLogger(__name__)
 
 
 class TestDefaultScene(unittest.TestCase):
+    def __init__(self, scene):
+        super().__init__()
+        self.scene = scene
+
+    def __str__(self):
+        return self.scene.__name__
+
     def setUp(self):
         self.pipe = Pipe("test_scene")
         self.pipe.send = MagicMock()
         self.pipe.sync = MagicMock()
 
-    def test_scenes(self):
-        for _, scene in inspect.getmembers(scenes, inspect.isclass):
-            #TODO every scene shall be tested in separate test case
-            self.scene_test(scene)
-
-    def scene_test(self, scene):
-        logger.info(scene)
+    def runTest(self):
+        logger.info(self.scene)
 
         logger.debug("instantiating scene class")
-        container_class = scene.container_class()
+        container_class = self.scene.container_class()
         container = container_class(self.pipe)
-        scene_instance = scene()
+        scene_instance = self.scene()
 
         logger.debug("initializing default options")
         form = scene_instance.Form()
@@ -45,3 +48,8 @@ class TestDefaultScene(unittest.TestCase):
 
         logger.debug("performing the test")
         scene_instance.test(container, self)
+
+
+def load_tests(loader, tests, pattern):
+    test_cases = (TestDefaultScene(scene) for _, scene in inspect.getmembers(scenes, inspect.isclass))
+    return unittest.TestSuite(test_cases)
