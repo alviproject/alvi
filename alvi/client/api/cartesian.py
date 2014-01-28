@@ -32,3 +32,12 @@ def update_line(pipe, id, id_point_from, id_point_to):
             id_point_from=id_point_from,
             id_point_to=id_point_to
         ))
+
+
+def remove_line(pipe, id):
+    pipe.send(
+        'remove_line',
+        (id, ),
+        dict(
+            id=id,
+        ))

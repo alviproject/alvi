@@ -16,6 +16,14 @@ class Point(base.Item):
     def value(self):
         return self._value
 
+    @property
+    def x(self):
+        return self._value.x
+
+    @property
+    def y(self):
+        return self._value.y
+
 
 class Line(base.Item):
     def __init__(self, container, point_from, point_to):

@@ -73,15 +73,21 @@
         }
 
         function action_create_line(line){
-            console.log('create_line action=' + JSON.stringify(line));
+            console.log('create_line line=' + JSON.stringify(line));
             line_indexes[line.id] = lines.length;
-            lines.push(line);
+            lines.push(line)
         }
 
         function action_update_line(line){
-            console.log('update_line action=' + JSON.stringify(line));
+            console.log('update_line line=' + JSON.stringify(line));
             lines[line_indexes[line.id]].id_point_from = line.id_point_from;
             lines[line_indexes[line.id]].id_point_to = line.id_point_to;
+        }
+
+        function action_remove_line(line){
+            console.log('remove_line action=' + JSON.stringify(line));
+            /* we don't really remove it, ha ha ha */
+            lines[line_indexes[line.id]].id_point_to = lines[line_indexes[line.id]].id_point_from;
         }
 
         function action_create_marker(marker) {
@@ -253,6 +259,7 @@
         register_action('remove_marker', action_remove_marker);
         register_action('create_line', action_create_line);
         register_action('update_line', action_update_line);
+        register_action('remove_line', action_remove_line);
     </script>
 
 {% endblock %}
