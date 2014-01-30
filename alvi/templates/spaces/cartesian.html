@@ -6,6 +6,8 @@
         var point_indexes = {};
         var markers = [];
         var marker_indexes = {};
+        var lines = [];
+        var line_indexes = {};
 
         var marker_color = d3.scale.category10();
 
@@ -70,6 +72,24 @@
             points.push(point);
         }
 
+        function action_create_line(line){
+            console.log('create_line line=' + JSON.stringify(line));
+            line_indexes[line.id] = lines.length;
+            lines.push(line)
+        }
+
+        function action_update_line(line){
+            console.log('update_line line=' + JSON.stringify(line));
+            lines[line_indexes[line.id]].id_point_from = line.id_point_from;
+            lines[line_indexes[line.id]].id_point_to = line.id_point_to;
+        }
+
+        function action_remove_line(line){
+            console.log('remove_line action=' + JSON.stringify(line));
+            /* we don't really remove it, ha ha ha */
+            lines[line_indexes[line.id]].id_point_to = lines[line_indexes[line.id]].id_point_from;
+        }
+
         function action_create_marker(marker) {
             marker_indexes[marker.id] = markers.length;
             markers.push(marker);
@@ -122,7 +142,7 @@
             MARKERS
              */
 
-            function marker(point_id) {
+            function scale_point(point_id) {
                 var point = points[point_indexes[point_id]];
                 return {
                     'x': xScale(point.x),
@@ -139,7 +159,7 @@
                 .attr("text-anchor", "end")
                 .attr("font-size", "12")
                 .attr("transform", function(d){
-                        return "translate(0,"+marker(d.point_id).y+")"
+                        return "translate(0,"+scale_point(d.point_id).y+")"
                 });
 
             markers_append.append("text")
@@ -159,7 +179,7 @@
                         return marker_color(d.id);
                     })
                 .attr("x1", function(d) {
-                        return marker(d.point_id).x;
+                        return scale_point(d.point_id).x;
                     })
                 .attr("y1", 0)
                 .attr("x2", xScale.range()[1]+padding)
@@ -172,7 +192,7 @@
                      if(d === null) {
                          return "translate("+xScale.range()[1]+", -10)"
                      }
-                     return "translate(0,"+marker(d.point_id).y+")"
+                     return "translate(0,"+scale_point(d.point_id).y+")"
                 });
 
             markers_select
@@ -180,8 +200,52 @@
                 .transition()
                 .duration(delay)
                 .attr("x1", function(d) {
-                    return marker(d.point_id).x;
+                    return scale_point(d.point_id).x;
                 });
+
+            /* LINES */
+
+            var lines_select = svg.selectAll('line.point_line').data(lines);
+
+            lines_select.enter()
+                .append("line")
+                    .attr("class", "point_line")
+                    .attr("stroke-width", 1)
+                    .attr("stroke", function(d){
+                            return "IndianRed" /* Indians !!! */
+                        })
+                    .attr("x1", function(d) {
+                            return scale_point(d.id_point_from).x;
+                        })
+                    .attr("y1", function(d) {
+                            return scale_point(d.id_point_from).y;
+                        })
+                    .attr("x2", function(d) {
+                            return scale_point(d.id_point_from).x;
+                        })
+                    .attr("y2", function(d) {
+                            return scale_point(d.id_point_from).y;
+                        })
+                .transition()
+                    .duration(delay)
+                    .attr("x2", function(d) {
+                        return scale_point(d.id_point_to).x;
+                    })
+                    .attr("y2", function(d) {
+                        return scale_point(d.id_point_to).y;
+                    });
+
+            lines_select
+                .transition()
+                    .duration(delay)
+                    .attr("x2", function(d) {
+                        return scale_point(d.id_point_to).x;
+                    })
+                    .attr("y2", function(d) {
+                        return scale_point(d.id_point_to).y;
+                    });
+
+            lines_select.exit().remove();
         }
 
         function action_remove_marker(action) {
@@ -193,6 +257,9 @@
         register_action('create_marker', action_create_marker);
         register_action('move_marker', action_move_marker);
         register_action('remove_marker', action_remove_marker);
+        register_action('create_line', action_create_line);
+        register_action('update_line', action_update_line);
+        register_action('remove_line', action_remove_line);
     </script>
 
 {% endblock %}
