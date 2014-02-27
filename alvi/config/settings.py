@@ -13,5 +13,6 @@ default_scenes = [
     'alvi.client.scenes.RedBlackTree',
     'alvi.client.scenes.TraverseTreeDepthFirst',
     'alvi.client.scenes.TraverseTreeBreadthFirst',
-    'alvi.client.scenes.GrahamConvexHull'
+    'alvi.client.scenes.GrahamConvexHull',
+    'alvi.client.scenes.Quicksort'
 ]
