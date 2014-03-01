@@ -17,18 +17,6 @@ class Cartesian(base.Container):
         return dict(id=id, x=x, y=y)
 
     @action
-    def create_line(self, id, id_point_from, id_point_to):
-        return dict(id=id, id_point_from=id_point_from, id_point_to=id_point_to)
-
-    @action
-    def update_line(self, id, id_point_from, id_point_to):
-        return dict(id=id, id_point_from=id_point_from, id_point_to=id_point_to)
-
-    @action
-    def remove_line(self, id):
-        return dict(id=id)
-
-    @action
     def create_marker(self, id, name, node_id):
         return dict(id=id, name=name, point_id=node_id)
 
@@ -39,3 +27,15 @@ class Cartesian(base.Container):
     @action
     def remove_marker(self, **kwargs):
         return kwargs
+
+    @action
+    def create_line(self, id, id_point_from, id_point_to):
+        return dict(id=id, id_point_from=id_point_from, id_point_to=id_point_to)
+
+    @action
+    def update_line(self, id, id_point_from, id_point_to):
+        return dict(id=id, id_point_from=id_point_from, id_point_to=id_point_to)
+
+    @action
+    def remove_line(self, id):
+        return dict(id=id)

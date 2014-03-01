@@ -13,3 +13,4 @@ from .red_black_tree import RedBlackTree
 from .traverse_tree_breadth_first import TraverseTreeBreadthFirst
 from .traverse_tree_depth_first import TraverseTreeDepthFirst
 from .graham_convex_hull import GrahamConvexHull
+from .quicksort import Quicksort

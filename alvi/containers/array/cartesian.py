@@ -3,7 +3,6 @@ from ..base import action
 
 
 class Cartesian(base.Array):
-    #TODO template value could be generated
     template = 'spaces/cartesian.html'
 
     def __init__(self, *args, **kwargs):

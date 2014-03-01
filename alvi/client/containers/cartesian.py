@@ -55,8 +55,8 @@ class Cartesian(base.Container):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self._points = []
+        self.points = []
 
     def create_point(self, coordinates):
-        self._points.append(Point(self, coordinates))
+        self.points.append(Point(self, coordinates))
 
