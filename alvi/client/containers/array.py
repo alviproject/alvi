@@ -48,3 +48,11 @@ class Array(base.Container):
     def create_marker(self, name, node_id):
         node = self._nodes[node_id]
         return Marker(name, node)
+
+    def swap_nodes(self, index1, index2):
+        array.swap_nodes(
+            self._pipe,
+            node1={'id': self._nodes[index1].id},
+            node2={'id': self._nodes[index2].id}
+        )
+        self._nodes[index1], self._nodes[index2] = self._nodes[index2], self._nodes[index1]

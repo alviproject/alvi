@@ -16,6 +16,10 @@ class Cartesian(base.Array):
     def create_node(self, id, value):
         return dict(id=id, x=id+1, y=value)
 
+    @action('swap_points')
+    def swap_nodes(self, **kwargs):
+        return kwargs
+
     @action
     def create_marker(self, id, name, node_id):
         return dict(id=id, name=name, point_id=node_id)
