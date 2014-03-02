@@ -27,9 +27,9 @@ class Quicksort(Sort):
 
     def _quicksort(self, A, p, r):
         log.info('quicksort p=%d, r=%d' % (p, r))
-        self.qs_left.move(p)
-        self.qs_right.move(r)
         if p < r:
+            self.qs_left.move(p)
+            self.qs_right.move(r)
             q = self._partition(A, p, r)
             log.info('q = %d'%q)
             self._quicksort(A, p, q-1)
@@ -47,9 +47,9 @@ class Quicksort(Sort):
             if A[j] < x:
                 i += 1
                 self.part_i.move(i)
-                A[i], A[j] = A[j], A[i]
+                A.swap_nodes(i, j)
                 A.sync()
-        A[i+1], A[r] = A[r], A[i+1]
+        A.swap_nodes(i+1, r)
         self.part_partby.move(i+1)
         A.sync()
         return i+1

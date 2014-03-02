@@ -72,6 +72,15 @@
             points.push(point);
         }
 
+        function action_swap_points(action){
+            console.log('action_swap_points action=' + JSON.stringify(action));
+            var point1 = points[point_indexes[action.point1.id]];
+            var point2 = points[point_indexes[action.point2.id]];
+            var temp_x = point1.x;
+            point1.x = point2.x;
+            point2.x = temp_x;
+        }
+
         function action_create_line(line){
             console.log('create_line line=' + JSON.stringify(line));
             line_indexes[line.id] = lines.length;
@@ -98,6 +107,8 @@
         function action_move_marker(marker) {
             markers[marker_indexes[marker.id]].point_id = marker.point_id;
         }
+
+
 
         function update_scale() {
             var maxX = d3.max(points, function(d) { return d.x; });
@@ -260,6 +271,7 @@
         register_action('create_line', action_create_line);
         register_action('update_line', action_update_line);
         register_action('remove_line', action_remove_line);
+        register_action('swap_points', action_swap_points);
     </script>
 
 {% endblock %}
