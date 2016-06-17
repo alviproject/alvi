@@ -1,0 +1,289 @@
+alvi=/home/piotr/projects/alvi CD=. {
+ create_dev_env.sh
+ discover_tests.py
+ Dockerfile
+ LICENSE
+ manage.py
+ MANIFEST.in
+ Procfile
+ README.md
+ requirements.txt
+ requirements_tests.txt
+ runtime.txt
+ setup.py
+ alvi=alvi {
+  __init__.py
+  connections.py
+  scene_manager.py
+  server.py
+  urls.py
+  views.py
+  client=client {
+   __init__.py
+   utils.py
+   scenes=scenes{
+   }
+   api=api {
+    __init__.py
+    array.py
+    base.py
+    cartesian.py
+    common.py
+    graph.py
+    list.py
+    tree.py
+   }
+   containers=containers {
+    __init__.py
+    array.py
+    base.py
+    binary_tree.py
+    cartesian.py
+    graph.py
+    list.py
+    tree.py
+   }
+   data_generators=data_generators {
+    __init__.py
+    base.py
+    random.py
+    sequenced.py
+   }
+  }
+  config=config {
+   __init__.py
+   django_settings.py
+   settings.py
+   settings_local_example.py
+  }
+  containers=containers {
+   __init__.py
+   base.py
+   cartesian.py
+   graph.py
+   tree.py
+   array=array {
+    __init__.py
+    base.py
+    cartesian.py
+   }
+   list=list {
+    __init__.py
+    base.py
+    cartesian.py
+   }
+  }
+  scenes=scenes {
+   __init__.py
+   base.py
+  }
+  static=static {
+   admin=admin {
+    css=css {
+     base.css
+     changelists.css
+     dashboard.css
+     forms.css
+     ie.css
+     login.css
+     rtl.css
+     widgets.css
+    }
+    img=img {
+     changelist-bg.gif
+     changelist-bg_rtl.gif
+     chooser-bg.gif
+     chooser_stacked-bg.gif
+     default-bg-reverse.gif
+     default-bg.gif
+     deleted-overlay.gif
+     icon-no.gif
+     icon-unknown.gif
+     icon-yes.gif
+     icon_addlink.gif
+     icon_alert.gif
+     icon_calendar.gif
+     icon_changelink.gif
+     icon_clock.gif
+     icon_deletelink.gif
+     icon_error.gif
+     icon_searchbox.png
+     icon_success.gif
+     inline-delete-8bit.png
+     inline-delete.png
+     inline-restore-8bit.png
+     inline-restore.png
+     inline-splitter-bg.gif
+     nav-bg-grabber.gif
+     nav-bg-reverse.gif
+     nav-bg-selected.gif
+     nav-bg.gif
+     selector-icons.gif
+     selector-search.gif
+     sorting-icons.gif
+     tool-left.gif
+     tool-left_over.gif
+     tool-right.gif
+     tool-right_over.gif
+     tooltag-add.gif
+     tooltag-add_over.gif
+     tooltag-arrowright.gif
+     tooltag-arrowright_over.gif
+     gis=gis {
+      move_vertex_off.png
+      move_vertex_on.png
+     }
+    }
+    js=js {
+     actions.js
+     actions.min.js
+     calendar.js
+     collapse.js
+     collapse.min.js
+     core.js
+     inlines.js
+     inlines.min.js
+     jquery.init.js
+     jquery.js
+     jquery.min.js
+     LICENSE-JQUERY.txt
+     prepopulate.js
+     prepopulate.min.js
+     SelectBox.js
+     SelectFilter2.js
+     timeparse.js
+     urlify.js
+     admin=admin {
+      DateTimeShortcuts.js
+      RelatedObjectLookups.js
+     }
+    }
+   }
+   css=css {
+    bootstrap-responsive.css
+    bootstrap-responsive.min.css
+    bootstrap.css
+    bootstrap.min.css
+    style.css
+   }
+   img=img {
+    glyphicons-halflings-white.png
+    glyphicons-halflings.png
+   }
+   js=js {
+    bootstrap.js
+    bootstrap.min.js
+    d3.v3.min.js
+    jquery-1.10.2.min.js
+    scripts.js
+    sockjs-0.3.js
+    sockjs-0.3.min.js
+    google-code-prettify=google-code-prettify {
+     lang-apollo.js
+     lang-basic.js
+     lang-clj.js
+     lang-css.js
+     lang-dart.js
+     lang-erlang.js
+     lang-go.js
+     lang-hs.js
+     lang-lisp.js
+     lang-llvm.js
+     lang-lua.js
+     lang-matlab.js
+     lang-ml.js
+     lang-mumps.js
+     lang-n.js
+     lang-pascal.js
+     lang-proto.js
+     lang-r.js
+     lang-rd.js
+     lang-scala.js
+     lang-sql.js
+     lang-tcl.js
+     lang-tex.js
+     lang-vb.js
+     lang-vhdl.js
+     lang-wiki.js
+     lang-xq.js
+     lang-yaml.js
+     prettify.css
+     prettify.js
+     run_prettify.js
+    }
+   }
+  }
+  templates=templates {
+   home.html
+   index.html
+   init_scene.html
+   spaces=spaces {
+    cartesian.html
+    graph.html
+    index.html
+    tree.html
+   }
+  }
+  tests=tests {
+   __init__.py
+   pages=pages {
+    __init__.py
+    base.py
+    cartesian.py
+    graph.py
+    home.py
+    scene.py
+    tree.py
+   }
+   resources=resources {
+    __init__.py
+    backend.py
+    base.py
+    browser.py
+    client=client {
+     __init__.py
+     local_python_client=local_python_client {
+      __init__.py
+      scenes=scenes {
+       __init__.py
+       array=array {
+        __init__.py
+        create_node.py
+        update_node.py
+       }
+       graph=graph {
+        __init__.py
+        add_multi_marker.py
+        create_node.py
+        marker.py
+        remove_node.py
+        update_node.py
+       }
+       tree=tree {
+        __init__.py
+        append_and_insert.py
+        create_node.py
+        marker.py
+        multi_marker.py
+       }
+      }
+     }
+    }
+   }
+   test_client=test_client {
+    __init__.py
+    base.py
+    config.py
+    test_array.py
+    test_graph.py
+    test_scenes.py
+    test_tree.py
+   }
+  }
+ }
+ screens=screens {
+  graph.png
+  insertion_sort.png
+  tree.png
+ }
+}
